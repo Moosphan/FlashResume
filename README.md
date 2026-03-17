@@ -1,73 +1,84 @@
-# React + TypeScript + Vite
+# Flash Resume
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+一款基于浏览器的在线简历制作工具，支持实时预览、多模板切换、PDF 导出，数据完全存储在本地，无需后端服务。
 
-Currently, two official plugins are available:
+## 功能特性
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- 多简历管理：创建、切换、重命名、删除多份简历
+- 实时预览：左侧编辑、右侧 A4 比例实时渲染，支持缩放（按钮 / Ctrl+滚轮 / 触控板手势）
+- 8 套内置模板：经典、现代、极简、时间线、卡片、专业、杂志、居中
+- 主题色自定义：通过取色器自由调整简历配色
+- 拖拽排序：基于 dnd-kit 的模块拖拽排序，自由调整简历结构
+- 自定义区块：可添加任意自定义内容模块
+- 导入 / 导出：支持 JSON 格式的简历数据导入导出
+- PDF 导出：基于 html-to-image + jsPDF 生成 A4 尺寸 PDF，支持多页
+- 自动保存：编辑内容自动保存至 localStorage
+- 中英文切换：简历内容标签支持中 / 英文切换
+- 深色模式：支持 Light / Dark 主题切换
+- Toast 通知：操作反馈通过 Toast 提示
 
-## React Compiler
+## 技术栈
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| 类别 | 技术 |
+|------|------|
+| 框架 | React 19 + TypeScript |
+| 构建 | Vite 8 |
+| 样式 | Tailwind CSS 4 |
+| 状态管理 | Zustand |
+| 拖拽 | @dnd-kit/core + @dnd-kit/sortable |
+| PDF 导出 | html-to-image + jsPDF |
+| 取色器 | react-colorful |
+| 测试 | Vitest + Testing Library + fast-check |
+| 代码规范 | ESLint + TypeScript ESLint |
 
-## Expanding the ESLint configuration
+## 项目结构
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── components/
+│   ├── Editor/          # 编辑表单（个人信息、经历、教育、项目、技能、自定义区块、排序列表）
+│   ├── Layout/          # 页面布局（AppLayout、Sidebar、ExportBar）
+│   ├── Preview/         # 预览面板 + 8 套模板组件
+│   └── UI/              # 通用 UI 组件（模板选择器、取色器、主题切换、标签输入、确认弹窗）
+├── hooks/               # useAutoSave、useDebounce
+├── services/            # exportService、importService、storageService、templateRegistry、validationService
+├── stores/              # resumeStore（简历数据）、uiStore（界面状态）
+├── types/               # TypeScript 类型定义
+└── utils/               # 校验工具、i18n 标签
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 快速开始
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# 安装依赖
+npm install
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# 启动开发服务器
+npm run dev
+
+# 构建生产版本
+npm run build
+
+# 运行测试
+npm run test
+
+# 代码检查
+npm run lint
 ```
+
+## 数据模型
+
+简历数据包含以下模块，均可独立编辑和排序：
+
+- 个人信息（姓名、邮箱、电话、地址、网站、头像）
+- 工作经历（公司、职位、时间段、描述）
+- 项目经验（项目名、角色、时间段、描述）
+- 教育背景（学校、学位、专业、时间段）
+- 技能专长（技能名称 + 等级：初级 / 中级 / 高级 / 专家）
+- 自定义区块（标题 + 富文本内容）
+
+所有数据以 JSON 格式存储在浏览器 localStorage 中，无需登录或网络连接。
+
+## License
+
+CC BY-NC 4.0 — 允许自由使用和修改，禁止商业用途。详见 [Creative Commons BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)。
