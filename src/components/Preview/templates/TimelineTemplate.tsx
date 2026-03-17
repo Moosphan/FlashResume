@@ -27,7 +27,7 @@ export default function TimelineTemplate({ data, themeColor, language }: Templat
           <span className="text-xs text-gray-400 shrink-0 ml-2">{date}</span>
         </div>
         {subtitle && <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{subtitle}</p>}
-        {desc && <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line leading-relaxed">{desc}</p>}
+        {desc && <div className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line leading-relaxed [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: desc }} />}
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import { templateRegistry } from '../../services/templateRegistry';
 import { useResumeStore } from '../../stores/resumeStore';
+import { useLocale } from '../../hooks/useLocale';
 
 const PLACEHOLDER_COLORS: Record<string, string> = {
   classic: 'bg-blue-100 dark:bg-blue-900',
@@ -11,6 +12,7 @@ export default function TemplateSelector() {
   const templates = templateRegistry.getAll();
   const selectedTemplateId = useResumeStore((s) => s.selectedTemplateId);
   const setTemplate = useResumeStore((s) => s.setTemplate);
+  const { t } = useLocale();
 
   return (
     <div className="flex gap-3 overflow-x-auto pb-2">
@@ -27,7 +29,7 @@ export default function TemplateSelector() {
                 : 'border-gray-200 hover:border-gray-400 dark:border-gray-600 dark:hover:border-gray-400'
             }`}
             aria-pressed={isSelected}
-            aria-label={`选择模板：${tpl.name}`}
+            aria-label={`${t.selectTemplate}：${tpl.name}`}
           >
             <div
               className={`flex h-20 w-16 items-center justify-center rounded text-xs font-medium text-gray-600 dark:text-gray-300 ${

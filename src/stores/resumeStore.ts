@@ -15,6 +15,7 @@ import { generateId } from '../utils/validators';
 import { validateResumeData } from '../services/validationService';
 import * as storage from '../services/storageService';
 import type { ResumeLanguage } from '../utils/i18n';
+import { getLocale, getTranslations } from '../utils/i18n';
 
 // ============================================================
 // ResumeStore - 简历数据状态管理 (Zustand)
@@ -479,7 +480,7 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
     // Create a resume list entry so the sidebar shows the imported resume
     const id = generateId();
     const now = new Date().toISOString();
-    const name = data.personalInfo.name?.trim() || '导入的简历';
+    const name = data.personalInfo.name?.trim() || getTranslations(getLocale()).importedResume;
 
     storage.saveResume(id, data);
     storage.setCurrentResumeId(id);

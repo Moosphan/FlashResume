@@ -33,7 +33,7 @@ export default function CardTemplate({ data, themeColor, language }: TemplatePro
                   <span className="text-xs text-gray-400">{formatDate(exp.startDate)} - {formatDate(exp.endDate)}</span>
                 </div>
                 <p className="text-xs text-gray-500 dark:text-gray-400">{exp.company}</p>
-                {exp.description && <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line">{exp.description}</p>}
+                {exp.description && <div className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: exp.description }} />}
               </div>
             ))}
           </div>
@@ -50,7 +50,7 @@ export default function CardTemplate({ data, themeColor, language }: TemplatePro
                   <span className="text-xs text-gray-400">{formatDate(proj.startDate)} - {formatDate(proj.endDate)}</span>
                 </div>
                 {proj.role && <p className="text-xs text-gray-500 dark:text-gray-400">{proj.role}</p>}
-                {proj.description && <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line">{proj.description}</p>}
+                {proj.description && <div className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: proj.description }} />}
               </div>
             ))}
           </div>

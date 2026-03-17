@@ -6,11 +6,15 @@ import { createRef } from 'react';
 
 const mockExportToPDF = vi.fn().mockResolvedValue(new Blob(['pdf'], { type: 'application/pdf' }));
 const mockExportToJSON = vi.fn().mockReturnValue('{"test":true}');
+const mockExportToPNG = vi.fn().mockResolvedValue(new Blob(['png'], { type: 'image/png' }));
+const mockExportToJPG = vi.fn().mockResolvedValue(new Blob(['jpg'], { type: 'image/jpeg' }));
 const mockDownloadFile = vi.fn();
 
 vi.mock('../../../services/exportService', () => ({
   exportToPDF: (...args: unknown[]) => mockExportToPDF(...args),
   exportToJSON: (...args: unknown[]) => mockExportToJSON(...args),
+  exportToPNG: (...args: unknown[]) => mockExportToPNG(...args),
+  exportToJPG: (...args: unknown[]) => mockExportToJPG(...args),
   downloadFile: (...args: unknown[]) => mockDownloadFile(...args),
 }));
 
@@ -59,6 +63,11 @@ function renderBar(refEl?: HTMLDivElement | null) {
   return render(<ExportBar previewRef={ref} />);
 }
 
+/** Helper: open the dropdown menu */
+function openMenu() {
+  fireEvent.click(screen.getByLabelText('导出菜单'));
+}
+
 describe('ExportBar', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -73,36 +82,56 @@ describe('ExportBar', () => {
     };
   });
 
-  it('renders all three buttons', () => {
+  it('renders the menu trigger button', () => {
     renderBar();
-    expect(screen.getByLabelText('导出 PDF')).toBeInTheDocument();
-    expect(screen.getByLabelText('导出 JSON')).toBeInTheDocument();
+    expect(screen.getByLabelText('导出菜单')).toBeInTheDocument();
+  });
+
+  it('shows menu items when trigger is clicked', () => {
+    renderBar();
+    openMenu();
+    expect(screen.getByText('导出 PDF')).toBeInTheDocument();
+    expect(screen.getByText('导出 PNG')).toBeInTheDocument();
+    expect(screen.getByText('导出 JPG')).toBeInTheDocument();
+    expect(screen.getByText('导出 JSON')).toBeInTheDocument();
+    // 导入 JSON 不在下拉菜单中
+    expect(screen.queryByText('导入 JSON')).not.toBeInTheDocument();
+  });
+
+  it('renders import button as separate icon', () => {
+    renderBar();
     expect(screen.getByLabelText('导入 JSON')).toBeInTheDocument();
   });
 
   it('disables export buttons when resume is empty', () => {
     renderBar();
-    expect(screen.getByLabelText('导出 PDF')).toBeDisabled();
-    expect(screen.getByLabelText('导出 JSON')).toBeDisabled();
+    openMenu();
+    expect(screen.getByText('导出 PDF').closest('button')).toBeDisabled();
+    expect(screen.getByText('导出 PNG').closest('button')).toBeDisabled();
+    expect(screen.getByText('导出 JPG').closest('button')).toBeDisabled();
+    expect(screen.getByText('导出 JSON').closest('button')).toBeDisabled();
   });
 
   it('enables export buttons when resume has a name', () => {
     mockResumeData.personalInfo.name = 'Alice';
     renderBar();
-    expect(screen.getByLabelText('导出 PDF')).not.toBeDisabled();
-    expect(screen.getByLabelText('导出 JSON')).not.toBeDisabled();
+    openMenu();
+    expect(screen.getByText('导出 PDF').closest('button')).not.toBeDisabled();
+    expect(screen.getByText('导出 JSON').closest('button')).not.toBeDisabled();
   });
 
   it('enables export buttons when resume has experiences', () => {
     mockResumeData.experiences = [{ id: '1', company: 'Co', position: '', startDate: '', endDate: '', description: '' }];
     renderBar();
-    expect(screen.getByLabelText('导出 PDF')).not.toBeDisabled();
+    openMenu();
+    expect(screen.getByText('导出 PDF').closest('button')).not.toBeDisabled();
   });
 
   it('calls exportToPDF and downloadFile on PDF export click', async () => {
     mockResumeData.personalInfo.name = 'Bob';
     renderBar();
-    fireEvent.click(screen.getByLabelText('导出 PDF'));
+    openMenu();
+    fireEvent.click(screen.getByText('导出 PDF'));
     await waitFor(() => {
       expect(mockExportToPDF).toHaveBeenCalledTimes(1);
       expect(mockDownloadFile).toHaveBeenCalledWith(expect.any(Blob), 'resume.pdf');
@@ -113,7 +142,8 @@ describe('ExportBar', () => {
     mockResumeData.personalInfo.name = 'Bob';
     mockExportToPDF.mockRejectedValueOnce(new Error('fail'));
     renderBar();
-    fireEvent.click(screen.getByLabelText('导出 PDF'));
+    openMenu();
+    fireEvent.click(screen.getByText('导出 PDF'));
     await waitFor(() => {
       expect(mockAddToast).toHaveBeenCalledWith('PDF 生成失败，请重试', 'error');
     });
@@ -122,7 +152,8 @@ describe('ExportBar', () => {
   it('calls exportToJSON and downloadFile on JSON export click', () => {
     mockResumeData.personalInfo.name = 'Bob';
     renderBar();
-    fireEvent.click(screen.getByLabelText('导出 JSON'));
+    openMenu();
+    fireEvent.click(screen.getByText('导出 JSON'));
     expect(mockExportToJSON).toHaveBeenCalledWith(mockResumeData);
     expect(mockDownloadFile).toHaveBeenCalledWith(expect.any(Blob), 'resume.json');
   });
@@ -179,12 +210,13 @@ describe('ExportBar', () => {
     });
   });
 
-  it('buttons have min 36x36px touch target', () => {
+  it('menu trigger button has adequate touch target', () => {
     renderBar();
-    const buttons = screen.getAllByRole('button');
-    buttons.forEach((btn) => {
-      expect(btn.className).toContain('min-w-[36px]');
-      expect(btn.className).toContain('min-h-[36px]');
-    });
+    const exportBtn = screen.getByLabelText('导出菜单');
+    const importBtn = screen.getByLabelText('导入 JSON');
+    expect(exportBtn.className).toContain('h-9');
+    expect(exportBtn.className).toContain('w-9');
+    expect(importBtn.className).toContain('h-9');
+    expect(importBtn.className).toContain('w-9');
   });
 });

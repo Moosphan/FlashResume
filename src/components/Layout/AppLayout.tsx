@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useUIStore } from '../../stores/uiStore';
-import { useResumeStore } from '../../stores/resumeStore';
+import { useLocale } from '../../hooks/useLocale';
 import ThemeToggle from '../UI/ThemeToggle';
 import TemplateSelector from '../UI/TemplateSelector';
 import ThemePicker from '../UI/ThemePicker';
@@ -15,8 +15,7 @@ export default function AppLayout() {
   const toasts = useUIStore((s) => s.toasts);
   const removeToast = useUIStore((s) => s.removeToast);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const resumeLanguage = useResumeStore((s) => s.resumeLanguage);
-  const setResumeLanguage = useResumeStore((s) => s.setResumeLanguage);
+  const { t, toggleLocale } = useLocale();
 
   return (
     <div className="flex h-screen flex-col bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
@@ -27,7 +26,7 @@ export default function AppLayout() {
             type="button"
             onClick={() => setSidebarOpen(true)}
             className="flex h-[44px] w-[44px] items-center justify-center rounded-md text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 lg:hidden"
-            aria-label="打开侧边栏"
+            aria-label={t.openSidebar}
           >
             ☰
           </button>
@@ -36,16 +35,16 @@ export default function AppLayout() {
         </div>
         <div className="flex items-center gap-2">
           {autoSaveStatus === 'saved' && (
-            <span className="text-xs text-green-600 dark:text-green-400">已自动保存</span>
+            <span className="text-xs text-green-600 dark:text-green-400">{t.autoSaved}</span>
           )}
           <ExportBar previewRef={previewRef} />
           <button
             type="button"
-            onClick={() => setResumeLanguage(resumeLanguage === 'zh' ? 'en' : 'zh')}
+            onClick={toggleLocale}
             className="flex h-9 items-center rounded-md border border-gray-200 px-2 text-xs font-medium text-gray-600 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700 transition-colors"
-            aria-label="切换简历语言"
+            aria-label={t.switchLang}
           >
-            {resumeLanguage === 'zh' ? '中→EN' : 'EN→中'}
+            {t.switchLang}
           </button>
           <ThemeToggle />
         </div>
@@ -61,11 +60,11 @@ export default function AppLayout() {
           <div className="flex-1 overflow-y-auto p-4 lg:max-w-[50%]">
             <div className="space-y-4">
               <section>
-                <h2 className="mb-2 text-sm font-semibold text-gray-600 dark:text-gray-400">模板选择</h2>
+                <h2 className="mb-2 text-sm font-semibold text-gray-600 dark:text-gray-400">{t.templateSelect}</h2>
                 <TemplateSelector />
               </section>
               <section>
-                <h2 className="mb-2 text-sm font-semibold text-gray-600 dark:text-gray-400">主题颜色</h2>
+                <h2 className="mb-2 text-sm font-semibold text-gray-600 dark:text-gray-400">{t.themeColor}</h2>
                 <ThemePicker />
               </section>
               <SortableSectionList />
@@ -99,7 +98,7 @@ export default function AppLayout() {
                 type="button"
                 onClick={() => removeToast(toast.id)}
                 className="ml-1 flex h-5 w-5 items-center justify-center rounded-full hover:bg-white/20 transition-colors"
-                aria-label="关闭通知"
+                aria-label={t.closeNotification}
               >
                 ×
               </button>

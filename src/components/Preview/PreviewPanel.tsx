@@ -1,6 +1,7 @@
 import { forwardRef, useCallback, useRef, useState } from 'react';
 import { useResumeStore } from '../../stores/resumeStore';
 import { templateRegistry } from '../../services/templateRegistry';
+import { useLocale } from '../../hooks/useLocale';
 
 /** A4 aspect ratio: 210mm x 297mm */
 const A4_WIDTH_PX = 794; // ~210mm at 96dpi
@@ -23,7 +24,7 @@ const PreviewPanel = forwardRef<HTMLDivElement>(function PreviewPanel(_props, re
   const resumeData = useResumeStore((s) => s.resumeData);
   const selectedTemplateId = useResumeStore((s) => s.selectedTemplateId);
   const themeColor = useResumeStore((s) => s.themeColor);
-  const language = useResumeStore((s) => s.resumeLanguage);
+  const { locale, t } = useLocale();
 
   const [zoom, setZoom] = useState(ZOOM_DEFAULT);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -85,10 +86,10 @@ const PreviewPanel = forwardRef<HTMLDivElement>(function PreviewPanel(_props, re
                 }}
               >
                 {TemplateComponent ? (
-                  <TemplateComponent data={resumeData} themeColor={themeColor} language={language} />
+                  <TemplateComponent data={resumeData} themeColor={themeColor} language={locale} />
                 ) : (
                   <div className="flex items-center justify-center h-full min-h-[297mm] text-gray-400">
-                    未找到模板
+                    {t.templateNotFound}
                   </div>
                 )}
               </div>

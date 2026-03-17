@@ -23,7 +23,7 @@ export default function CenteredTemplate({ data, themeColor, language }: Templat
             <div key={exp.id} className="mb-4">
               <p className="text-sm font-bold text-gray-900 dark:text-gray-100">{exp.position}</p>
               <p className="text-[10px] text-gray-500 dark:text-gray-400">{exp.company} · {formatDate(exp.startDate)} – {formatDate(exp.endDate)}</p>
-              {exp.description && <p className="text-[10px] text-gray-600 dark:text-gray-400 mt-1 max-w-md mx-auto whitespace-pre-line leading-relaxed">{exp.description}</p>}
+              {exp.description && <div className="text-[10px] text-gray-600 dark:text-gray-400 mt-1 max-w-md mx-auto whitespace-pre-line leading-relaxed [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: exp.description }} />}
             </div>
           ))}
         </section>
@@ -36,7 +36,7 @@ export default function CenteredTemplate({ data, themeColor, language }: Templat
             <div key={p.id} className="mb-4">
               <p className="text-sm font-bold text-gray-900 dark:text-gray-100">{p.name}</p>
               <p className="text-[10px] text-gray-500 dark:text-gray-400">{p.role && `${p.role} · `}{formatDate(p.startDate)} – {formatDate(p.endDate)}</p>
-              {p.description && <p className="text-[10px] text-gray-600 dark:text-gray-400 mt-1 max-w-md mx-auto whitespace-pre-line leading-relaxed">{p.description}</p>}
+              {p.description && <div className="text-[10px] text-gray-600 dark:text-gray-400 mt-1 max-w-md mx-auto whitespace-pre-line leading-relaxed [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: p.description }} />}
             </div>
           ))}
         </section>

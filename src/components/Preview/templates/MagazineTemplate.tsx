@@ -27,7 +27,7 @@ export default function MagazineTemplate({ data, themeColor, language }: Templat
                 <span className="text-[10px] text-gray-400">{formatDate(exp.startDate)} – {formatDate(exp.endDate)}</span>
               </div>
               <p className="text-[10px] text-gray-500 dark:text-gray-400 italic">{exp.company}</p>
-              {exp.description && <p className="text-[10px] text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line leading-relaxed">{exp.description}</p>}
+              {exp.description && <div className="text-[10px] text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line leading-relaxed [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: exp.description }} />}
             </div>
           ))}
         </section>
@@ -45,7 +45,7 @@ export default function MagazineTemplate({ data, themeColor, language }: Templat
                 <span className="text-[10px] text-gray-400">{formatDate(p.startDate)} – {formatDate(p.endDate)}</span>
               </div>
               {p.role && <p className="text-[10px] text-gray-500 dark:text-gray-400 italic">{p.role}</p>}
-              {p.description && <p className="text-[10px] text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line leading-relaxed">{p.description}</p>}
+              {p.description && <div className="text-[10px] text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line leading-relaxed [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: p.description }} />}
             </div>
           ))}
         </section>

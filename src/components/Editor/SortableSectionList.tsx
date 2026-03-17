@@ -18,6 +18,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { useResumeStore } from '../../stores/resumeStore';
+import { useLocale } from '../../hooks/useLocale';
 import PersonalInfoForm from './PersonalInfoForm';
 import ExperienceForm from './ExperienceForm';
 import EducationForm from './EducationForm';
@@ -25,22 +26,13 @@ import SkillsForm from './SkillsForm';
 import ProjectForm from './ProjectForm';
 import CustomSectionForm from './CustomSectionForm';
 
-// --- Section labels for display ---
-const SECTION_LABELS: Record<string, string> = {
-  personalInfo: '个人信息',
-  experiences: '工作经历',
-  projects: '项目经验',
-  educations: '教育背景',
-  skills: '技能专长',
-};
-
 // --- Drag Handle ---
-function DragHandle({ listeners, attributes }: { listeners?: DraggableSyntheticListeners; attributes?: React.HTMLAttributes<HTMLButtonElement> }) {
+function DragHandle({ listeners, attributes, label }: { listeners?: DraggableSyntheticListeners; attributes?: React.HTMLAttributes<HTMLButtonElement>; label: string }) {
   return (
     <button
       type="button"
       className="flex min-h-[44px] min-w-[44px] cursor-grab items-center justify-center rounded-md text-gray-400 hover:bg-gray-100 hover:text-gray-600 active:cursor-grabbing dark:hover:bg-gray-700 dark:hover:text-gray-300 transition-colors duration-150"
-      aria-label="拖拽排序"
+      aria-label={label}
       {...attributes}
       {...listeners}
     >
@@ -66,8 +58,8 @@ function SortableSectionItem({ id, customSectionIds }: { id: string; customSecti
     transition,
     isDragging,
   } = useSortable({ id });
+  const { t } = useLocale();
 
-  // Only apply translate, never scale — prevents distortion during drag
   const style = {
     transform: transform
       ? `translate3d(${Math.round(transform.x)}px, ${Math.round(transform.y)}px, 0)`
@@ -76,8 +68,16 @@ function SortableSectionItem({ id, customSectionIds }: { id: string; customSecti
     opacity: isDragging ? 0.4 : 1,
   };
 
+  const sectionLabels: Record<string, string> = {
+    personalInfo: t.sectionPersonalInfo,
+    experiences: t.sectionExperiences,
+    projects: t.sectionProjects,
+    educations: t.sectionEducations,
+    skills: t.sectionSkills,
+  };
+
   const isCustom = customSectionIds.includes(id);
-  const label = SECTION_LABELS[id] ?? (isCustom ? '自定义区块' : id);
+  const label = sectionLabels[id] ?? (isCustom ? t.sectionCustom : id);
 
   const renderContent = () => {
     switch (id) {
@@ -112,7 +112,7 @@ function SortableSectionItem({ id, customSectionIds }: { id: string; customSecti
       className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900"
     >
       <div className="mb-3 flex items-center gap-2 border-b border-gray-200 pb-2 dark:border-gray-700">
-        <DragHandle listeners={listeners} attributes={attributes} />
+        <DragHandle listeners={listeners} attributes={attributes} label={t.dragSort} />
         <span className="text-sm font-medium text-gray-500 dark:text-gray-400">{label}</span>
       </div>
       {content}
@@ -122,8 +122,16 @@ function SortableSectionItem({ id, customSectionIds }: { id: string; customSecti
 
 // --- Drag Overlay placeholder (lightweight, no distortion) ---
 function DragOverlayContent({ id, customSectionIds }: { id: string; customSectionIds: string[] }) {
+  const { t } = useLocale();
+  const sectionLabels: Record<string, string> = {
+    personalInfo: t.sectionPersonalInfo,
+    experiences: t.sectionExperiences,
+    projects: t.sectionProjects,
+    educations: t.sectionEducations,
+    skills: t.sectionSkills,
+  };
   const isCustom = customSectionIds.includes(id);
-  const label = SECTION_LABELS[id] ?? (isCustom ? '自定义区块' : id);
+  const label = sectionLabels[id] ?? (isCustom ? t.sectionCustom : id);
 
   return (
     <div className="rounded-lg border-2 border-blue-400 bg-white p-4 shadow-xl dark:bg-gray-800 dark:border-blue-500">
@@ -148,6 +156,7 @@ export default function SortableSectionList() {
   const customSections = useResumeStore((s) => s.resumeData.customSections);
   const reorderSections = useResumeStore((s) => s.reorderSections);
   const addCustomSection = useResumeStore((s) => s.addCustomSection);
+  const { t } = useLocale();
 
   const [activeId, setActiveId] = useState<string | null>(null);
 
@@ -234,7 +243,7 @@ export default function SortableSectionList() {
           onClick={addCustomSection}
           className="min-h-[44px] w-full rounded-md border-2 border-dashed border-gray-300 px-4 py-3 text-sm font-medium text-gray-500 hover:border-blue-400 hover:text-blue-500 transition-colors duration-150 dark:border-gray-600 dark:text-gray-400 dark:hover:border-blue-500 dark:hover:text-blue-400"
         >
-          + 添加自定义区块
+          {t.addCustomSection}
         </button>
       </div>
     </div>

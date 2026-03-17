@@ -26,7 +26,7 @@ export default function ProfessionalTemplate({ data, themeColor, language }: Tem
                 <span className="text-xs text-gray-400">{formatDate(exp.startDate)} - {formatDate(exp.endDate)}</span>
               </div>
               <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">{exp.company}</p>
-              {exp.description && <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line leading-relaxed">{exp.description}</p>}
+              {exp.description && <div className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line leading-relaxed [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: exp.description }} />}
             </div>
           ))}
         </section>
@@ -42,7 +42,7 @@ export default function ProfessionalTemplate({ data, themeColor, language }: Tem
                 <span className="text-xs text-gray-400">{formatDate(proj.startDate)} - {formatDate(proj.endDate)}</span>
               </div>
               {proj.role && <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">{proj.role}</p>}
-              {proj.description && <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line leading-relaxed">{proj.description}</p>}
+              {proj.description && <div className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line leading-relaxed [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: proj.description }} />}
             </div>
           ))}
         </section>

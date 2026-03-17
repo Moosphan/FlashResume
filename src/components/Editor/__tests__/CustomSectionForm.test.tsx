@@ -43,8 +43,9 @@ describe('CustomSectionForm', () => {
   it('updates store when content textarea changes', () => {
     render(<CustomSectionForm />);
     fireEvent.click(screen.getByText('+ 添加区块'));
-    const contentInput = screen.getByPlaceholderText('请输入区块内容');
-    fireEvent.change(contentInput, { target: { value: '负责核心模块开发' } });
+    const contentEditor = document.querySelector('[aria-placeholder="请输入区块内容"]') as HTMLElement;
+    contentEditor.innerHTML = '负责核心模块开发';
+    fireEvent.input(contentEditor);
     expect(useResumeStore.getState().resumeData.customSections[0].content).toBe('负责核心模块开发');
   });
 

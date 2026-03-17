@@ -1,17 +1,20 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState, useEffect } from 'react';
 import { useResumeStore } from '../../stores/resumeStore';
 import { useUIStore } from '../../stores/uiStore';
-import { exportToPDF, exportToJSON, downloadFile } from '../../services/exportService';
+import { useLocale } from '../../hooks/useLocale';
+import {
+  exportToPDF,
+  exportToJSON,
+  exportToPNG,
+  exportToJPG,
+  downloadFile,
+} from '../../services/exportService';
 import { parseJSON } from '../../services/importService';
 
 interface ExportBarProps {
   previewRef: React.RefObject<HTMLDivElement | null>;
 }
 
-/**
- * Checks whether the resume has any meaningful content.
- * Returns true when there is nothing to export.
- */
 function isResumeEmpty(data: ReturnType<typeof useResumeStore.getState>['resumeData']): boolean {
   const hasName = data.personalInfo.name.trim() !== '';
   const hasExperiences = data.experiences.length > 0;
@@ -20,44 +23,74 @@ function isResumeEmpty(data: ReturnType<typeof useResumeStore.getState>['resumeD
   return !hasName && !hasExperiences && !hasEducations && !hasSkills;
 }
 
-/**
- * ExportBar - 导出工具栏
- *
- * - 导出 PDF：调用 exportToPDF 渲染预览面板并触发下载
- * - 导出 JSON：序列化 resumeData 并触发下载
- * - 导入 JSON：打开文件选择器，解析并导入简历数据
- * - 内容为空时禁用导出按钮
- */
 export default function ExportBar({ previewRef }: ExportBarProps) {
   const resumeData = useResumeStore((s) => s.resumeData);
   const importFromJSON = useResumeStore((s) => s.importFromJSON);
   const addToast = useUIStore((s) => s.addToast);
+  const { t } = useLocale();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
 
   const empty = isResumeEmpty(resumeData);
 
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [open]);
+
   const handleExportPDF = useCallback(async () => {
+    setOpen(false);
     if (!previewRef.current) return;
     try {
       const blob = await exportToPDF(previewRef.current);
       downloadFile(blob, 'resume.pdf');
-    } catch (err) {
-      console.error('[ExportBar] PDF export failed:', err);
-      addToast('PDF 生成失败，请重试', 'error');
+    } catch {
+      addToast(t.pdfFailed, 'error');
     }
-  }, [previewRef, addToast]);
+  }, [previewRef, addToast, t]);
 
   const handleExportJSON = useCallback(() => {
+    setOpen(false);
     try {
       const json = exportToJSON(resumeData);
       const blob = new Blob([json], { type: 'application/json' });
       downloadFile(blob, 'resume.json');
     } catch {
-      addToast('JSON 导出失败，请重试', 'error');
+      addToast(t.jsonExportFailed, 'error');
     }
-  }, [resumeData, addToast]);
+  }, [resumeData, addToast, t]);
+
+  const handleExportPNG = useCallback(async () => {
+    setOpen(false);
+    if (!previewRef.current) return;
+    try {
+      const blob = await exportToPNG(previewRef.current);
+      downloadFile(blob, 'resume.png');
+    } catch {
+      addToast(t.pngFailed, 'error');
+    }
+  }, [previewRef, addToast, t]);
+
+  const handleExportJPG = useCallback(async () => {
+    setOpen(false);
+    if (!previewRef.current) return;
+    try {
+      const blob = await exportToJPG(previewRef.current);
+      downloadFile(blob, 'resume.jpg');
+    } catch {
+      addToast(t.jpgFailed, 'error');
+    }
+  }, [previewRef, addToast, t]);
 
   const handleImportClick = useCallback(() => {
+    setOpen(false);
     fileInputRef.current?.click();
   }, []);
 
@@ -65,71 +98,83 @@ export default function ExportBar({ previewRef }: ExportBarProps) {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (!file) return;
-
       const reader = new FileReader();
       reader.onload = () => {
         const content = reader.result as string;
         const result = parseJSON(content);
-
         if (result.success) {
           importFromJSON(content);
-          addToast('导入成功', 'success');
+          addToast(t.importSuccess, 'success');
         } else if (result.error === 'invalid_json') {
-          addToast('文件格式无效', 'error');
+          addToast(t.invalidFile, 'error');
         } else if (result.error === 'missing_fields') {
           const details = result.details?.join('、') ?? '';
-          addToast(`简历数据不完整：缺少 ${details}`, 'error');
+          addToast(t.incompleteData(details), 'error');
         }
       };
-
-      reader.onerror = () => {
-        addToast('文件读取失败，请重试', 'error');
-      };
-
+      reader.onerror = () => addToast(t.fileReadFailed, 'error');
       reader.readAsText(file);
-
-      // Reset so the same file can be re-selected
       e.target.value = '';
     },
-    [importFromJSON, addToast],
+    [importFromJSON, addToast, t],
   );
 
-  const btnBase =
-    'inline-flex items-center justify-center min-w-[36px] min-h-[36px] px-3 py-1.5 rounded-md text-xs font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1';
+  const iconBtnCls =
+    'inline-flex h-9 w-9 items-center justify-center rounded-md text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 transition-colors';
 
-  const btnPrimary = `${btnBase} bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 disabled:opacity-40 disabled:cursor-not-allowed`;
-  const btnSecondary = `${btnBase} bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600 focus:ring-gray-400`;
+  const itemCls =
+    'flex w-full items-center gap-2 px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed';
 
   return (
-    <div className="flex items-center gap-2">
-      <button
-        type="button"
-        onClick={handleExportPDF}
-        disabled={empty}
-        className={btnPrimary}
-        aria-label="导出 PDF"
-      >
-        导出 PDF
-      </button>
-
-      <button
-        type="button"
-        onClick={handleExportJSON}
-        disabled={empty}
-        className={btnPrimary}
-        aria-label="导出 JSON"
-      >
-        导出 JSON
-      </button>
-
+    <div className="flex items-center gap-1">
+      {/* Import JSON standalone button */}
       <button
         type="button"
         onClick={handleImportClick}
-        className={btnSecondary}
-        aria-label="导入 JSON"
+        className={iconBtnCls}
+        aria-label={t.importJSON}
       >
-        导入 JSON
+        <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <polyline points="17 8 12 3 7 8" />
+          <line x1="12" y1="3" x2="12" y2="15" />
+        </svg>
       </button>
+
+      {/* Export dropdown */}
+      <div ref={menuRef} className="relative">
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          className={iconBtnCls}
+          aria-label={t.exportMenu}
+          aria-expanded={open}
+          aria-haspopup="true"
+        >
+          <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+        </button>
+
+        {open && (
+          <div className="absolute right-0 top-full mt-1 w-44 rounded-lg border border-gray-200 bg-white py-1 shadow-lg dark:border-gray-600 dark:bg-gray-800 z-50 animate-fade-in">
+            <button type="button" onClick={handleExportPDF} disabled={empty} className={itemCls}>
+              <span className="w-5 text-center text-xs">📄</span> {t.exportPDF}
+            </button>
+            <button type="button" onClick={handleExportPNG} disabled={empty} className={itemCls}>
+              <span className="w-5 text-center text-xs">🖼️</span> {t.exportPNG}
+            </button>
+            <button type="button" onClick={handleExportJPG} disabled={empty} className={itemCls}>
+              <span className="w-5 text-center text-xs">🖼️</span> {t.exportJPG}
+            </button>
+            <button type="button" onClick={handleExportJSON} disabled={empty} className={itemCls}>
+              <span className="w-5 text-center text-xs">📋</span> {t.exportJSON}
+            </button>
+          </div>
+        )}
+      </div>
 
       <input
         ref={fileInputRef}

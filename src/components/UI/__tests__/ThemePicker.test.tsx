@@ -58,13 +58,13 @@ describe('ThemePicker', () => {
     // Picker is hidden by default
     expect(screen.queryByTestId('hex-color-picker')).not.toBeInTheDocument();
     // Click the custom color toggle
-    fireEvent.click(screen.getByLabelText('自定义颜色'));
+    fireEvent.click(screen.getByLabelText('自定义'));
     expect(screen.getByTestId('hex-color-picker')).toBeInTheDocument();
   });
 
   it('calls setThemeColor from custom picker', () => {
     render(<ThemePicker />);
-    fireEvent.click(screen.getByLabelText('自定义颜色'));
+    fireEvent.click(screen.getByLabelText('自定义'));
     const picker = screen.getByTestId('hex-color-picker');
     fireEvent.change(picker, { target: { value: '#FF0000' } });
     expect(mockSetThemeColor).toHaveBeenCalledWith('#FF0000');

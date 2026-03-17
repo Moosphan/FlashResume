@@ -28,9 +28,7 @@ export default function MinimalTemplate({ data, themeColor, language }: Template
                 </div>
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{exp.company}</p>
                 {exp.description && (
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 leading-relaxed whitespace-pre-line">
-                    {exp.description}
-                  </p>
+                  <div className="text-xs text-gray-600 dark:text-gray-400 mt-1 leading-relaxed whitespace-pre-line [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: exp.description }} />
                 )}
               </div>
             ))}
@@ -95,9 +93,7 @@ export default function MinimalTemplate({ data, themeColor, language }: Template
                 </div>
                 {proj.role && <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{proj.role}</p>}
                 {proj.description && (
-                  <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 leading-relaxed whitespace-pre-line">
-                    {proj.description}
-                  </p>
+                  <div className="text-xs text-gray-600 dark:text-gray-400 mt-1 leading-relaxed whitespace-pre-line [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: proj.description }} />
                 )}
               </div>
             ))}

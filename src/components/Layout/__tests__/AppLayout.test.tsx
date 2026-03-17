@@ -49,6 +49,8 @@ vi.mock('../../../services/templateRegistry', () => ({
 vi.mock('../../../services/exportService', () => ({
   exportToPDF: vi.fn(),
   exportToJSON: vi.fn().mockReturnValue('{}'),
+  exportToPNG: vi.fn(),
+  exportToJPG: vi.fn(),
   downloadFile: vi.fn(),
 }));
 
@@ -75,7 +77,7 @@ describe('AppLayout', () => {
 
   it('renders the app title', () => {
     render(<AppLayout />);
-    expect(screen.getByText('简历制作器')).toBeInTheDocument();
+    expect(screen.getByText('Flash Resume')).toBeInTheDocument();
   });
 
   it('renders the ThemeToggle button', () => {
@@ -96,11 +98,9 @@ describe('AppLayout', () => {
     expect(screen.queryByText('已自动保存')).not.toBeInTheDocument();
   });
 
-  it('renders the ExportBar with export buttons', () => {
+  it('renders the ExportBar with menu trigger', () => {
     render(<AppLayout />);
-    expect(screen.getByLabelText('导出 PDF')).toBeInTheDocument();
-    expect(screen.getByLabelText('导出 JSON')).toBeInTheDocument();
-    expect(screen.getByLabelText('导入 JSON')).toBeInTheDocument();
+    expect(screen.getByLabelText('导出菜单')).toBeInTheDocument();
   });
 
   it('renders toast notifications', () => {

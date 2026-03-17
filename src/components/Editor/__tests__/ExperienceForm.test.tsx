@@ -54,8 +54,9 @@ describe('ExperienceForm', () => {
   it('updates store when description textarea changes', () => {
     render(<ExperienceForm />);
     fireEvent.click(screen.getByText('+ 添加工作经历'));
-    const descInput = screen.getByPlaceholderText('请描述工作内容和成就');
-    fireEvent.change(descInput, { target: { value: '负责前端开发' } });
+    const descEditor = document.querySelector('[aria-placeholder="请描述工作内容和成就"]') as HTMLElement;
+    descEditor.innerHTML = '负责前端开发';
+    fireEvent.input(descEditor);
     expect(useResumeStore.getState().resumeData.experiences[0].description).toBe('负责前端开发');
   });
 
