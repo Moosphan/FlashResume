@@ -78,7 +78,7 @@ const PreviewPanel = forwardRef<HTMLDivElement>(function PreviewPanel(_props, re
               {/* A4 paper sheet */}
               <div
                 ref={ref}
-                className="bg-white shadow-lg"
+                className="bg-white dark:bg-gray-800 shadow-lg"
                 style={{
                   width: A4_WIDTH_PX,
                   minHeight: A4_HEIGHT_PX,

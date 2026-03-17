@@ -33,7 +33,13 @@ export async function exportToPDF(element: HTMLElement): Promise<Blob> {
   offscreen.classList.add('no-theme-transition');
   document.body.appendChild(offscreen);
 
-  // 2. 克隆元素到离屏容器
+  // 2. Temporarily remove dark mode so cloned templates render in light mode for PDF
+  const wasDark = document.documentElement.classList.contains('dark');
+  if (wasDark) {
+    document.documentElement.classList.remove('dark');
+  }
+
+  // 3. 克隆元素到离屏容器
   const clone = element.cloneNode(true) as HTMLElement;
   clone.style.width = `${A4_WIDTH_PX}px`;
   clone.style.minHeight = `${A4_HEIGHT_PX}px`;
@@ -80,6 +86,10 @@ export async function exportToPDF(element: HTMLElement): Promise<Blob> {
 
     return pdf.output('blob');
   } finally {
+    // Restore dark mode if it was active before export
+    if (wasDark) {
+      document.documentElement.classList.add('dark');
+    }
     document.body.removeChild(offscreen);
   }
 }

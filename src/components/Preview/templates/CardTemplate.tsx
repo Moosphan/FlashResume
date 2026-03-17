@@ -11,7 +11,7 @@ export default function CardTemplate({ data, themeColor, language }: TemplatePro
 
   function Card({ title, children }: { title: string; children: React.ReactNode }) {
     return (
-      <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+      <div className="rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 p-4 shadow-sm">
         <h2 className="text-xs font-bold tracking-widest mb-3 pb-2 border-b" style={{ color: themeColor, borderColor: `${themeColor}33` }}>
           {title}
         </h2>
@@ -29,11 +29,11 @@ export default function CardTemplate({ data, themeColor, language }: TemplatePro
             {experiences.map((exp) => (
               <div key={exp.id}>
                 <div className="flex justify-between items-baseline">
-                  <span className="text-sm font-semibold text-gray-900">{exp.position}</span>
+                  <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">{exp.position}</span>
                   <span className="text-xs text-gray-400">{formatDate(exp.startDate)} - {formatDate(exp.endDate)}</span>
                 </div>
-                <p className="text-xs text-gray-500">{exp.company}</p>
-                {exp.description && <p className="text-xs text-gray-600 mt-1 whitespace-pre-line">{exp.description}</p>}
+                <p className="text-xs text-gray-500 dark:text-gray-400">{exp.company}</p>
+                {exp.description && <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line">{exp.description}</p>}
               </div>
             ))}
           </div>
@@ -46,11 +46,11 @@ export default function CardTemplate({ data, themeColor, language }: TemplatePro
             {projects.map((proj) => (
               <div key={proj.id}>
                 <div className="flex justify-between items-baseline">
-                  <span className="text-sm font-semibold text-gray-900">{proj.name}</span>
+                  <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">{proj.name}</span>
                   <span className="text-xs text-gray-400">{formatDate(proj.startDate)} - {formatDate(proj.endDate)}</span>
                 </div>
-                {proj.role && <p className="text-xs text-gray-500">{proj.role}</p>}
-                {proj.description && <p className="text-xs text-gray-600 mt-1 whitespace-pre-line">{proj.description}</p>}
+                {proj.role && <p className="text-xs text-gray-500 dark:text-gray-400">{proj.role}</p>}
+                {proj.description && <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line">{proj.description}</p>}
               </div>
             ))}
           </div>
@@ -63,10 +63,10 @@ export default function CardTemplate({ data, themeColor, language }: TemplatePro
             {educations.map((edu) => (
               <div key={edu.id}>
                 <div className="flex justify-between items-baseline">
-                  <span className="text-sm font-semibold text-gray-900">{edu.school}</span>
+                  <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">{edu.school}</span>
                   <span className="text-xs text-gray-400">{formatDate(edu.startDate)} - {formatDate(edu.endDate)}</span>
                 </div>
-                <p className="text-xs text-gray-500">{edu.degree} · {edu.major}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">{edu.degree} · {edu.major}</p>
               </div>
             ))}
           </div>
@@ -89,13 +89,13 @@ export default function CardTemplate({ data, themeColor, language }: TemplatePro
   customSections.forEach((cs) => {
     sectionRenderers[cs.id] = () => (
       <Card key={cs.id} title={cs.title}>
-        <div className="text-xs text-gray-600" dangerouslySetInnerHTML={{ __html: cs.content }} />
+        <div className="text-xs text-gray-600 dark:text-gray-400" dangerouslySetInnerHTML={{ __html: cs.content }} />
       </Card>
     );
   });
 
   return (
-    <div className="font-sans text-gray-800 p-8" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box', backgroundColor: '#f8f9fa' }}>
+    <div className="font-sans text-gray-800 dark:text-gray-200 p-8 bg-gray-50 dark:bg-gray-800" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}>
       {/* Header card */}
       <div className="rounded-lg p-6 mb-4 text-white shadow-md" style={{ backgroundColor: themeColor }}>
         <h1 className="text-2xl font-bold">{personalInfo.name || L.namePlaceholder}</h1>

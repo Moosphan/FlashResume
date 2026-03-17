@@ -21,9 +21,9 @@ export default function CenteredTemplate({ data, themeColor, language }: Templat
           <h2 className="text-[11px] font-bold tracking-[0.25em] mb-4" style={{ color: themeColor }}>{L.experiences}</h2>
           {experiences.map((exp) => (
             <div key={exp.id} className="mb-4">
-              <p className="text-sm font-bold text-gray-900">{exp.position}</p>
-              <p className="text-[10px] text-gray-500">{exp.company} · {formatDate(exp.startDate)} – {formatDate(exp.endDate)}</p>
-              {exp.description && <p className="text-[10px] text-gray-600 mt-1 max-w-md mx-auto whitespace-pre-line leading-relaxed">{exp.description}</p>}
+              <p className="text-sm font-bold text-gray-900 dark:text-gray-100">{exp.position}</p>
+              <p className="text-[10px] text-gray-500 dark:text-gray-400">{exp.company} · {formatDate(exp.startDate)} – {formatDate(exp.endDate)}</p>
+              {exp.description && <p className="text-[10px] text-gray-600 dark:text-gray-400 mt-1 max-w-md mx-auto whitespace-pre-line leading-relaxed">{exp.description}</p>}
             </div>
           ))}
         </section>
@@ -34,9 +34,9 @@ export default function CenteredTemplate({ data, themeColor, language }: Templat
           <h2 className="text-[11px] font-bold tracking-[0.25em] mb-4" style={{ color: themeColor }}>{L.projects}</h2>
           {projects.map((p) => (
             <div key={p.id} className="mb-4">
-              <p className="text-sm font-bold text-gray-900">{p.name}</p>
-              <p className="text-[10px] text-gray-500">{p.role && `${p.role} · `}{formatDate(p.startDate)} – {formatDate(p.endDate)}</p>
-              {p.description && <p className="text-[10px] text-gray-600 mt-1 max-w-md mx-auto whitespace-pre-line leading-relaxed">{p.description}</p>}
+              <p className="text-sm font-bold text-gray-900 dark:text-gray-100">{p.name}</p>
+              <p className="text-[10px] text-gray-500 dark:text-gray-400">{p.role && `${p.role} · `}{formatDate(p.startDate)} – {formatDate(p.endDate)}</p>
+              {p.description && <p className="text-[10px] text-gray-600 dark:text-gray-400 mt-1 max-w-md mx-auto whitespace-pre-line leading-relaxed">{p.description}</p>}
             </div>
           ))}
         </section>
@@ -47,8 +47,8 @@ export default function CenteredTemplate({ data, themeColor, language }: Templat
           <h2 className="text-[11px] font-bold tracking-[0.25em] mb-4" style={{ color: themeColor }}>{L.educations}</h2>
           {educations.map((edu) => (
             <div key={edu.id} className="mb-3">
-              <p className="text-sm font-bold text-gray-900">{edu.school}</p>
-              <p className="text-[10px] text-gray-500">{edu.degree} · {edu.major}</p>
+              <p className="text-sm font-bold text-gray-900 dark:text-gray-100">{edu.school}</p>
+              <p className="text-[10px] text-gray-500 dark:text-gray-400">{edu.degree} · {edu.major}</p>
               <p className="text-[9px] text-gray-400">{formatDate(edu.startDate)} – {formatDate(edu.endDate)}</p>
             </div>
           ))}
@@ -74,7 +74,7 @@ export default function CenteredTemplate({ data, themeColor, language }: Templat
     sectionRenderers[cs.id] = () => (
       <section key={cs.id} className="mb-8 text-center">
         <h2 className="text-[11px] font-bold tracking-[0.25em] mb-4" style={{ color: themeColor }}>{cs.title}</h2>
-        <div className="text-[10px] text-gray-600 max-w-md mx-auto" dangerouslySetInnerHTML={{ __html: cs.content }} />
+        <div className="text-[10px] text-gray-600 dark:text-gray-400 max-w-md mx-auto" dangerouslySetInnerHTML={{ __html: cs.content }} />
       </section>
     );
   });
@@ -102,13 +102,13 @@ export default function CenteredTemplate({ data, themeColor, language }: Templat
   });
 
   return (
-    <div className="bg-white text-gray-800 font-sans" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}>
+    <div className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-sans" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}>
       {/* Centered header with generous whitespace */}
       <header className="text-center pt-16 pb-8 px-12">
         <h1 className="text-3xl font-light tracking-[0.15em]" style={{ color: themeColor }}>
           {personalInfo.name || L.namePlaceholder}
         </h1>
-        <div className="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-1 text-[10px] text-gray-400">
+        <div className="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-1 text-[10px] text-gray-400 dark:text-gray-500">
           {personalInfo.email && <span>{personalInfo.email}</span>}
           {personalInfo.phone && <span>{personalInfo.phone}</span>}
           {personalInfo.address && <span>{personalInfo.address}</span>}

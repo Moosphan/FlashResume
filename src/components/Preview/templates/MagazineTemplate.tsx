@@ -23,11 +23,11 @@ export default function MagazineTemplate({ data, themeColor, language }: Templat
           {experiences.map((exp) => (
             <div key={exp.id} className="mb-3 pl-3" style={{ borderLeft: `2px solid ${themeColor}30` }}>
               <div className="flex justify-between items-baseline">
-                <span className="text-xs font-bold text-gray-900">{exp.position}</span>
+                <span className="text-xs font-bold text-gray-900 dark:text-gray-100">{exp.position}</span>
                 <span className="text-[10px] text-gray-400">{formatDate(exp.startDate)} – {formatDate(exp.endDate)}</span>
               </div>
-              <p className="text-[10px] text-gray-500 italic">{exp.company}</p>
-              {exp.description && <p className="text-[10px] text-gray-600 mt-1 whitespace-pre-line leading-relaxed">{exp.description}</p>}
+              <p className="text-[10px] text-gray-500 dark:text-gray-400 italic">{exp.company}</p>
+              {exp.description && <p className="text-[10px] text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line leading-relaxed">{exp.description}</p>}
             </div>
           ))}
         </section>
@@ -41,11 +41,11 @@ export default function MagazineTemplate({ data, themeColor, language }: Templat
           {projects.map((p) => (
             <div key={p.id} className="mb-3 pl-3" style={{ borderLeft: `2px solid ${themeColor}30` }}>
               <div className="flex justify-between items-baseline">
-                <span className="text-xs font-bold text-gray-900">{p.name}</span>
+                <span className="text-xs font-bold text-gray-900 dark:text-gray-100">{p.name}</span>
                 <span className="text-[10px] text-gray-400">{formatDate(p.startDate)} – {formatDate(p.endDate)}</span>
               </div>
-              {p.role && <p className="text-[10px] text-gray-500 italic">{p.role}</p>}
-              {p.description && <p className="text-[10px] text-gray-600 mt-1 whitespace-pre-line leading-relaxed">{p.description}</p>}
+              {p.role && <p className="text-[10px] text-gray-500 dark:text-gray-400 italic">{p.role}</p>}
+              {p.description && <p className="text-[10px] text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line leading-relaxed">{p.description}</p>}
             </div>
           ))}
         </section>
@@ -59,13 +59,13 @@ export default function MagazineTemplate({ data, themeColor, language }: Templat
         <h2 className="text-[11px] font-black tracking-[0.2em] mb-3" style={{ color: themeColor }}>
           ▎{cs.title}
         </h2>
-        <div className="text-[10px] text-gray-600 leading-relaxed" dangerouslySetInnerHTML={{ __html: cs.content }} />
+        <div className="text-[10px] text-gray-600 dark:text-gray-400 leading-relaxed" dangerouslySetInnerHTML={{ __html: cs.content }} />
       </section>
     );
   });
 
   return (
-    <div className="bg-white text-gray-800 font-sans" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}>
+    <div className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-sans" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}>
       {/* Full-width name banner */}
       <header className="px-8 pt-10 pb-4">
         <h1 className="text-4xl font-black tracking-tight leading-none" style={{ color: themeColor }}>
@@ -80,8 +80,8 @@ export default function MagazineTemplate({ data, themeColor, language }: Templat
         <aside className="w-[30%] shrink-0 space-y-5">
           {/* Contact */}
           <section>
-            <h2 className="text-[10px] font-black tracking-[0.2em] mb-2 text-gray-400">{L.contact}</h2>
-            <div className="text-[10px] text-gray-600 space-y-1">
+            <h2 className="text-[10px] font-black tracking-[0.2em] mb-2 text-gray-400 dark:text-gray-500">{L.contact}</h2>
+            <div className="text-[10px] text-gray-600 dark:text-gray-400 space-y-1">
               {personalInfo.email && <p>{personalInfo.email}</p>}
               {personalInfo.phone && <p>{personalInfo.phone}</p>}
               {personalInfo.address && <p>{personalInfo.address}</p>}
@@ -92,7 +92,7 @@ export default function MagazineTemplate({ data, themeColor, language }: Templat
           {/* Skills */}
           {skills.length > 0 && (
             <section>
-              <h2 className="text-[10px] font-black tracking-[0.2em] mb-2 text-gray-400">{L.skills}</h2>
+              <h2 className="text-[10px] font-black tracking-[0.2em] mb-2 text-gray-400 dark:text-gray-500">{L.skills}</h2>
               <div className="flex flex-wrap gap-1">
                 {skills.map((s) => (
                   <span key={s.id} className="text-[10px] px-1.5 py-0.5 rounded" style={{ backgroundColor: `${themeColor}12`, color: themeColor }}>
@@ -106,11 +106,11 @@ export default function MagazineTemplate({ data, themeColor, language }: Templat
           {/* Education */}
           {educations.length > 0 && (
             <section>
-              <h2 className="text-[10px] font-black tracking-[0.2em] mb-2 text-gray-400">{L.educations}</h2>
+              <h2 className="text-[10px] font-black tracking-[0.2em] mb-2 text-gray-400 dark:text-gray-500">{L.educations}</h2>
               {educations.map((edu) => (
                 <div key={edu.id} className="mb-2">
-                  <p className="text-[10px] font-bold text-gray-900">{edu.school}</p>
-                  <p className="text-[10px] text-gray-500">{edu.degree} · {edu.major}</p>
+                  <p className="text-[10px] font-bold text-gray-900 dark:text-gray-100">{edu.school}</p>
+                  <p className="text-[10px] text-gray-500 dark:text-gray-400">{edu.degree} · {edu.major}</p>
                   <p className="text-[9px] text-gray-400">{formatDate(edu.startDate)} – {formatDate(edu.endDate)}</p>
                 </div>
               ))}

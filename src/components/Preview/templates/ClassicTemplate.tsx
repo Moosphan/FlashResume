@@ -23,14 +23,14 @@ export default function ClassicTemplate({ data, themeColor, language }: Template
           {experiences.map((exp) => (
             <div key={exp.id} className="mb-3">
               <div className="flex justify-between items-baseline">
-                <h3 className="font-bold text-sm text-gray-900">{exp.position}</h3>
+                <h3 className="font-bold text-sm text-gray-900 dark:text-gray-100">{exp.position}</h3>
                 <span className="text-xs text-gray-500">
                   {formatDate(exp.startDate)} - {formatDate(exp.endDate)}
                 </span>
               </div>
-              <p className="text-sm text-gray-700 italic">{exp.company}</p>
+              <p className="text-sm text-gray-700 dark:text-gray-300 italic">{exp.company}</p>
               {exp.description && (
-                <p className="text-xs text-gray-600 mt-1 whitespace-pre-line">{exp.description}</p>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line">{exp.description}</p>
               )}
             </div>
           ))}
@@ -48,12 +48,12 @@ export default function ClassicTemplate({ data, themeColor, language }: Template
           {educations.map((edu) => (
             <div key={edu.id} className="mb-3">
               <div className="flex justify-between items-baseline">
-                <h3 className="font-bold text-sm text-gray-900">{edu.school}</h3>
-                <span className="text-xs text-gray-500">
+                <h3 className="font-bold text-sm text-gray-900 dark:text-gray-100">{edu.school}</h3>
+                <span className="text-xs text-gray-500 dark:text-gray-400">
                   {formatDate(edu.startDate)} - {formatDate(edu.endDate)}
                 </span>
               </div>
-              <p className="text-sm text-gray-700">
+              <p className="text-sm text-gray-700 dark:text-gray-300">
                 {edu.degree} · {edu.major}
               </p>
             </div>
@@ -94,14 +94,14 @@ export default function ClassicTemplate({ data, themeColor, language }: Template
           {projects.map((proj) => (
             <div key={proj.id} className="mb-3">
               <div className="flex justify-between items-baseline">
-                <h3 className="font-bold text-sm text-gray-900">{proj.name}</h3>
+                <h3 className="font-bold text-sm text-gray-900 dark:text-gray-100">{proj.name}</h3>
                 <span className="text-xs text-gray-500">
                   {formatDate(proj.startDate)} - {formatDate(proj.endDate)}
                 </span>
               </div>
-              {proj.role && <p className="text-sm text-gray-700 italic">{proj.role}</p>}
+              {proj.role && <p className="text-sm text-gray-700 dark:text-gray-300 italic">{proj.role}</p>}
               {proj.description && (
-                <p className="text-xs text-gray-600 mt-1 whitespace-pre-line">{proj.description}</p>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line">{proj.description}</p>
               )}
             </div>
           ))}
@@ -119,14 +119,14 @@ export default function ClassicTemplate({ data, themeColor, language }: Template
         >
           {cs.title}
         </h2>
-        <div className="text-xs text-gray-600" dangerouslySetInnerHTML={{ __html: cs.content }} />
+        <div className="text-xs text-gray-600 dark:text-gray-400" dangerouslySetInnerHTML={{ __html: cs.content }} />
       </section>
     );
   });
 
   return (
     <div
-      className="bg-white text-gray-800 p-8 font-serif"
+      className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 p-8 font-serif"
       style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}
     >
       {/* Header - Personal Info (always first) */}
@@ -134,7 +134,7 @@ export default function ClassicTemplate({ data, themeColor, language }: Template
         <h1 className="text-2xl font-bold mb-1" style={{ color: themeColor }}>
           {personalInfo.name || L.namePlaceholder}
         </h1>
-        <div className="text-xs text-gray-600 flex flex-wrap justify-center gap-x-4 gap-y-1">
+        <div className="text-xs text-gray-600 dark:text-gray-400 flex flex-wrap justify-center gap-x-4 gap-y-1">
           {personalInfo.email && <span>{personalInfo.email}</span>}
           {personalInfo.phone && <span>{personalInfo.phone}</span>}
           {personalInfo.address && <span>{personalInfo.address}</span>}

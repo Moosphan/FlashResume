@@ -22,11 +22,11 @@ export default function ProfessionalTemplate({ data, themeColor, language }: Tem
           {experiences.map((exp) => (
             <div key={exp.id} className="mb-3">
               <div className="flex justify-between items-baseline">
-                <span className="text-sm font-bold text-gray-900">{exp.position}</span>
+                <span className="text-sm font-bold text-gray-900 dark:text-gray-100">{exp.position}</span>
                 <span className="text-xs text-gray-400">{formatDate(exp.startDate)} - {formatDate(exp.endDate)}</span>
               </div>
-              <p className="text-xs text-gray-500 font-medium">{exp.company}</p>
-              {exp.description && <p className="text-xs text-gray-600 mt-1 whitespace-pre-line leading-relaxed">{exp.description}</p>}
+              <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">{exp.company}</p>
+              {exp.description && <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line leading-relaxed">{exp.description}</p>}
             </div>
           ))}
         </section>
@@ -38,11 +38,11 @@ export default function ProfessionalTemplate({ data, themeColor, language }: Tem
           {projects.map((proj) => (
             <div key={proj.id} className="mb-3">
               <div className="flex justify-between items-baseline">
-                <span className="text-sm font-bold text-gray-900">{proj.name}</span>
+                <span className="text-sm font-bold text-gray-900 dark:text-gray-100">{proj.name}</span>
                 <span className="text-xs text-gray-400">{formatDate(proj.startDate)} - {formatDate(proj.endDate)}</span>
               </div>
-              {proj.role && <p className="text-xs text-gray-500 font-medium">{proj.role}</p>}
-              {proj.description && <p className="text-xs text-gray-600 mt-1 whitespace-pre-line leading-relaxed">{proj.description}</p>}
+              {proj.role && <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">{proj.role}</p>}
+              {proj.description && <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line leading-relaxed">{proj.description}</p>}
             </div>
           ))}
         </section>
@@ -53,7 +53,7 @@ export default function ProfessionalTemplate({ data, themeColor, language }: Tem
     mainRenderers[cs.id] = () => (
       <section key={cs.id} className="mb-5">
         <h2 className="text-xs font-bold tracking-widest pb-1 mb-2 border-b" style={{ color: themeColor, borderColor: themeColor }}>{cs.title}</h2>
-        <div className="text-xs text-gray-600" dangerouslySetInnerHTML={{ __html: cs.content }} />
+        <div className="text-xs text-gray-600 dark:text-gray-400" dangerouslySetInnerHTML={{ __html: cs.content }} />
       </section>
     );
   });
@@ -89,7 +89,7 @@ export default function ProfessionalTemplate({ data, themeColor, language }: Tem
   };
 
   return (
-    <div className="bg-white text-gray-800 font-sans" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}>
+    <div className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-sans" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}>
       {/* Top header band */}
       <header className="px-8 py-6 text-white" style={{ backgroundColor: themeColor }}>
         <h1 className="text-3xl font-bold tracking-tight">{personalInfo.name || L.namePlaceholder}</h1>

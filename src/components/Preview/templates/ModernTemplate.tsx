@@ -25,14 +25,14 @@ export default function ModernTemplate({ data, themeColor, language }: TemplateP
           {experiences.map((exp) => (
             <div key={exp.id} className="mb-3">
               <div className="flex justify-between items-baseline">
-                <h3 className="font-semibold text-sm text-gray-900">{exp.position}</h3>
+                <h3 className="font-semibold text-sm text-gray-900 dark:text-gray-100">{exp.position}</h3>
                 <span className="text-xs text-gray-400">
                   {formatDate(exp.startDate)} - {formatDate(exp.endDate)}
                 </span>
               </div>
-              <p className="text-xs text-gray-500">{exp.company}</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">{exp.company}</p>
               {exp.description && (
-                <p className="text-xs text-gray-600 mt-1 whitespace-pre-line">{exp.description}</p>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line">{exp.description}</p>
               )}
             </div>
           ))}
@@ -47,12 +47,12 @@ export default function ModernTemplate({ data, themeColor, language }: TemplateP
           {educations.map((edu) => (
             <div key={edu.id} className="mb-3">
               <div className="flex justify-between items-baseline">
-                <h3 className="font-semibold text-sm text-gray-900">{edu.school}</h3>
+                <h3 className="font-semibold text-sm text-gray-900 dark:text-gray-100">{edu.school}</h3>
                 <span className="text-xs text-gray-400">
                   {formatDate(edu.startDate)} - {formatDate(edu.endDate)}
                 </span>
               </div>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-500 dark:text-gray-400">
                 {edu.degree} · {edu.major}
               </p>
             </div>
@@ -68,14 +68,14 @@ export default function ModernTemplate({ data, themeColor, language }: TemplateP
           {projects.map((proj) => (
             <div key={proj.id} className="mb-3">
               <div className="flex justify-between items-baseline">
-                <h3 className="font-semibold text-sm text-gray-900">{proj.name}</h3>
+                <h3 className="font-semibold text-sm text-gray-900 dark:text-gray-100">{proj.name}</h3>
                 <span className="text-xs text-gray-400">
                   {formatDate(proj.startDate)} - {formatDate(proj.endDate)}
                 </span>
               </div>
-              {proj.role && <p className="text-xs text-gray-500">{proj.role}</p>}
+              {proj.role && <p className="text-xs text-gray-500 dark:text-gray-400">{proj.role}</p>}
               {proj.description && (
-                <p className="text-xs text-gray-600 mt-1 whitespace-pre-line">{proj.description}</p>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line">{proj.description}</p>
               )}
             </div>
           ))}
@@ -90,14 +90,14 @@ export default function ModernTemplate({ data, themeColor, language }: TemplateP
         <h2 className="text-sm font-bold tracking-widest mb-3" style={{ color: themeColor }}>
           {cs.title}
         </h2>
-        <div className="text-xs text-gray-600" dangerouslySetInnerHTML={{ __html: cs.content }} />
+        <div className="text-xs text-gray-600 dark:text-gray-400" dangerouslySetInnerHTML={{ __html: cs.content }} />
       </section>
     );
   });
 
   return (
     <div
-      className="bg-white text-gray-800 font-sans flex"
+      className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-sans flex"
       style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}
     >
       {/* Sidebar */}

@@ -14,7 +14,7 @@ export default function TimelineTemplate({ data, themeColor, language }: Templat
       <div className="relative pl-6 pb-4">
         {/* Dot */}
         <div
-          className="absolute left-0 top-1 w-3 h-3 rounded-full border-2 bg-white"
+          className="absolute left-0 top-1 w-3 h-3 rounded-full border-2 bg-white dark:bg-gray-800"
           style={{ borderColor: themeColor }}
         />
         {/* Line */}
@@ -23,11 +23,11 @@ export default function TimelineTemplate({ data, themeColor, language }: Templat
           style={{ backgroundColor: themeColor, opacity: 0.25 }}
         />
         <div className="flex justify-between items-baseline">
-          <span className="text-sm font-semibold text-gray-900">{title}</span>
+          <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">{title}</span>
           <span className="text-xs text-gray-400 shrink-0 ml-2">{date}</span>
         </div>
-        {subtitle && <p className="text-xs text-gray-500 mt-0.5">{subtitle}</p>}
-        {desc && <p className="text-xs text-gray-600 mt-1 whitespace-pre-line leading-relaxed">{desc}</p>}
+        {subtitle && <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{subtitle}</p>}
+        {desc && <p className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line leading-relaxed">{desc}</p>}
       </div>
     );
   }
@@ -80,17 +80,17 @@ export default function TimelineTemplate({ data, themeColor, language }: Templat
     sectionRenderers[cs.id] = () => (
       <section key={cs.id} className="mb-6">
         <h2 className="text-xs font-bold tracking-widest mb-3" style={{ color: themeColor }}>{cs.title}</h2>
-        <div className="text-xs text-gray-600 pl-6" dangerouslySetInnerHTML={{ __html: cs.content }} />
+        <div className="text-xs text-gray-600 dark:text-gray-400 pl-6" dangerouslySetInnerHTML={{ __html: cs.content }} />
       </section>
     );
   });
 
   return (
-    <div className="bg-white text-gray-800 font-sans p-8" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}>
+    <div className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-sans p-8" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}>
       {/* Header */}
       <header className="mb-8">
         <h1 className="text-3xl font-bold" style={{ color: themeColor }}>{personalInfo.name || L.namePlaceholder}</h1>
-        <div className="mt-2 flex flex-wrap gap-x-4 text-xs text-gray-500">
+        <div className="mt-2 flex flex-wrap gap-x-4 text-xs text-gray-500 dark:text-gray-400">
           {personalInfo.email && <span>✉ {personalInfo.email}</span>}
           {personalInfo.phone && <span>☎ {personalInfo.phone}</span>}
           {personalInfo.address && <span>⌂ {personalInfo.address}</span>}

@@ -4,6 +4,7 @@ import { useAutoSave } from './hooks/useAutoSave';
 import { useResumeStore } from './stores/resumeStore';
 import { useUIStore } from './stores/uiStore';
 import * as storageService from './services/storageService';
+import { PRESET_RESUME_DATA } from './data/presetResume';
 
 function App() {
   // Activate auto-save at the top level
@@ -20,11 +21,20 @@ function App() {
     }
   }, [themeMode]);
 
-  // On startup, restore the last active resume from localStorage
+  // On startup, always load preset demo data, then restore last active resume if exists
   useEffect(() => {
+    const store = useResumeStore.getState();
+    // Always ensure preset resume exists in the list
+    const list = storageService.getResumeList();
+    const presetExists = list.some((item) => item.name === 'Alex Chen');
+    if (!presetExists) {
+      store.importFromJSON(JSON.stringify(PRESET_RESUME_DATA));
+    }
+
+    // Then restore last active resume if available
     const savedId = storageService.getCurrentResumeId();
     if (savedId) {
-      useResumeStore.getState().loadResume(savedId);
+      store.loadResume(savedId);
     }
   }, []);
 
