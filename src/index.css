@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Typography */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  /* Primary palette */
+  --color-primary: #2563EB;
+  --color-primary-light: #3B82F6;
+  --color-primary-dark: #1D4ED8;
+
+  /* Border radius scale */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+
+  /* Transition durations */
+  --transition-fast: 150ms;
+  --transition-normal: 300ms;
+}
+
+/*
+ * Global theme transition: ensures background, text, and border colors
+ * animate smoothly when toggling between light and dark modes (300ms).
+ */
+html {
+  transition-property: color, background-color, border-color;
+  transition-duration: 300ms;
+  transition-timing-function: ease-in-out;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition-property: color, background-color, border-color;
+  transition-duration: 300ms;
+  transition-timing-function: ease-in-out;
+}
+
+/*
+ * Apply theme transition to common structural elements so the entire
+ * page transitions uniformly on theme switch without requiring every
+ * component to add transition classes individually.
+ */
+*, *::before, *::after {
+  transition-property: color, background-color, border-color, box-shadow;
+  transition-duration: 300ms;
+  transition-timing-function: ease-in-out;
+}
+
+/*
+ * Opt-out: elements that need instant or custom transitions (e.g. drag
+ * handles, color pickers) can use this utility to disable the global
+ * theme transition.
+ */
+.no-theme-transition,
+.no-theme-transition *  {
+  transition-property: none !important;
+}
+
+/* ── Utility animations ─────────────────────────────────────────────── */
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slide-in-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 200ms ease-out both;
+}
+
+.animate-slide-in-up {
+  animation: slide-in-up 200ms ease-out both;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 200ms ease-out both;
+}
