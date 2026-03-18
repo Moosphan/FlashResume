@@ -8,6 +8,7 @@ import SortableSectionList from '../Editor/SortableSectionList';
 import PreviewPanel from '../Preview/PreviewPanel';
 import ExportBar from './ExportBar';
 import Sidebar from './Sidebar';
+import faviconUrl from '/favicon.svg?url';
 
 export default function AppLayout() {
   const previewRef = useRef<HTMLDivElement>(null);
@@ -30,7 +31,7 @@ export default function AppLayout() {
           >
             ☰
           </button>
-          <img src="/favicon.svg" alt="Flash Resume" className="h-7 w-7" />
+          <img src={faviconUrl} alt="Flash Resume" className="h-7 w-7" />
           <h1 className="text-lg font-bold text-gray-900 dark:text-gray-100">Flash Resume</h1>
         </div>
         <div className="flex items-center gap-2">
