@@ -54,7 +54,9 @@ describe('PreviewPanel', () => {
 
   it('renders the template component with correct props', () => {
     render(<PreviewPanel />);
-    expect(screen.getByTestId('mock-template')).toBeInTheDocument();
+    // Template is rendered in both the measurement div and the visible page
+    const templates = screen.getAllByTestId('mock-template');
+    expect(templates.length).toBeGreaterThanOrEqual(1);
     expect(MockTemplate).toHaveBeenCalledWith(
       expect.objectContaining({ data: mockResumeData, themeColor: '#2563EB' }),
       undefined,
@@ -89,7 +91,6 @@ describe('PreviewPanel', () => {
   it('disables zoom out at minimum zoom', () => {
     render(<PreviewPanel />);
     const zoomOutBtn = screen.getByLabelText('缩小预览');
-    // Click 3 times to reach 30% (60 - 30 = 30)
     for (let i = 0; i < 3; i++) {
       fireEvent.click(zoomOutBtn);
     }
@@ -100,7 +101,6 @@ describe('PreviewPanel', () => {
   it('disables zoom in at maximum zoom', () => {
     render(<PreviewPanel />);
     const zoomInBtn = screen.getByLabelText('放大预览');
-    // Click 14 times to reach 200% (60 + 140 = 200)
     for (let i = 0; i < 14; i++) {
       fireEvent.click(zoomInBtn);
     }
@@ -118,19 +118,30 @@ describe('PreviewPanel', () => {
     expect(zoomOutBtn.className).toContain('h-8');
   });
 
-  it('exposes ref to the paper container for PDF export', () => {
+  it('exposes ref to the content container for PDF export', () => {
     const ref = createRef<HTMLDivElement>();
     render(<PreviewPanel ref={ref} />);
     expect(ref.current).toBeInstanceOf(HTMLDivElement);
-    expect(ref.current?.className).toContain('shadow-lg');
+    // ref now points to the measurement div (full content for export)
+    expect(ref.current?.className).toContain('bg-white');
   });
 
   it('applies scale transform based on zoom level', () => {
     render(<PreviewPanel />);
     const zoomInBtn = screen.getByLabelText('放大预览');
     fireEvent.click(zoomInBtn); // 60 + 10 = 70%
-    // The scaling container wraps the paper sheet: paper -> scaling div -> sizing div
-    const scalingContainer = screen.getByTestId('mock-template').parentElement?.parentElement;
+    // The visible page template (second instance, in the paginated view)
+    const templates = screen.getAllByTestId('mock-template');
+    const visibleTemplate = templates[templates.length - 1];
+    // Walk up: template -> content-offset div -> overflow-hidden div -> flex-col page -> transform div
+    const scalingContainer = visibleTemplate.parentElement?.parentElement?.parentElement?.parentElement;
     expect(scalingContainer?.style.transform).toBe('scale(0.7)');
+  });
+
+  it('displays page footer with name and page number', () => {
+    render(<PreviewPanel />);
+    // Single page: should show "Test" (the name) and "1 / 1"
+    expect(screen.getByText('Test')).toBeInTheDocument();
+    expect(screen.getByText('1 / 1')).toBeInTheDocument();
   });
 });

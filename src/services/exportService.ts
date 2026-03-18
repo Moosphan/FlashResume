@@ -70,14 +70,15 @@ function createOffscreenClone(element: HTMLElement): { offscreen: HTMLDivElement
 
 /**
  * 将 DOM 元素导出为 A4 尺寸的 PDF 文件（智能分页，避免内容截断）。
+ * 每页底部显示姓名 + 页码。
  * 静默导出：不会修改页面的 dark/light 状态，不会产生闪烁。
  *
  * 策略：
  * 1. 克隆到离屏容器，收集所有块级子元素的位置
  * 2. 找到合适的分页断点（在元素之间而非元素中间）
- * 3. 为每一页分别截图并写入 PDF
+ * 3. 为每一页分别截图并写入 PDF，底部绘制页脚
  */
-export async function exportToPDF(element: HTMLElement): Promise<Blob> {
+export async function exportToPDF(element: HTMLElement, personName?: string): Promise<Blob> {
   const { offscreen, clone } = createOffscreenClone(element);
 
   try {
@@ -85,9 +86,9 @@ export async function exportToPDF(element: HTMLElement): Promise<Blob> {
     const contentRoot = clone;
     const totalHeight = contentRoot.scrollHeight;
 
-    // 如果内容不超过一页，直接单页导出
+    // 如果内容不超过一页，直接单页导出（带页脚）
     if (totalHeight <= A4_HEIGHT_PX) {
-      return await exportSinglePagePDF(clone);
+      return await exportSinglePagePDF(clone, personName);
     }
 
     // 收集所有可作为分页断点的元素的 bottom 位置
@@ -102,6 +103,8 @@ export async function exportToPDF(element: HTMLElement): Promise<Blob> {
       unit: 'pt',
       format: 'a4',
     });
+
+    const totalPages = pageBreaks.length;
 
     for (let i = 0; i < pageBreaks.length; i++) {
       if (i > 0) pdf.addPage();
@@ -120,6 +123,9 @@ export async function exportToPDF(element: HTMLElement): Promise<Blob> {
       // 第一页不加顶部边距（模板自带 padding），后续页加顶部边距
       const yOffset = i === 0 ? 0 : PAGE_MARGIN_PT;
       pdf.addImage(dataUrl, 'PNG', 0, yOffset, drawWidth, drawHeight);
+
+      // 绘制页脚：姓名 + 页码
+      drawPageFooter(pdf, personName || '', i + 1, totalPages);
     }
 
     return pdf.output('blob');
@@ -263,8 +269,8 @@ async function renderPageSlice(
   return dataUrl;
 }
 
-/** 单页 PDF 导出（内容不超过一页时使用） */
-async function exportSinglePagePDF(clone: HTMLElement): Promise<Blob> {
+/** 单页 PDF 导出（内容不超过一页时使用，带页脚） */
+async function exportSinglePagePDF(clone: HTMLElement, personName?: string): Promise<Blob> {
   const dataUrl = await toPng(clone, {
     width: A4_WIDTH_PX,
     height: A4_HEIGHT_PX,
@@ -283,8 +289,35 @@ async function exportSinglePagePDF(clone: HTMLElement): Promise<Blob> {
   });
 
   pdf.addImage(dataUrl, 'PNG', 0, 0, A4_WIDTH_PT, A4_HEIGHT_PT);
+
+  // 绘制页脚
+  drawPageFooter(pdf, personName || '', 1, 1);
+
   return pdf.output('blob');
 }
+/**
+ * 在 PDF 页面底部绘制页脚：左侧姓名，右侧页码。
+ * footerY 对应预览中 FOOTER_HEIGHT_PX=40 的居中位置。
+ */
+function drawPageFooter(pdf: jsPDF, name: string, currentPage: number, totalPages: number): void {
+  // 页脚区域 40px ≈ 30pt，文字放在区域中偏下位置
+  const footerY = A4_HEIGHT_PT - 14;
+  const marginX = 40; // 左右边距
+
+  pdf.setFontSize(9);
+  pdf.setTextColor(156, 163, 175); // gray-400
+
+  // 左侧：姓名
+  if (name) {
+    pdf.text(name, marginX, footerY);
+  }
+
+  // 右侧：页码
+  const pageText = `${currentPage} / ${totalPages}`;
+  pdf.text(pageText, A4_WIDTH_PT - marginX, footerY, { align: 'right' });
+}
+
+
 
 /** 辅助：将 data URL 加载为 HTMLImageElement */
 function loadImage(src: string): Promise<HTMLImageElement> {

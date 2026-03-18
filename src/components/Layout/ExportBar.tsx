@@ -49,7 +49,7 @@ export default function ExportBar({ previewRef }: ExportBarProps) {
     setOpen(false);
     if (!previewRef.current) return;
     try {
-      const blob = await exportToPDF(previewRef.current);
+      const blob = await exportToPDF(previewRef.current, resumeData.personalInfo.name);
       downloadFile(blob, 'resume.pdf');
     } catch {
       addToast(t.pdfFailed, 'error');
