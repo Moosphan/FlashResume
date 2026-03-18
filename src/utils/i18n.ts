@@ -280,8 +280,8 @@ const translations = {
 // Static keys type (excludes function values)
 export type TranslationKeys = keyof typeof translations.zh;
 
-// The full translations object for a locale
-export type Translations = typeof translations.zh;
+// The full translations object for a locale (widened to accept both zh and en values)
+export type Translations = (typeof translations)['zh'] | (typeof translations)['en'];
 
 // Backward compat: SectionLabels is a subset
 export type SectionLabels = Pick<
@@ -290,12 +290,12 @@ export type SectionLabels = Pick<
 >;
 
 /** Get all translations for a locale */
-export function getTranslations(locale: Locale): Translations {
+export function getTranslations(locale: Locale) {
   return translations[locale];
 }
 
 /** Backward compat: get just the resume section labels */
-export function getLabels(lang: ResumeLanguage): SectionLabels {
+export function getLabels(lang: ResumeLanguage) {
   return translations[lang];
 }
 
