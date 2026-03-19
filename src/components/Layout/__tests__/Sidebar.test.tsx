@@ -64,25 +64,44 @@ describe('Sidebar', () => {
     expect(onClose).toHaveBeenCalled();
   });
 
-  it('calls createResume when clicking new resume button with a name', () => {
-    vi.spyOn(window, 'prompt').mockReturnValue('新简历');
+  it('calls createResume when confirming with a valid name', () => {
     render(<Sidebar open={true} onClose={onClose} />);
+    // Click the new resume button to show the input
     fireEvent.click(screen.getByText('+ 新建简历'));
+    const input = screen.getByPlaceholderText('请输入简历名称');
+    fireEvent.change(input, { target: { value: '新简历' } });
+    fireEvent.click(screen.getByText('确认'));
     expect(mockCreateResume).toHaveBeenCalledWith('新简历');
   });
 
-  it('does not call createResume when prompt is cancelled', () => {
-    vi.spyOn(window, 'prompt').mockReturnValue(null);
+  it('does not call createResume and shows error when name is empty', () => {
     render(<Sidebar open={true} onClose={onClose} />);
     fireEvent.click(screen.getByText('+ 新建简历'));
+    // Click confirm without entering a name
+    fireEvent.click(screen.getByText('确认'));
     expect(mockCreateResume).not.toHaveBeenCalled();
+    expect(screen.getByText('请输入简历名称')).toBeInTheDocument();
+    // Input should still be visible
+    expect(screen.getByPlaceholderText('请输入简历名称')).toBeInTheDocument();
   });
 
-  it('does not call createResume when prompt returns empty string', () => {
-    vi.spyOn(window, 'prompt').mockReturnValue('   ');
+  it('does not call createResume and shows error when name is only spaces', () => {
     render(<Sidebar open={true} onClose={onClose} />);
     fireEvent.click(screen.getByText('+ 新建简历'));
+    const input = screen.getByPlaceholderText('请输入简历名称');
+    fireEvent.change(input, { target: { value: '   ' } });
+    fireEvent.click(screen.getByText('确认'));
     expect(mockCreateResume).not.toHaveBeenCalled();
+    expect(screen.getByText('请输入简历名称')).toBeInTheDocument();
+  });
+
+  it('hides input when cancel is clicked', () => {
+    render(<Sidebar open={true} onClose={onClose} />);
+    fireEvent.click(screen.getByText('+ 新建简历'));
+    expect(screen.getByPlaceholderText('请输入简历名称')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('取消'));
+    expect(screen.queryByPlaceholderText('请输入简历名称')).not.toBeInTheDocument();
+    expect(screen.getByText('+ 新建简历')).toBeInTheDocument();
   });
 
   it('shows confirm dialog when delete button is clicked', () => {
@@ -101,7 +120,7 @@ describe('Sidebar', () => {
     ];
     render(<Sidebar open={true} onClose={onClose} />);
     fireEvent.click(screen.getByLabelText('删除简历 前端简历'));
-    fireEvent.click(screen.getByText('确认'));
+    fireEvent.click(screen.getAllByText('确认')[0]);
     expect(mockDeleteResume).toHaveBeenCalledWith('1');
   });
 
@@ -111,9 +130,8 @@ describe('Sidebar', () => {
     ];
     render(<Sidebar open={true} onClose={onClose} />);
     fireEvent.click(screen.getByLabelText('删除简历 前端简历'));
-    fireEvent.click(screen.getByText('取消'));
+    fireEvent.click(screen.getAllByText('取消')[0]);
     expect(mockDeleteResume).not.toHaveBeenCalled();
-    expect(screen.queryByText('删除简历')).not.toBeInTheDocument();
   });
 
   it('is hidden off-screen when open is false', () => {

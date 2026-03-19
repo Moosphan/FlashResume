@@ -58,8 +58,10 @@ describe('SortableSectionList', () => {
   it('renders custom section when added', () => {
     useResumeStore.getState().addCustomSection();
     render(<SortableSectionList />);
-    // CustomSectionForm renders "自定义区块" heading and add button
-    expect(screen.getByText('+ 添加区块')).toBeInTheDocument();
+    // Each custom section renders its own editor with title input
+    expect(screen.getByPlaceholderText('请输入区块标题')).toBeInTheDocument();
+    // The add custom section button is always visible at the bottom
+    expect(screen.getByText('+ 添加自定义区块')).toBeInTheDocument();
   });
 
   it('section order matches store sectionOrder', () => {

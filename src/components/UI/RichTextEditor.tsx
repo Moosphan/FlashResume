@@ -50,6 +50,16 @@ export default function RichTextEditor({ value, onChange, placeholder = '', minH
     }
   }, [handleBold, handleItalic, handleUnderline, handleLink]);
 
+  // 粘贴时去除富文本格式，并清理多余空行
+  const handlePaste = useCallback((e: React.ClipboardEvent) => {
+    e.preventDefault();
+    let text = e.clipboardData.getData('text/plain');
+    // 将连续多个空行合并为单个换行
+    text = text.replace(/\n{3,}/g, '\n\n').replace(/^\n+|\n+$/g, '');
+    document.execCommand('insertText', false, text);
+    emitChange();
+  }, [emitChange]);
+
   const btnCls = 'flex items-center justify-center w-7 h-7 rounded text-xs font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors select-none';
 
   return (
@@ -67,7 +77,8 @@ export default function RichTextEditor({ value, onChange, placeholder = '', minH
         onInput={() => { if (!isComposing.current) emitChange(); }}
         onCompositionStart={() => { isComposing.current = true; }}
         onCompositionEnd={() => { isComposing.current = false; emitChange(); }}
-        onKeyDown={handleKeyDown} />
+        onKeyDown={handleKeyDown}
+        onPaste={handlePaste} />
     </div>
   );
 }

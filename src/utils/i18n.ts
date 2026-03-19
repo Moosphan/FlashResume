@@ -148,6 +148,7 @@ const translations = {
     colorPurple: '紫色',
     colorAmber: '琥珀色',
     colorCyan: '青色',
+    resumeNameRequired: '请输入简历名称',
   },
   en: {
     experiences: 'Work Experience',
@@ -274,6 +275,7 @@ const translations = {
     colorPurple: 'Purple',
     colorAmber: 'Amber',
     colorCyan: 'Cyan',
+    resumeNameRequired: 'Please enter a resume name',
   },
 } as const;
 

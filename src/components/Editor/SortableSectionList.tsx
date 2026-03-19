@@ -24,7 +24,7 @@ import ExperienceForm from './ExperienceForm';
 import EducationForm from './EducationForm';
 import SkillsForm from './SkillsForm';
 import ProjectForm from './ProjectForm';
-import CustomSectionForm from './CustomSectionForm';
+import SingleCustomSectionEditor from './SingleCustomSectionEditor';
 
 // --- Drag Handle ---
 function DragHandle({ listeners, attributes, label }: { listeners?: DraggableSyntheticListeners; attributes?: React.HTMLAttributes<HTMLButtonElement>; label: string }) {
@@ -59,6 +59,7 @@ function SortableSectionItem({ id, customSectionIds }: { id: string; customSecti
     isDragging,
   } = useSortable({ id });
   const { t } = useLocale();
+  const customSections = useResumeStore((s) => s.resumeData.customSections);
 
   const style = {
     transform: transform
@@ -77,7 +78,8 @@ function SortableSectionItem({ id, customSectionIds }: { id: string; customSecti
   };
 
   const isCustom = customSectionIds.includes(id);
-  const label = sectionLabels[id] ?? (isCustom ? t.sectionCustom : id);
+  const customSection = isCustom ? customSections.find((s) => s.id === id) : undefined;
+  const label = sectionLabels[id] ?? (customSection?.title || t.sectionCustom);
 
   const renderContent = () => {
     switch (id) {
@@ -92,11 +94,8 @@ function SortableSectionItem({ id, customSectionIds }: { id: string; customSecti
       case 'projects':
         return <ProjectForm />;
       default:
-        if (isCustom && id === customSectionIds[0]) {
-          return <CustomSectionForm />;
-        }
         if (isCustom) {
-          return null;
+          return <SingleCustomSectionEditor sectionId={id} />;
         }
         return null;
     }
@@ -120,9 +119,10 @@ function SortableSectionItem({ id, customSectionIds }: { id: string; customSecti
   );
 }
 
-// --- Drag Overlay placeholder (lightweight, no distortion) ---
+// --- Drag Overlay placeholder ---
 function DragOverlayContent({ id, customSectionIds }: { id: string; customSectionIds: string[] }) {
   const { t } = useLocale();
+  const customSections = useResumeStore((s) => s.resumeData.customSections);
   const sectionLabels: Record<string, string> = {
     personalInfo: t.sectionPersonalInfo,
     experiences: t.sectionExperiences,
@@ -131,7 +131,8 @@ function DragOverlayContent({ id, customSectionIds }: { id: string; customSectio
     skills: t.sectionSkills,
   };
   const isCustom = customSectionIds.includes(id);
-  const label = sectionLabels[id] ?? (isCustom ? t.sectionCustom : id);
+  const customSection = isCustom ? customSections.find((s) => s.id === id) : undefined;
+  const label = sectionLabels[id] ?? (customSection?.title || t.sectionCustom);
 
   return (
     <div className="rounded-lg border-2 border-blue-400 bg-white p-4 shadow-xl dark:bg-gray-800 dark:border-blue-500">
@@ -164,21 +165,6 @@ export default function SortableSectionList() {
     () => customSections.map((s) => s.id),
     [customSections],
   );
-
-  // Filter sectionOrder to only include the first custom section ID
-  const visibleSections = useMemo(() => {
-    let firstCustomSeen = false;
-    return sectionOrder.filter((id) => {
-      if (customSectionIds.includes(id)) {
-        if (!firstCustomSeen) {
-          firstCustomSeen = true;
-          return true;
-        }
-        return false;
-      }
-      return true;
-    });
-  }, [sectionOrder, customSectionIds]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -218,8 +204,8 @@ export default function SortableSectionList() {
         onDragEnd={handleDragEnd}
         onDragCancel={handleDragCancel}
       >
-        <SortableContext items={visibleSections} strategy={verticalListSortingStrategy}>
-          {visibleSections.map((sectionId) => (
+        <SortableContext items={sectionOrder} strategy={verticalListSortingStrategy}>
+          {sectionOrder.map((sectionId) => (
             <SortableSectionItem
               key={sectionId}
               id={sectionId}
@@ -228,7 +214,6 @@ export default function SortableSectionList() {
           ))}
         </SortableContext>
 
-        {/* Drag overlay — renders a lightweight placeholder, no distortion */}
         <DragOverlay dropAnimation={null}>
           {activeId ? (
             <DragOverlayContent id={activeId} customSectionIds={customSectionIds} />
@@ -236,7 +221,7 @@ export default function SortableSectionList() {
         </DragOverlay>
       </DndContext>
 
-      {/* Add custom section button */}
+      {/* Add custom section button — always at the bottom */}
       <div className="rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900">
         <button
           type="button"

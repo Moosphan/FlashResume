@@ -201,7 +201,7 @@ const PreviewPanel = forwardRef<HTMLDivElement>(function PreviewPanel(_props, re
       >
         <div
           ref={setMeasureRef}
-          className="bg-white"
+          className="bg-white resume-preview-font"
           style={{ width: A4_WIDTH_PX, minHeight: A4_HEIGHT_PX }}
         >
           {TemplateComponent && (
@@ -244,7 +244,7 @@ const PreviewPanel = forwardRef<HTMLDivElement>(function PreviewPanel(_props, re
                   }}
                 >
                   <div
-                    className="bg-white dark:bg-gray-800 shadow-lg flex flex-col"
+                    className="bg-white dark:bg-gray-800 shadow-lg flex flex-col resume-preview-font"
                     style={{
                       width: A4_WIDTH_PX,
                       height: A4_HEIGHT_PX,

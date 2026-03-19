@@ -54,7 +54,7 @@ export default function ExportBar({ previewRef }: ExportBarProps) {
     } catch {
       addToast(t.pdfFailed, 'error');
     }
-  }, [previewRef, addToast, t]);
+  }, [previewRef, addToast, t, resumeData.personalInfo.name]);
 
   const handleExportJSON = useCallback(() => {
     setOpen(false);
