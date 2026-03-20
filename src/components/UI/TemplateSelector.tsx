@@ -1,5 +1,6 @@
 import { templateRegistry } from '../../services/templateRegistry';
 import { useResumeStore } from '../../stores/resumeStore';
+import { useUIStore } from '../../stores/uiStore';
 import { useLocale } from '../../hooks/useLocale';
 
 const PLACEHOLDER_COLORS: Record<string, string> = {
@@ -9,13 +10,17 @@ const PLACEHOLDER_COLORS: Record<string, string> = {
 };
 
 export default function TemplateSelector() {
-  const templates = templateRegistry.getAll();
+  // Only show general-purpose templates (non-industry) in the compact selector
+  // Industry-specific templates are accessible via the gallery overlay
+  const templates = templateRegistry.getAll().filter((tpl) => !tpl.id.endsWith('-industry'));
   const selectedTemplateId = useResumeStore((s) => s.selectedTemplateId);
   const setTemplate = useResumeStore((s) => s.setTemplate);
   const { t } = useLocale();
+  const openGallery = useUIStore((s) => s.openGallery);
 
   return (
-    <div className="flex gap-3 overflow-x-auto pb-2">
+    <div>
+      <div className="flex gap-3 overflow-x-auto pb-2">
       {templates.map((tpl) => {
         const isSelected = tpl.id === selectedTemplateId;
         return (
@@ -42,6 +47,14 @@ export default function TemplateSelector() {
           </button>
         );
       })}
+      </div>
+      <button
+        type="button"
+        onClick={openGallery}
+        className="mt-2 w-full rounded-lg border-2 border-dashed border-gray-300 px-3 py-2 text-sm text-gray-500 hover:border-gray-400 hover:text-gray-700 dark:border-gray-600 dark:text-gray-400 dark:hover:border-gray-500 dark:hover:text-gray-300 transition-colors"
+      >
+        {t.browseMoreTemplates}
+      </button>
     </div>
   );
 }

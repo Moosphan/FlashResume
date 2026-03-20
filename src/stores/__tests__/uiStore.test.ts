@@ -21,6 +21,7 @@ describe('UIStore', () => {
       themeMode: 'light',
       autoSaveStatus: 'idle',
       toasts: [],
+      galleryOpen: false,
     });
   });
 
@@ -110,6 +111,30 @@ describe('UIStore', () => {
       useUIStore.getState().addToast('B', 'error');
       useUIStore.getState().addToast('C', 'info');
       expect(useUIStore.getState().toasts).toHaveLength(3);
+    });
+  });
+
+  describe('galleryOpen', () => {
+    it('defaults to false', () => {
+      expect(useUIStore.getState().galleryOpen).toBe(false);
+    });
+
+    it('openGallery sets galleryOpen to true', () => {
+      useUIStore.getState().openGallery();
+      expect(useUIStore.getState().galleryOpen).toBe(true);
+    });
+
+    it('closeGallery sets galleryOpen to false', () => {
+      useUIStore.setState({ galleryOpen: true });
+      useUIStore.getState().closeGallery();
+      expect(useUIStore.getState().galleryOpen).toBe(false);
+    });
+
+    it('openGallery then closeGallery round-trips correctly', () => {
+      useUIStore.getState().openGallery();
+      expect(useUIStore.getState().galleryOpen).toBe(true);
+      useUIStore.getState().closeGallery();
+      expect(useUIStore.getState().galleryOpen).toBe(false);
     });
   });
 });

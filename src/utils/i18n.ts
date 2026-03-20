@@ -149,6 +149,17 @@ const translations = {
     colorAmber: '琥珀色',
     colorCyan: '青色',
     resumeNameRequired: '请输入简历名称',
+
+    // Gallery
+    browseMoreTemplates: '浏览更多模板',
+    galleryTitle: '行业模板画廊',
+    closeGallery: '关闭画廊',
+    allCategories: '全部',
+    useTemplate: '使用此模板',
+    currentTemplate: '当前使用中',
+    templateSwitched: '模板已切换成功',
+    filterByIndustry: '按行业筛选',
+    noTemplatesFound: '该行业暂无推荐模板',
   },
   en: {
     experiences: 'Work Experience',
@@ -276,6 +287,17 @@ const translations = {
     colorAmber: 'Amber',
     colorCyan: 'Cyan',
     resumeNameRequired: 'Please enter a resume name',
+
+    // Gallery
+    browseMoreTemplates: 'Browse More Templates',
+    galleryTitle: 'Industry Template Gallery',
+    closeGallery: 'Close Gallery',
+    allCategories: 'All',
+    useTemplate: 'Use This Template',
+    currentTemplate: 'Currently Used',
+    templateSwitched: 'Template switched successfully',
+    filterByIndustry: 'Filter by Industry',
+    noTemplatesFound: 'No templates found for this industry',
   },
 } as const;
 

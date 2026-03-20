@@ -15,12 +15,15 @@ export interface UIStoreState {
   themeMode: 'light' | 'dark';
   autoSaveStatus: 'idle' | 'saving' | 'saved';
   toasts: Toast[];
+  galleryOpen: boolean;
 
   toggleThemeMode: () => void;
   setThemeMode: (mode: 'light' | 'dark') => void;
   setAutoSaveStatus: (status: 'idle' | 'saving' | 'saved') => void;
   addToast: (message: string, type?: 'success' | 'error' | 'info') => void;
   removeToast: (id: string) => void;
+  openGallery: () => void;
+  closeGallery: () => void;
 }
 
 let toastCounter = 0;
@@ -29,6 +32,7 @@ export const useUIStore = create<UIStoreState>((set) => ({
   themeMode: getThemeMode(),
   autoSaveStatus: 'idle',
   toasts: [],
+  galleryOpen: false,
 
   toggleThemeMode: () =>
     set((state) => {
@@ -62,4 +66,7 @@ export const useUIStore = create<UIStoreState>((set) => ({
     set((state) => ({
       toasts: state.toasts.filter((t) => t.id !== id),
     })),
+
+  openGallery: () => set({ galleryOpen: true }),
+  closeGallery: () => set({ galleryOpen: false }),
 }));

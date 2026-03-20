@@ -117,6 +117,17 @@ export interface TemplateDefinition {
   component: React.ComponentType<TemplateProps>;
 }
 
+export interface TemplateFeatureTag {
+  zh: string;
+  en: string;
+}
+
+export interface ExtendedTemplateDefinition extends TemplateDefinition {
+  industries: string[];
+  featureTags: TemplateFeatureTag[];
+  nameEn: string;
+}
+
 // --- 默认空简历数据 ---
 
 export const DEFAULT_RESUME_DATA: ResumeData = {
