@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useUIStore } from '../../stores/uiStore';
 import { useResumeStore } from '../../stores/resumeStore';
 import { useLocale } from '../../hooks/useLocale';
+import { useIsMobile, useIsTablet } from '../../hooks/useMediaQuery';
 import { templateRegistry } from '../../services/templateRegistry';
 import { filterTemplatesByIndustry, getTemplateCountByIndustry } from './galleryUtils';
 import FilterPanel from './FilterPanel';
@@ -13,6 +14,8 @@ export default function IndustryGalleryOverlay() {
   const resumeData = useResumeStore((s) => s.resumeData);
   const themeColor = useResumeStore((s) => s.themeColor);
   const currentTemplateId = useResumeStore((s) => s.selectedTemplateId);
+  const isMobile = useIsMobile();
+  const isTablet = useIsTablet();
 
   const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null);
 
@@ -41,7 +44,13 @@ export default function IndustryGalleryOverlay() {
     useUIStore.getState().closeGallery();
     useUIStore.getState().addToast(t.templateSwitched, 'success');
     setSelectedIndustry(null);
+    // On mobile, switch to preview tab so user can see the new template
+    if (isMobile) {
+      useUIStore.getState().setActiveTab('preview');
+    }
   };
+
+  const contentPadding = isMobile ? 16 : 24;
 
   return (
     <div
@@ -61,7 +70,7 @@ export default function IndustryGalleryOverlay() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '16px 24px',
+          padding: `16px ${contentPadding}px`,
           borderBottom: '1px solid #e5e7eb',
           flexShrink: 0,
         }}
@@ -80,6 +89,11 @@ export default function IndustryGalleryOverlay() {
             fontSize: 14,
             cursor: 'pointer',
             color: '#374151',
+            minWidth: 44,
+            minHeight: 44,
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
           {t.closeGallery}
@@ -87,7 +101,7 @@ export default function IndustryGalleryOverlay() {
       </div>
 
       {/* Scrollable content */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '0 24px 24px' }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: `0 ${contentPadding}px ${contentPadding}px` }}>
         <FilterPanel
           selectedIndustry={selectedIndustry}
           onSelect={setSelectedIndustry}
@@ -101,6 +115,7 @@ export default function IndustryGalleryOverlay() {
           resumeData={resumeData}
           themeColor={themeColor}
           language={locale}
+          columns={isMobile ? 2 : isTablet ? 2 : undefined}
         />
       </div>
     </div>

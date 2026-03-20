@@ -85,8 +85,8 @@ export default function Sidebar({ open, onClose }: { open: boolean; onClose: () 
                 <p className="text-xs text-red-500">{nameError}</p>
               )}
               <div className="flex gap-1">
-                <button type="button" onClick={handleCreateConfirm} className="flex-1 min-h-[36px] rounded-md bg-blue-600 text-xs font-medium text-white hover:bg-blue-700 transition-colors">{t.confirm}</button>
-                <button type="button" onClick={handleCreateCancel} className="flex-1 min-h-[36px] rounded-md border border-gray-300 text-xs font-medium text-gray-600 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700 transition-colors">{t.cancel}</button>
+                <button type="button" onClick={handleCreateConfirm} className="flex-1 min-h-[44px] rounded-md bg-blue-600 text-xs font-medium text-white hover:bg-blue-700 transition-colors">{t.confirm}</button>
+                <button type="button" onClick={handleCreateCancel} className="flex-1 min-h-[44px] rounded-md border border-gray-300 text-xs font-medium text-gray-600 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700 transition-colors">{t.cancel}</button>
               </div>
             </div>
           ) : (

@@ -51,6 +51,11 @@ vi.mock('../../../stores/uiStore', () => ({
     }),
 }));
 
+let mockIsMobile = false;
+vi.mock('../../../hooks/useMediaQuery', () => ({
+  useIsMobile: () => mockIsMobile,
+}));
+
 import ExportBar from '../ExportBar';
 
 function renderBar(refEl?: HTMLDivElement | null) {
@@ -71,6 +76,7 @@ function openMenu() {
 describe('ExportBar', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mockIsMobile = false;
     mockResumeData = {
       personalInfo: { name: '', email: '', phone: '', address: '', website: '', avatar: '' },
       experiences: [],
@@ -210,7 +216,8 @@ describe('ExportBar', () => {
     });
   });
 
-  it('menu trigger button has adequate touch target', () => {
+  it('menu trigger button has adequate touch target (desktop)', () => {
+    mockIsMobile = false;
     renderBar();
     const exportBtn = screen.getByLabelText('导出菜单');
     const importBtn = screen.getByLabelText('导入 JSON');
@@ -218,5 +225,31 @@ describe('ExportBar', () => {
     expect(exportBtn.className).toContain('w-9');
     expect(importBtn.className).toContain('h-9');
     expect(importBtn.className).toContain('w-9');
+  });
+
+  it('buttons have min 44px touch targets on mobile', () => {
+    mockIsMobile = true;
+    renderBar();
+    const exportBtn = screen.getByLabelText('导出菜单');
+    const importBtn = screen.getByLabelText('导入 JSON');
+    expect(exportBtn.className).toContain('min-h-[44px]');
+    expect(exportBtn.className).toContain('min-w-[44px]');
+    expect(importBtn.className).toContain('min-h-[44px]');
+    expect(importBtn.className).toContain('min-w-[44px]');
+  });
+
+  it('dropdown menu items have min 44px touch targets on mobile', () => {
+    mockIsMobile = true;
+    renderBar();
+    openMenu();
+    const pdfBtn = screen.getByText('导出 PDF').closest('button')!;
+    expect(pdfBtn.className).toContain('min-h-[44px]');
+  });
+
+  it('dropdown menu uses right-0 positioning to prevent overflow', () => {
+    renderBar();
+    openMenu();
+    const menu = screen.getByText('导出 PDF').closest('div');
+    expect(menu?.className).toContain('right-0');
   });
 });

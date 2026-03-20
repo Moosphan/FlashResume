@@ -22,6 +22,7 @@ describe('UIStore', () => {
       autoSaveStatus: 'idle',
       toasts: [],
       galleryOpen: false,
+      activeTab: 'editor',
     });
   });
 
@@ -135,6 +136,30 @@ describe('UIStore', () => {
       expect(useUIStore.getState().galleryOpen).toBe(true);
       useUIStore.getState().closeGallery();
       expect(useUIStore.getState().galleryOpen).toBe(false);
+    });
+  });
+
+  describe('activeTab', () => {
+    it('defaults to editor', () => {
+      expect(useUIStore.getState().activeTab).toBe('editor');
+    });
+
+    it('setActiveTab switches to preview', () => {
+      useUIStore.getState().setActiveTab('preview');
+      expect(useUIStore.getState().activeTab).toBe('preview');
+    });
+
+    it('setActiveTab switches back to editor', () => {
+      useUIStore.setState({ activeTab: 'preview' });
+      useUIStore.getState().setActiveTab('editor');
+      expect(useUIStore.getState().activeTab).toBe('editor');
+    });
+
+    it('setActiveTab round-trips correctly', () => {
+      useUIStore.getState().setActiveTab('preview');
+      expect(useUIStore.getState().activeTab).toBe('preview');
+      useUIStore.getState().setActiveTab('editor');
+      expect(useUIStore.getState().activeTab).toBe('editor');
     });
   });
 });

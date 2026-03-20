@@ -1,4 +1,4 @@
-import React from 'react';
+
 import GalleryTemplateCard from './GalleryTemplateCard';
 import type { ExtendedTemplateDefinition, ResumeData } from '../../types/resume';
 import type { Locale } from '../../utils/i18n';
@@ -11,6 +11,7 @@ export interface TemplateGridProps {
   resumeData: ResumeData;
   themeColor: string;
   language: Locale;
+  columns?: number;
 }
 
 export default function TemplateGrid({
@@ -20,6 +21,7 @@ export default function TemplateGrid({
   resumeData,
   themeColor,
   language,
+  columns,
 }: TemplateGridProps) {
   const t = getTranslations(language);
 
@@ -42,7 +44,9 @@ export default function TemplateGrid({
     <div
       style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+        gridTemplateColumns: columns
+          ? `repeat(${columns}, 1fr)`
+          : 'repeat(auto-fill, minmax(220px, 1fr))',
         gap: 20,
         padding: '16px 0',
       }}

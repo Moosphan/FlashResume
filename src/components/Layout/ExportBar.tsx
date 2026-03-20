@@ -2,6 +2,7 @@ import { useCallback, useRef, useState, useEffect } from 'react';
 import { useResumeStore } from '../../stores/resumeStore';
 import { useUIStore } from '../../stores/uiStore';
 import { useLocale } from '../../hooks/useLocale';
+import { useIsMobile } from '../../hooks/useMediaQuery';
 import {
   exportToPDF,
   exportToJSON,
@@ -119,11 +120,15 @@ export default function ExportBar({ previewRef }: ExportBarProps) {
     [importFromJSON, addToast, t],
   );
 
-  const iconBtnCls =
-    'inline-flex h-9 w-9 items-center justify-center rounded-md text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 transition-colors';
+  const isMobile = useIsMobile();
 
-  const itemCls =
-    'flex w-full items-center gap-2 px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed';
+  const iconBtnCls = isMobile
+    ? 'inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 transition-colors'
+    : 'inline-flex h-9 w-9 items-center justify-center rounded-md text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 transition-colors';
+
+  const itemCls = isMobile
+    ? 'flex w-full items-center gap-2 px-3 py-2 min-h-[44px] text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed'
+    : 'flex w-full items-center gap-2 px-3 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed';
 
   return (
     <div className="flex items-center gap-1">

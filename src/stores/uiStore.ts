@@ -16,6 +16,7 @@ export interface UIStoreState {
   autoSaveStatus: 'idle' | 'saving' | 'saved';
   toasts: Toast[];
   galleryOpen: boolean;
+  activeTab: 'editor' | 'preview';
 
   toggleThemeMode: () => void;
   setThemeMode: (mode: 'light' | 'dark') => void;
@@ -24,6 +25,7 @@ export interface UIStoreState {
   removeToast: (id: string) => void;
   openGallery: () => void;
   closeGallery: () => void;
+  setActiveTab: (tab: 'editor' | 'preview') => void;
 }
 
 let toastCounter = 0;
@@ -33,6 +35,7 @@ export const useUIStore = create<UIStoreState>((set) => ({
   autoSaveStatus: 'idle',
   toasts: [],
   galleryOpen: false,
+  activeTab: 'editor',
 
   toggleThemeMode: () =>
     set((state) => {
@@ -69,4 +72,6 @@ export const useUIStore = create<UIStoreState>((set) => ({
 
   openGallery: () => set({ galleryOpen: true }),
   closeGallery: () => set({ galleryOpen: false }),
+
+  setActiveTab: (tab) => set({ activeTab: tab }),
 }));

@@ -1,5 +1,6 @@
 import { useRef, useCallback, useEffect } from 'react';
 import { useLocale } from '../../hooks/useLocale';
+import { useIsMobile } from '../../hooks/useMediaQuery';
 
 interface RichTextEditorProps {
   value: string;
@@ -12,6 +13,7 @@ export default function RichTextEditor({ value, onChange, placeholder = '', minH
   const editorRef = useRef<HTMLDivElement>(null);
   const isComposing = useRef(false);
   const { t } = useLocale();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const el = editorRef.current;
@@ -60,7 +62,20 @@ export default function RichTextEditor({ value, onChange, placeholder = '', minH
     emitChange();
   }, [emitChange]);
 
-  const btnCls = 'flex items-center justify-center w-7 h-7 rounded text-xs font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors select-none';
+  // Handle virtual keyboard on mobile: scroll editor into view when focused
+  const handleFocus = useCallback(() => {
+    if (!isMobile) return;
+    const el = editorRef.current;
+    if (el) {
+      setTimeout(() => {
+        el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }, 300);
+    }
+  }, [isMobile]);
+
+  const btnCls = `flex items-center justify-center rounded text-xs font-semibold text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors select-none ${isMobile ? 'min-w-[44px] min-h-[44px]' : 'w-7 h-7'}`;
+
+  const editorMinHeight = isMobile ? '120px' : minHeight;
 
   return (
     <div className="rounded-md border border-gray-300 dark:border-gray-600 overflow-hidden bg-white dark:bg-gray-800 transition-colors focus-within:border-primary focus-within:ring-1 focus-within:ring-primary">
@@ -73,12 +88,13 @@ export default function RichTextEditor({ value, onChange, placeholder = '', minH
       </div>
       <div ref={editorRef} contentEditable role="textbox" aria-multiline="true" aria-placeholder={placeholder} data-placeholder={placeholder}
         className="px-3 py-2 text-sm outline-none dark:text-gray-100 empty:before:content-[attr(data-placeholder)] empty:before:text-gray-400 empty:before:dark:text-gray-500 empty:before:pointer-events-none [&_a]:text-blue-600 [&_a]:underline"
-        style={{ minHeight }}
+        style={{ minHeight: editorMinHeight }}
         onInput={() => { if (!isComposing.current) emitChange(); }}
         onCompositionStart={() => { isComposing.current = true; }}
         onCompositionEnd={() => { isComposing.current = false; emitChange(); }}
         onKeyDown={handleKeyDown}
-        onPaste={handlePaste} />
+        onPaste={handlePaste}
+        onFocus={handleFocus} />
     </div>
   );
 }

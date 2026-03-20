@@ -4,6 +4,7 @@ import {
   closestCenter,
   KeyboardSensor,
   PointerSensor,
+  TouchSensor,
   useSensor,
   useSensors,
   DragOverlay,
@@ -168,6 +169,9 @@ export default function SortableSectionList() {
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
+      activationConstraint: { distance: 8 },
+    }),
+    useSensor(TouchSensor, {
       activationConstraint: { distance: 8 },
     }),
     useSensor(KeyboardSensor, {

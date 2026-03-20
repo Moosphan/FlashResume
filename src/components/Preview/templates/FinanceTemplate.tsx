@@ -5,7 +5,7 @@ import { getLabels } from '../../../utils/i18n';
 /**
  * 金融/银行行业模板 - 单栏传统布局，衬线字体，深蓝+金色配色，严谨对称
  */
-export default function FinanceTemplate({ data, themeColor, language }: TemplateProps) {
+export default function FinanceTemplate({ data, language }: TemplateProps) {
   const { personalInfo, experiences, educations, skills, projects, customSections, sectionOrder } = data;
   const L = getLabels(language);
 

@@ -27,7 +27,7 @@ export default function ProjectForm() {
     setDateErrors((prev) => ({ ...prev, [proj.id]: result.valid ? undefined : result.error }));
   };
 
-  const inputCls = 'min-h-[44px] w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm outline-none transition-colors duration-150 focus:border-primary focus:ring-1 focus:ring-primary dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-500';
+  const inputCls = 'min-h-[44px] w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base md:text-sm outline-none transition-colors duration-150 focus:border-primary focus:ring-1 focus:ring-primary dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-500';
 
   return (
     <section className="space-y-4">
@@ -36,7 +36,7 @@ export default function ProjectForm() {
         <div key={proj.id} className="rounded-lg border border-gray-200 bg-white p-4 space-y-3 dark:border-gray-600 dark:bg-gray-800">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-gray-600 dark:text-gray-400">{proj.name || t.unfilledProject}</span>
-            <button type="button" onClick={() => removeProject(proj.id)} className="min-h-[44px] min-w-[44px] rounded-md px-3 py-2 text-sm text-red-500 hover:bg-red-50 transition-colors duration-150 dark:hover:bg-red-900/20">{t.delete}</button>
+            <button type="button" onClick={() => removeProject(proj.id)} className="min-h-[44px] min-w-[44px] rounded-md px-3 py-2 text-base md:text-sm text-red-500 hover:bg-red-50 transition-colors duration-150 dark:hover:bg-red-900/20">{t.delete}</button>
           </div>
           <div>
             <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">{t.projectName}</label>
@@ -46,7 +46,7 @@ export default function ProjectForm() {
             <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">{t.projectRole}</label>
             <input type="text" value={proj.role} onChange={(e) => handleChange(proj.id, 'role', e.target.value)} placeholder={t.projectRolePh} className={inputCls} />
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
               <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">{t.startDate}</label>
               <input type="month" value={proj.startDate} onChange={(e) => handleChange(proj.id, 'startDate', e.target.value)} className={inputCls} />
@@ -64,7 +64,7 @@ export default function ProjectForm() {
           </div>
         </div>
       ))}
-      <button type="button" onClick={addProject} className="min-h-[44px] w-full rounded-md border-2 border-dashed border-gray-300 px-4 py-3 text-sm font-medium text-gray-500 hover:border-primary hover:text-primary transition-colors duration-150 dark:border-gray-600 dark:text-gray-400 dark:hover:border-primary dark:hover:text-primary">
+      <button type="button" onClick={addProject} className="min-h-[44px] w-full rounded-md border-2 border-dashed border-gray-300 px-4 py-3 text-base md:text-sm font-medium text-gray-500 hover:border-primary hover:text-primary transition-colors duration-150 dark:border-gray-600 dark:text-gray-400 dark:hover:border-primary dark:hover:text-primary">
         {t.addProject}
       </button>
     </section>

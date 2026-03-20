@@ -63,6 +63,8 @@ export default function GalleryTemplateCard({
   language,
 }: GalleryTemplateCardProps) {
   const [hovered, setHovered] = React.useState(false);
+  const [containerWidth, setContainerWidth] = React.useState(220);
+  const containerRef = React.useRef<HTMLDivElement>(null);
   const t = getTranslations(language);
 
   const displayName = language === 'zh' ? template.name : template.nameEn;
@@ -74,17 +76,32 @@ export default function GalleryTemplateCard({
   // A4 dimensions in mm → use px approximation for the inner render
   const innerWidth = 794; // ~210mm at 96dpi
   const innerHeight = 1123; // ~297mm at 96dpi
-  const containerWidth = 220;
+
+  // Measure actual container width to fill grid cell
+  React.useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const w = entry.contentBoxSize?.[0]?.inlineSize ?? entry.contentRect.width;
+        if (w > 0) setContainerWidth(w);
+      }
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   const scale = containerWidth / innerWidth;
-  const containerHeight = innerHeight * scale;
 
   return (
     <div
+      ref={containerRef}
       role="article"
       aria-label={displayName}
       tabIndex={0}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onClick={onSelect}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -111,8 +128,8 @@ export default function GalleryTemplateCard({
       {/* Thumbnail preview */}
       <div
         style={{
-          width: containerWidth,
-          height: containerHeight,
+          width: '100%',
+          aspectRatio: `${innerWidth} / ${innerHeight}`,
           overflow: 'hidden',
           position: 'relative',
           backgroundColor: '#fff',
@@ -162,6 +179,11 @@ export default function GalleryTemplateCard({
                 fontSize: 13,
                 fontWeight: 600,
                 cursor: 'pointer',
+                minWidth: 44,
+                minHeight: 44,
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
               {t.useTemplate}

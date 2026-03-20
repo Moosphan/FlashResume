@@ -6,6 +6,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 let mockAutoSaveStatus = 'idle';
 let mockToasts: Array<{ id: string; message: string; type: string }> = [];
 const mockRemoveToast = vi.fn();
+let mockActiveTab: 'editor' | 'preview' = 'editor';
+const mockSetActiveTab = vi.fn();
 
 vi.mock('../../../stores/uiStore', () => ({
   useUIStore: (selector: (s: Record<string, unknown>) => unknown) =>
@@ -13,6 +15,8 @@ vi.mock('../../../stores/uiStore', () => ({
       autoSaveStatus: mockAutoSaveStatus,
       toasts: mockToasts,
       removeToast: mockRemoveToast,
+      activeTab: mockActiveTab,
+      setActiveTab: mockSetActiveTab,
     }),
 }));
 
@@ -58,6 +62,15 @@ vi.mock('../../../services/importService', () => ({
   parseJSON: vi.fn(),
 }));
 
+vi.mock('../../../hooks/useMediaQuery', () => ({
+  useIsMobile: () => false,
+  useIsTablet: () => false,
+}));
+
+vi.mock('../MobileTabNav', () => ({
+  default: () => <div data-testid="mobile-tab-nav">MobileTabNav</div>,
+}));
+
 vi.mock('../Sidebar', () => ({
   default: ({ open, onClose }: { open: boolean; onClose: () => void }) => (
     <div data-testid="sidebar" data-open={open}>
@@ -73,6 +86,7 @@ describe('AppLayout', () => {
     vi.clearAllMocks();
     mockAutoSaveStatus = 'idle';
     mockToasts = [];
+    mockActiveTab = 'editor';
   });
 
   it('renders the app title', () => {

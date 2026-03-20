@@ -45,6 +45,7 @@ export default function FilterPanel({
     <div
       role="tablist"
       aria-label={t.filterByIndustry}
+      className="hide-scrollbar"
       style={{
         display: 'flex',
         gap: 8,

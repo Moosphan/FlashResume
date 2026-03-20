@@ -34,8 +34,8 @@ export default function PersonalInfoForm() {
     reader.readAsDataURL(file);
   };
 
-  const inputCls = 'min-h-[44px] w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm outline-none transition-colors duration-150 focus:border-primary focus:ring-1 focus:ring-primary dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-500';
-  const baseCls = 'min-h-[44px] w-full rounded-md border px-3 py-2 text-sm outline-none transition-colors duration-150 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-500';
+  const inputCls = 'min-h-[44px] w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-base md:text-sm outline-none transition-colors duration-150 focus:border-primary focus:ring-1 focus:ring-primary dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-500';
+  const baseCls = 'min-h-[44px] w-full rounded-md border px-3 py-2 text-base md:text-sm outline-none transition-colors duration-150 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-500';
   const errCls = 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500';
   const okCls = 'border-gray-300 bg-white focus:border-primary focus:ring-1 focus:ring-primary dark:border-gray-600';
   const labelCls = 'mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300';
@@ -50,7 +50,7 @@ export default function PersonalInfoForm() {
           {personalInfo.avatar && (
             <img src={personalInfo.avatar} alt={t.avatarPreview} className="h-16 w-16 rounded-full object-cover border border-gray-200 dark:border-gray-600" />
           )}
-          <input type="file" accept="image/*" onChange={handleAvatarChange} className="min-h-[44px] text-sm text-gray-600 dark:text-gray-400 file:mr-3 file:rounded-md file:border-0 file:bg-primary/10 file:px-4 file:py-2 file:text-sm file:font-medium file:text-primary hover:file:bg-primary/20 file:transition-colors file:duration-150 file:cursor-pointer" />
+          <input type="file" accept="image/*" onChange={handleAvatarChange} className="min-h-[44px] text-base md:text-sm text-gray-600 dark:text-gray-400 file:mr-3 file:rounded-md file:border-0 file:bg-primary/10 file:px-4 file:py-2 file:text-base md:file:text-sm file:font-medium file:text-primary hover:file:bg-primary/20 file:transition-colors file:duration-150 file:cursor-pointer" />
         </div>
       </div>
 

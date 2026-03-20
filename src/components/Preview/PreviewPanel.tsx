@@ -1,7 +1,9 @@
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import { useResumeStore } from '../../stores/resumeStore';
+import { useUIStore } from '../../stores/uiStore';
 import { templateRegistry } from '../../services/templateRegistry';
 import { useLocale } from '../../hooks/useLocale';
+import { useIsMobile } from '../../hooks/useMediaQuery';
 
 /** A4 aspect ratio: 210mm x 297mm */
 const A4_WIDTH_PX = 794; // ~210mm at 96dpi
@@ -118,16 +120,25 @@ function PageFooter({
  * - 支持按钮缩放 + 触控板/鼠标滚轮手势缩放
  * - 通过 forwardRef 暴露预览内容 DOM 供 PDF 导出使用
  */
+/** Calculate mobile default zoom: fit A4 width to screen */
+function getMobileDefaultZoom(): number {
+  if (typeof window === 'undefined') return ZOOM_DEFAULT;
+  return Math.floor(window.innerWidth / A4_WIDTH_PX * 100);
+}
+
 const PreviewPanel = forwardRef<HTMLDivElement>(function PreviewPanel(_props, ref) {
   const resumeData = useResumeStore((s) => s.resumeData);
   const selectedTemplateId = useResumeStore((s) => s.selectedTemplateId);
   const themeColor = useResumeStore((s) => s.themeColor);
   const { locale, t } = useLocale();
+  const isMobile = useIsMobile();
+  const activeTab = useUIStore((s) => s.activeTab);
 
-  const [zoom, setZoom] = useState(ZOOM_DEFAULT);
+  const [zoom, setZoom] = useState(() => isMobile ? getMobileDefaultZoom() : ZOOM_DEFAULT);
   const [pageBreaks, setPageBreaks] = useState<number[]>([0]);
   const containerRef = useRef<HTMLDivElement>(null);
   const measureRef = useRef<HTMLDivElement>(null);
+  const pinchRef = useRef<{ startDist: number; startZoom: number } | null>(null);
 
   // 将 forwardRef 和 measureRef 合并：外部 ref 指向完整内容（供导出使用）
   const setMeasureRef = useCallback(
@@ -159,6 +170,32 @@ const PreviewPanel = forwardRef<HTMLDivElement>(function PreviewPanel(_props, re
     }
   }, []);
 
+  // Pinch-to-zoom touch event handlers
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    if (e.touches.length === 2) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      pinchRef.current = { startDist: dist, startZoom: zoom };
+    }
+  }, [zoom]);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (e.touches.length === 2 && pinchRef.current) {
+      e.preventDefault();
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const ratio = dist / pinchRef.current.startDist;
+      const newZoom = Math.round(pinchRef.current.startZoom * ratio);
+      setZoom(Math.min(Math.max(newZoom, ZOOM_MIN), ZOOM_MAX));
+    }
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    pinchRef.current = null;
+  }, []);
+
   // 测量内容高度并计算分页
   useEffect(() => {
     const el = measureRef.current;
@@ -178,6 +215,22 @@ const PreviewPanel = forwardRef<HTMLDivElement>(function PreviewPanel(_props, re
 
     return () => cancelAnimationFrame(raf);
   }, [resumeData, selectedTemplateId, themeColor, locale]);
+
+  // Auto-center scroll position when preview becomes visible or zoom changes
+  useEffect(() => {
+    if (!isMobile) return;
+    const el = containerRef.current;
+    if (!el) return;
+    // Use rAF to ensure layout is computed after render
+    const raf = requestAnimationFrame(() => {
+      const scrollableWidth = el.scrollWidth;
+      const visibleWidth = el.clientWidth;
+      if (scrollableWidth > visibleWidth) {
+        el.scrollLeft = (scrollableWidth - visibleWidth) / 2;
+      }
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [activeTab, zoom, isMobile, selectedTemplateId]);
 
   const templateDef = templateRegistry.getById(selectedTemplateId);
   const TemplateComponent = templateDef?.component;
@@ -215,8 +268,14 @@ const PreviewPanel = forwardRef<HTMLDivElement>(function PreviewPanel(_props, re
         ref={containerRef}
         className="flex-1 overflow-auto p-4"
         onWheel={handleWheel}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
-        <div className="flex flex-col items-center gap-4 pb-16 pt-2">
+        <div
+          className="flex flex-col items-center gap-4 pb-16 pt-2"
+          style={{ minWidth: 'fit-content' }}
+        >
           {pageBreaks.map((pageTop, idx) => {
             // 当前页实际内容高度 = 下一页起点 - 当前页起点（最后一页取到内容末尾）
             const nextPageTop = idx + 1 < totalPages ? pageBreaks[idx + 1] : undefined;
@@ -296,14 +355,22 @@ const PreviewPanel = forwardRef<HTMLDivElement>(function PreviewPanel(_props, re
         </div>
       </div>
 
-      {/* Floating zoom controls — bottom-right, semi-transparent */}
-      <div className="absolute bottom-4 right-4 flex items-center gap-1 rounded-full bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm shadow-sm px-2 py-1 z-10 opacity-60 hover:opacity-100 transition-opacity">
+      {/* Floating zoom controls — desktop: bottom-right, mobile: bottom-center with tab offset */}
+      <div
+        className={`absolute flex items-center gap-1 rounded-full bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm shadow-sm px-2 py-1 z-10 opacity-60 hover:opacity-100 transition-opacity ${
+          isMobile
+            ? 'bottom-[calc(var(--mobile-tab-height)+var(--safe-area-bottom)+8px)] left-1/2 -translate-x-1/2'
+            : 'bottom-4 right-4'
+        }`}
+      >
         <button
           type="button"
           onClick={handleZoomOut}
           disabled={zoom <= ZOOM_MIN}
           aria-label="缩小预览"
-          className="flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-200/60 dark:hover:bg-gray-700/60 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          className={`flex items-center justify-center rounded-full text-sm font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-200/60 dark:hover:bg-gray-700/60 disabled:opacity-40 disabled:cursor-not-allowed transition-colors ${
+            isMobile ? 'min-w-[44px] min-h-[44px]' : 'w-8 h-8'
+          }`}
         >
           −
         </button>
@@ -315,7 +382,9 @@ const PreviewPanel = forwardRef<HTMLDivElement>(function PreviewPanel(_props, re
           onClick={handleZoomIn}
           disabled={zoom >= ZOOM_MAX}
           aria-label="放大预览"
-          className="flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-200/60 dark:hover:bg-gray-700/60 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          className={`flex items-center justify-center rounded-full text-sm font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-200/60 dark:hover:bg-gray-700/60 disabled:opacity-40 disabled:cursor-not-allowed transition-colors ${
+            isMobile ? 'min-w-[44px] min-h-[44px]' : 'w-8 h-8'
+          }`}
         >
           +
         </button>

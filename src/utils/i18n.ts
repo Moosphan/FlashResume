@@ -150,6 +150,10 @@ const translations = {
     colorCyan: '青色',
     resumeNameRequired: '请输入简历名称',
 
+    // Mobile Tab Navigation
+    mobileTabEditor: '编辑',
+    mobileTabPreview: '预览',
+
     // Gallery
     browseMoreTemplates: '浏览更多模板',
     galleryTitle: '行业模板画廊',
@@ -287,6 +291,10 @@ const translations = {
     colorAmber: 'Amber',
     colorCyan: 'Cyan',
     resumeNameRequired: 'Please enter a resume name',
+
+    // Mobile Tab Navigation
+    mobileTabEditor: 'Editor',
+    mobileTabPreview: 'Preview',
 
     // Gallery
     browseMoreTemplates: 'Browse More Templates',
