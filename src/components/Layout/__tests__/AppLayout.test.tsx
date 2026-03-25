@@ -3,7 +3,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // --- Mocks ---
 
-let mockAutoSaveStatus = 'idle';
 let mockToasts: Array<{ id: string; message: string; type: string }> = [];
 const mockRemoveToast = vi.fn();
 let mockActiveTab: 'editor' | 'preview' = 'editor';
@@ -12,7 +11,6 @@ const mockSetActiveTab = vi.fn();
 vi.mock('../../../stores/uiStore', () => ({
   useUIStore: (selector: (s: Record<string, unknown>) => unknown) =>
     selector({
-      autoSaveStatus: mockAutoSaveStatus,
       toasts: mockToasts,
       removeToast: mockRemoveToast,
       activeTab: mockActiveTab,
@@ -84,7 +82,6 @@ import AppLayout from '../AppLayout';
 describe('AppLayout', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    mockAutoSaveStatus = 'idle';
     mockToasts = [];
     mockActiveTab = 'editor';
   });
@@ -98,18 +95,6 @@ describe('AppLayout', () => {
     render(<AppLayout />);
     const toggleBtn = screen.getByLabelText(/切换到/);
     expect(toggleBtn).toBeInTheDocument();
-  });
-
-  it('shows auto-save status when saved', () => {
-    mockAutoSaveStatus = 'saved';
-    render(<AppLayout />);
-    expect(screen.getByText('已自动保存')).toBeInTheDocument();
-  });
-
-  it('does not show auto-save status when idle', () => {
-    mockAutoSaveStatus = 'idle';
-    render(<AppLayout />);
-    expect(screen.queryByText('已自动保存')).not.toBeInTheDocument();
   });
 
   it('renders the ExportBar with menu trigger', () => {

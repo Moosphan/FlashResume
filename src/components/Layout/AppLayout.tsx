@@ -11,11 +11,11 @@ import PreviewPanel from '../Preview/PreviewPanel';
 import ExportBar from './ExportBar';
 import Sidebar from './Sidebar';
 import IndustryGalleryOverlay from '../Gallery/IndustryGalleryOverlay';
+import TutorialPanel from '../Tutorial/TutorialPanel';
 import faviconUrl from '/favicon.svg?url';
 
 export default function AppLayout() {
   const previewRef = useRef<HTMLDivElement>(null);
-  const autoSaveStatus = useUIStore((s) => s.autoSaveStatus);
   const toasts = useUIStore((s) => s.toasts);
   const removeToast = useUIStore((s) => s.removeToast);
   const activeTab = useUIStore((s) => s.activeTab);
@@ -81,9 +81,6 @@ export default function AppLayout() {
           )}
         </div>
         <div className="flex items-center gap-2">
-          {autoSaveStatus === 'saved' && (
-            <span className="text-xs text-green-600 dark:text-green-400">{t.autoSaved}</span>
-          )}
           <ExportBar previewRef={previewRef} />
           <button
             type="button"
@@ -92,6 +89,14 @@ export default function AppLayout() {
             aria-label={t.switchLang}
           >
             {t.switchLang}
+          </button>
+          <button
+            type="button"
+            onClick={() => useUIStore.getState().openTutorial()}
+            className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 transition-colors"
+            aria-label={t.tutorialButton}
+          >
+            📖
           </button>
           <ThemeToggle />
         </div>
@@ -160,6 +165,9 @@ export default function AppLayout() {
 
       {/* Industry Gallery Overlay */}
       <IndustryGalleryOverlay />
+
+      {/* Tutorial Panel */}
+      <TutorialPanel />
 
       {/* Toast notifications */}
       {toasts.length > 0 && (
