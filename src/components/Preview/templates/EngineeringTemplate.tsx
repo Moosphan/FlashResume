@@ -27,7 +27,7 @@ export default function EngineeringTemplate({ data, themeColor, language }: Temp
                   <span className="text-xs mr-1" style={{ color: blue }}>{String(idx + 1).padStart(2, '0')}.</span>
                   {exp.position}
                 </h3>
-                <span className="font-mono text-xs text-gray-400">{formatDate(exp.startDate)} - {formatDate(exp.endDate)}</span>
+                <span className="font-mono text-xs text-gray-400">{formatDate(exp.startDate, language)} - {formatDate(exp.endDate, language)}</span>
               </div>
               <p className="text-xs text-gray-500">{exp.company}</p>
               {exp.description && (
@@ -46,7 +46,7 @@ export default function EngineeringTemplate({ data, themeColor, language }: Temp
           <div className="border rounded" style={{ borderColor: `${steelGray}33` }}>
             {educations.map((edu, idx) => (
               <div key={edu.id} className="flex text-xs p-2" style={{ borderBottom: idx < educations.length - 1 ? `1px solid ${steelGray}22` : 'none' }}>
-                <div className="w-1/3 font-mono text-gray-500">{formatDate(edu.startDate)} - {formatDate(edu.endDate)}</div>
+                <div className="w-1/3 font-mono text-gray-500">{formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</div>
                 <div className="w-2/3">
                   <span className="font-bold" style={{ color: steelGray }}>{edu.school}</span>
                   <span className="text-gray-500"> · {edu.degree} · {edu.major}</span>
@@ -95,7 +95,7 @@ export default function EngineeringTemplate({ data, themeColor, language }: Temp
                   <span className="text-xs mr-1" style={{ color: blue }}>{String(idx + 1).padStart(2, '0')}.</span>
                   {proj.name}
                 </h3>
-                <span className="font-mono text-xs text-gray-400">{formatDate(proj.startDate)} - {formatDate(proj.endDate)}</span>
+                <span className="font-mono text-xs text-gray-400">{formatDate(proj.startDate, language)} - {formatDate(proj.endDate, language)}</span>
               </div>
               {proj.role && <p className="text-xs text-gray-500">{proj.role}</p>}
               {proj.description && (
@@ -122,7 +122,7 @@ export default function EngineeringTemplate({ data, themeColor, language }: Temp
   const renderedIds = new Set(orderedSections);
 
   return (
-    <div className="bg-white font-mono" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box', color: steelGray }}>
+    <div className="bg-white font-mono" style={{ width: 794, minHeight: 1123, boxSizing: 'border-box', color: steelGray }}>
       {/* Header - grid style */}
       <div className="px-8 pt-8 pb-4" style={{ borderBottom: `3px solid ${blue}` }}>
         <div className="grid grid-cols-3 gap-4 items-center">

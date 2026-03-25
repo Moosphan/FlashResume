@@ -22,7 +22,7 @@ export default function CenteredTemplate({ data, themeColor, language }: Templat
           {experiences.map((exp) => (
             <div key={exp.id} className="mb-4">
               <p className="text-sm font-bold text-gray-900 dark:text-gray-100">{exp.position}</p>
-              <p className="text-[10px] text-gray-500 dark:text-gray-400">{exp.company} · {formatDate(exp.startDate)} – {formatDate(exp.endDate)}</p>
+              <p className="text-[10px] text-gray-500 dark:text-gray-400">{exp.company} · {formatDate(exp.startDate, language)} – {formatDate(exp.endDate, language)}</p>
               {exp.description && <div className="text-[10px] text-gray-600 dark:text-gray-400 mt-1 max-w-md mx-auto whitespace-pre-line leading-relaxed [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: exp.description }} />}
             </div>
           ))}
@@ -35,7 +35,7 @@ export default function CenteredTemplate({ data, themeColor, language }: Templat
           {projects.map((p) => (
             <div key={p.id} className="mb-4">
               <p className="text-sm font-bold text-gray-900 dark:text-gray-100">{p.name}</p>
-              <p className="text-[10px] text-gray-500 dark:text-gray-400">{p.role && `${p.role} · `}{formatDate(p.startDate)} – {formatDate(p.endDate)}</p>
+              <p className="text-[10px] text-gray-500 dark:text-gray-400">{p.role && `${p.role} · `}{formatDate(p.startDate, language)} – {formatDate(p.endDate, language)}</p>
               {p.description && <div className="text-[10px] text-gray-600 dark:text-gray-400 mt-1 max-w-md mx-auto whitespace-pre-line leading-relaxed [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: p.description }} />}
             </div>
           ))}
@@ -49,7 +49,7 @@ export default function CenteredTemplate({ data, themeColor, language }: Templat
             <div key={edu.id} className="mb-3">
               <p className="text-sm font-bold text-gray-900 dark:text-gray-100">{edu.school}</p>
               <p className="text-[10px] text-gray-500 dark:text-gray-400">{edu.degree} · {edu.major}</p>
-              <p className="text-[9px] text-gray-400">{formatDate(edu.startDate)} – {formatDate(edu.endDate)}</p>
+              <p className="text-[9px] text-gray-400">{formatDate(edu.startDate, language)} – {formatDate(edu.endDate, language)}</p>
             </div>
           ))}
         </section>
@@ -102,7 +102,7 @@ export default function CenteredTemplate({ data, themeColor, language }: Templat
   });
 
   return (
-    <div className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-sans" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}>
+    <div className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-sans" style={{ width: 794, minHeight: 1123, boxSizing: 'border-box' }}>
       {/* Centered header with generous whitespace */}
       <header className="text-center pt-16 pb-8 px-12">
         <h1 className="text-3xl font-light tracking-[0.15em]" style={{ color: themeColor }}>

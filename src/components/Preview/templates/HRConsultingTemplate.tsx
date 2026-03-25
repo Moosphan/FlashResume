@@ -46,7 +46,7 @@ export default function HRConsultingTemplate({ data, themeColor, language }: Tem
             <div key={edu.id} className="mb-3">
               <p className="text-xs font-semibold text-white">{edu.school}</p>
               <p className="text-xs text-gray-300">{edu.degree} · {edu.major}</p>
-              <p className="text-xs text-gray-400">{formatDate(edu.startDate)} - {formatDate(edu.endDate)}</p>
+              <p className="text-xs text-gray-400">{formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</p>
             </div>
           ))}
         </section>
@@ -64,7 +64,7 @@ export default function HRConsultingTemplate({ data, themeColor, language }: Tem
             <div key={exp.id} className="mb-4">
               <div className="flex justify-between items-baseline">
                 <h3 className="font-bold text-sm" style={{ color: purple }}>{exp.position}</h3>
-                <span className="text-xs text-gray-400">{formatDate(exp.startDate)} - {formatDate(exp.endDate)}</span>
+                <span className="text-xs text-gray-400">{formatDate(exp.startDate, language)} - {formatDate(exp.endDate, language)}</span>
               </div>
               <p className="text-xs text-gray-500">{exp.company}</p>
               {exp.description && (
@@ -84,7 +84,7 @@ export default function HRConsultingTemplate({ data, themeColor, language }: Tem
             <div key={proj.id} className="mb-4">
               <div className="flex justify-between items-baseline">
                 <h3 className="font-bold text-sm" style={{ color: purple }}>{proj.name}</h3>
-                <span className="text-xs text-gray-400">{formatDate(proj.startDate)} - {formatDate(proj.endDate)}</span>
+                <span className="text-xs text-gray-400">{formatDate(proj.startDate, language)} - {formatDate(proj.endDate, language)}</span>
               </div>
               {proj.role && <p className="text-xs text-gray-500">{proj.role}</p>}
               {proj.description && (
@@ -111,7 +111,7 @@ export default function HRConsultingTemplate({ data, themeColor, language }: Tem
   const renderedSidebar = new Set(sidebarSections);
 
   return (
-    <div className="font-sans flex" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box', backgroundColor: lightGray }}>
+    <div className="font-sans flex" style={{ width: 794, minHeight: 1123, boxSizing: 'border-box', backgroundColor: lightGray }}>
       {/* Sidebar */}
       <aside className="w-1/3 p-6" style={{ backgroundColor: purple }}>
         <div className="mb-6 text-center">

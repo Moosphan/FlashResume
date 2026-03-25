@@ -27,7 +27,7 @@ export default function ModernTemplate({ data, themeColor, language }: TemplateP
               <div className="flex justify-between items-baseline">
                 <h3 className="font-semibold text-sm text-gray-900 dark:text-gray-100">{exp.position}</h3>
                 <span className="text-xs text-gray-400">
-                  {formatDate(exp.startDate)} - {formatDate(exp.endDate)}
+                  {formatDate(exp.startDate, language)} - {formatDate(exp.endDate, language)}
                 </span>
               </div>
               <p className="text-xs text-gray-500 dark:text-gray-400">{exp.company}</p>
@@ -49,7 +49,7 @@ export default function ModernTemplate({ data, themeColor, language }: TemplateP
               <div className="flex justify-between items-baseline">
                 <h3 className="font-semibold text-sm text-gray-900 dark:text-gray-100">{edu.school}</h3>
                 <span className="text-xs text-gray-400">
-                  {formatDate(edu.startDate)} - {formatDate(edu.endDate)}
+                  {formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}
                 </span>
               </div>
               <p className="text-xs text-gray-500 dark:text-gray-400">
@@ -70,7 +70,7 @@ export default function ModernTemplate({ data, themeColor, language }: TemplateP
               <div className="flex justify-between items-baseline">
                 <h3 className="font-semibold text-sm text-gray-900 dark:text-gray-100">{proj.name}</h3>
                 <span className="text-xs text-gray-400">
-                  {formatDate(proj.startDate)} - {formatDate(proj.endDate)}
+                  {formatDate(proj.startDate, language)} - {formatDate(proj.endDate, language)}
                 </span>
               </div>
               {proj.role && <p className="text-xs text-gray-500 dark:text-gray-400">{proj.role}</p>}
@@ -98,7 +98,7 @@ export default function ModernTemplate({ data, themeColor, language }: TemplateP
   return (
     <div
       className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-sans flex"
-      style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}
+      style={{ width: 794, minHeight: 1123, boxSizing: 'border-box' }}
     >
       {/* Sidebar */}
       <aside className="w-1/3 p-6 text-white" style={{ backgroundColor: themeColor }}>

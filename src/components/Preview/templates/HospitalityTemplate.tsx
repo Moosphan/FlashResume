@@ -25,7 +25,7 @@ export default function HospitalityTemplate({ data, themeColor, language }: Temp
                 <div className="absolute -left-4 top-1 w-3 h-3 rounded-full border-2" style={{ borderColor: brown, backgroundColor: cream }} />
                 <div className="flex justify-between items-baseline">
                   <h3 className="font-bold text-sm" style={{ color: brown }}>{exp.position}</h3>
-                  <span className="text-xs text-gray-400">{formatDate(exp.startDate)} - {formatDate(exp.endDate)}</span>
+                  <span className="text-xs text-gray-400">{formatDate(exp.startDate, language)} - {formatDate(exp.endDate, language)}</span>
                 </div>
                 <p className="text-xs text-gray-500">{exp.company}</p>
                 {exp.description && (
@@ -43,7 +43,7 @@ export default function HospitalityTemplate({ data, themeColor, language }: Temp
           {educations.map((edu) => (
             <div key={edu.id} className="mb-3 p-3 rounded-lg" style={{ backgroundColor: cream }}>
               <h3 className="font-bold text-sm" style={{ color: brown }}>{edu.school}</h3>
-              <p className="text-xs text-gray-500">{edu.degree} · {edu.major} · {formatDate(edu.startDate)} - {formatDate(edu.endDate)}</p>
+              <p className="text-xs text-gray-500">{edu.degree} · {edu.major} · {formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</p>
             </div>
           ))}
         </section>
@@ -69,7 +69,7 @@ export default function HospitalityTemplate({ data, themeColor, language }: Temp
             <div key={proj.id} className="mb-3 p-3 rounded-lg" style={{ backgroundColor: cream }}>
               <div className="flex justify-between items-baseline">
                 <h3 className="font-bold text-sm" style={{ color: brown }}>{proj.name}</h3>
-                <span className="text-xs text-gray-400">{formatDate(proj.startDate)} - {formatDate(proj.endDate)}</span>
+                <span className="text-xs text-gray-400">{formatDate(proj.startDate, language)} - {formatDate(proj.endDate, language)}</span>
               </div>
               {proj.role && <p className="text-xs text-gray-500">{proj.role}</p>}
               {proj.description && (
@@ -94,7 +94,7 @@ export default function HospitalityTemplate({ data, themeColor, language }: Temp
   const renderedIds = new Set(orderedSections);
 
   return (
-    <div className="bg-white font-sans" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box', color: '#333' }}>
+    <div className="bg-white font-sans" style={{ width: 794, minHeight: 1123, boxSizing: 'border-box', color: '#333' }}>
       {/* Header with warm style */}
       <div className="px-10 pt-8 pb-6 rounded-b-3xl" style={{ backgroundColor: cream }}>
         <div className="flex items-center gap-6">

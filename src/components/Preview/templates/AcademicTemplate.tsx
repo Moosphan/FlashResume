@@ -28,7 +28,7 @@ export default function AcademicTemplate({ data, themeColor, language }: Templat
             <div key={edu.id} className="mb-3 pl-4">
               <div className="flex justify-between items-baseline">
                 <h3 className="font-bold text-sm" style={{ color: darkGray }}>{edu.school}</h3>
-                <span className="text-xs text-gray-500">{formatDate(edu.startDate)} - {formatDate(edu.endDate)}</span>
+                <span className="text-xs text-gray-500">{formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</span>
               </div>
               <p className="text-sm text-gray-700">{edu.degree} · {edu.major}</p>
             </div>
@@ -45,7 +45,7 @@ export default function AcademicTemplate({ data, themeColor, language }: Templat
             <div key={exp.id} className="mb-3 pl-4">
               <div className="flex justify-between items-baseline">
                 <h3 className="font-bold text-sm" style={{ color: darkGray }}>{exp.position}</h3>
-                <span className="text-xs text-gray-500">{formatDate(exp.startDate)} - {formatDate(exp.endDate)}</span>
+                <span className="text-xs text-gray-500">{formatDate(exp.startDate, language)} - {formatDate(exp.endDate, language)}</span>
               </div>
               <p className="text-sm text-gray-700 italic">{exp.company}</p>
               {exp.description && (
@@ -65,7 +65,7 @@ export default function AcademicTemplate({ data, themeColor, language }: Templat
             <div key={proj.id} className="mb-3 pl-4">
               <div className="flex justify-between items-baseline">
                 <h3 className="font-bold text-sm" style={{ color: darkGray }}>{proj.name}</h3>
-                <span className="text-xs text-gray-500">{formatDate(proj.startDate)} - {formatDate(proj.endDate)}</span>
+                <span className="text-xs text-gray-500">{formatDate(proj.startDate, language)} - {formatDate(proj.endDate, language)}</span>
               </div>
               {proj.role && <p className="text-sm text-gray-700 italic">{proj.role}</p>}
               {proj.description && (
@@ -111,7 +111,7 @@ export default function AcademicTemplate({ data, themeColor, language }: Templat
   return (
     <div
       className="bg-white text-gray-800 p-8"
-      style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box', fontFamily: '"Times New Roman", Times, serif' }}
+      style={{ width: 794, minHeight: 1123, boxSizing: 'border-box', fontFamily: '"Times New Roman", Times, serif' }}
     >
       {/* Header */}
       <header className="text-center mb-6 pb-4 border-b-2" style={{ borderColor: darkRed }}>

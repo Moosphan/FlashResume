@@ -27,7 +27,7 @@ export default function GovernmentTemplate({ data, themeColor, language }: Templ
                   <span className="font-bold text-sm" style={{ color: navy }}>{exp.company}</span>
                   <span className="text-sm text-gray-600"> — {exp.position}</span>
                 </div>
-                <span className="text-xs text-gray-500">{formatDate(exp.startDate)} - {formatDate(exp.endDate)}</span>
+                <span className="text-xs text-gray-500">{formatDate(exp.startDate, language)} - {formatDate(exp.endDate, language)}</span>
               </div>
               {exp.description && (
                 <div className="text-xs text-gray-600 mt-1 whitespace-pre-line [&_a]:underline" dangerouslySetInnerHTML={{ __html: exp.description }} />
@@ -45,7 +45,7 @@ export default function GovernmentTemplate({ data, themeColor, language }: Templ
           <div className="border rounded" style={{ borderColor: `${navy}33` }}>
             {educations.map((edu, idx) => (
               <div key={edu.id} className="flex text-xs p-2" style={{ borderBottom: idx < educations.length - 1 ? `1px solid ${navy}22` : 'none' }}>
-                <div className="w-1/4 text-gray-500">{formatDate(edu.startDate)} - {formatDate(edu.endDate)}</div>
+                <div className="w-1/4 text-gray-500">{formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</div>
                 <div className="w-1/3 font-bold" style={{ color: navy }}>{edu.school}</div>
                 <div className="w-5/12 text-gray-600">{edu.degree} · {edu.major}</div>
               </div>
@@ -78,7 +78,7 @@ export default function GovernmentTemplate({ data, themeColor, language }: Templ
             <div key={proj.id} className="mb-3">
               <div className="flex justify-between items-baseline">
                 <h3 className="font-bold text-sm" style={{ color: navy }}>{proj.name}</h3>
-                <span className="text-xs text-gray-500">{formatDate(proj.startDate)} - {formatDate(proj.endDate)}</span>
+                <span className="text-xs text-gray-500">{formatDate(proj.startDate, language)} - {formatDate(proj.endDate, language)}</span>
               </div>
               {proj.role && <p className="text-xs text-gray-500">{proj.role}</p>}
               {proj.description && (
@@ -105,7 +105,7 @@ export default function GovernmentTemplate({ data, themeColor, language }: Templ
   const renderedIds = new Set(orderedSections);
 
   return (
-    <div className="bg-white font-sans" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box', color: '#333' }}>
+    <div className="bg-white font-sans" style={{ width: 794, minHeight: 1123, boxSizing: 'border-box', color: '#333' }}>
       {/* Header */}
       <div className="px-10 pt-8 pb-4" style={{ borderBottom: `3px solid ${navy}` }}>
         <h1 className="text-2xl font-bold text-center" style={{ color: navy }}>{personalInfo.name || L.namePlaceholder}</h1>

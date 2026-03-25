@@ -23,7 +23,7 @@ export default function LegalTemplate({ data, themeColor, language }: TemplatePr
           {experiences.map((exp) => (
             <div key={exp.id} className="mb-4 pl-4">
               <p className="text-sm"><span className="font-bold">{exp.company}</span> — {exp.position}</p>
-              <p className="text-xs text-gray-500 mb-1">{formatDate(exp.startDate)} - {formatDate(exp.endDate)}</p>
+              <p className="text-xs text-gray-500 mb-1">{formatDate(exp.startDate, language)} - {formatDate(exp.endDate, language)}</p>
               {exp.description && (
                 <div className="text-xs leading-relaxed text-gray-700 whitespace-pre-line [&_a]:underline" dangerouslySetInnerHTML={{ __html: exp.description }} />
               )}
@@ -41,7 +41,7 @@ export default function LegalTemplate({ data, themeColor, language }: TemplatePr
             <div key={edu.id} className="mb-3 pl-4">
               <p className="text-sm"><span className="font-bold">{edu.school}</span></p>
               <p className="text-xs text-gray-600 pl-4">{edu.degree} · {edu.major}</p>
-              <p className="text-xs text-gray-500 pl-4">{formatDate(edu.startDate)} - {formatDate(edu.endDate)}</p>
+              <p className="text-xs text-gray-500 pl-4">{formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</p>
             </div>
           ))}
         </section>
@@ -68,7 +68,7 @@ export default function LegalTemplate({ data, themeColor, language }: TemplatePr
           {projects.map((proj) => (
             <div key={proj.id} className="mb-4 pl-4">
               <p className="text-sm font-bold">{proj.name}</p>
-              <p className="text-xs text-gray-500 mb-1">{proj.role && `${proj.role} · `}{formatDate(proj.startDate)} - {formatDate(proj.endDate)}</p>
+              <p className="text-xs text-gray-500 mb-1">{proj.role && `${proj.role} · `}{formatDate(proj.startDate, language)} - {formatDate(proj.endDate, language)}</p>
               {proj.description && (
                 <div className="text-xs leading-relaxed text-gray-700 whitespace-pre-line [&_a]:underline" dangerouslySetInnerHTML={{ __html: proj.description }} />
               )}
@@ -93,7 +93,7 @@ export default function LegalTemplate({ data, themeColor, language }: TemplatePr
   const renderedIds = new Set(orderedSections);
 
   return (
-    <div className="bg-white font-serif" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box', color: textColor }}>
+    <div className="bg-white font-serif" style={{ width: 794, minHeight: 1123, boxSizing: 'border-box', color: textColor }}>
       {/* Header */}
       <div className="px-10 pt-10 pb-4 text-center" style={{ borderBottom: `3px double ${darkRed}` }}>
         <h1 className="text-2xl font-bold tracking-wider" style={{ color: darkRed }}>{personalInfo.name || L.namePlaceholder}</h1>

@@ -32,7 +32,7 @@ export default function LogisticsTemplate({ data, themeColor, language }: Templa
                 )}
                 <div className="flex justify-between items-baseline">
                   <h3 className="font-bold text-sm" style={{ color: darkBlue }}>{exp.position}</h3>
-                  <span className="text-xs text-gray-400">{formatDate(exp.startDate)} - {formatDate(exp.endDate)}</span>
+                  <span className="text-xs text-gray-400">{formatDate(exp.startDate, language)} - {formatDate(exp.endDate, language)}</span>
                 </div>
                 <p className="text-xs" style={{ color: green }}>{exp.company}</p>
                 {exp.description && (
@@ -52,7 +52,7 @@ export default function LogisticsTemplate({ data, themeColor, language }: Templa
           {educations.map((edu) => (
             <div key={edu.id} className="mb-3 pl-4" style={{ borderLeft: `3px solid ${green}33` }}>
               <h3 className="font-bold text-sm" style={{ color: darkBlue }}>{edu.school}</h3>
-              <p className="text-xs text-gray-500">{edu.degree} · {edu.major} · {formatDate(edu.startDate)} - {formatDate(edu.endDate)}</p>
+              <p className="text-xs text-gray-500">{edu.degree} · {edu.major} · {formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</p>
             </div>
           ))}
         </section>
@@ -82,7 +82,7 @@ export default function LogisticsTemplate({ data, themeColor, language }: Templa
             <div key={proj.id} className="mb-3 pl-4" style={{ borderLeft: `3px solid ${green}33` }}>
               <div className="flex justify-between items-baseline">
                 <h3 className="font-bold text-sm" style={{ color: darkBlue }}>{proj.name}</h3>
-                <span className="text-xs text-gray-400">{formatDate(proj.startDate)} - {formatDate(proj.endDate)}</span>
+                <span className="text-xs text-gray-400">{formatDate(proj.startDate, language)} - {formatDate(proj.endDate, language)}</span>
               </div>
               {proj.role && <p className="text-xs" style={{ color: green }}>{proj.role}</p>}
               {proj.description && (
@@ -109,7 +109,7 @@ export default function LogisticsTemplate({ data, themeColor, language }: Templa
   const renderedIds = new Set(orderedSections);
 
   return (
-    <div className="bg-white font-sans" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box', color: '#333' }}>
+    <div className="bg-white font-sans" style={{ width: 794, minHeight: 1123, boxSizing: 'border-box', color: '#333' }}>
       {/* Header */}
       <div className="px-10 pt-8 pb-4" style={{ borderBottom: `4px solid ${green}` }}>
         <div className="flex items-center gap-2">

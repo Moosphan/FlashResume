@@ -30,7 +30,7 @@ export default function CardTemplate({ data, themeColor, language }: TemplatePro
               <div key={exp.id}>
                 <div className="flex justify-between items-baseline">
                   <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">{exp.position}</span>
-                  <span className="text-xs text-gray-400">{formatDate(exp.startDate)} - {formatDate(exp.endDate)}</span>
+                  <span className="text-xs text-gray-400">{formatDate(exp.startDate, language)} - {formatDate(exp.endDate, language)}</span>
                 </div>
                 <p className="text-xs text-gray-500 dark:text-gray-400">{exp.company}</p>
                 {exp.description && <div className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: exp.description }} />}
@@ -47,7 +47,7 @@ export default function CardTemplate({ data, themeColor, language }: TemplatePro
               <div key={proj.id}>
                 <div className="flex justify-between items-baseline">
                   <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">{proj.name}</span>
-                  <span className="text-xs text-gray-400">{formatDate(proj.startDate)} - {formatDate(proj.endDate)}</span>
+                  <span className="text-xs text-gray-400">{formatDate(proj.startDate, language)} - {formatDate(proj.endDate, language)}</span>
                 </div>
                 {proj.role && <p className="text-xs text-gray-500 dark:text-gray-400">{proj.role}</p>}
                 {proj.description && <div className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: proj.description }} />}
@@ -64,7 +64,7 @@ export default function CardTemplate({ data, themeColor, language }: TemplatePro
               <div key={edu.id}>
                 <div className="flex justify-between items-baseline">
                   <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">{edu.school}</span>
-                  <span className="text-xs text-gray-400">{formatDate(edu.startDate)} - {formatDate(edu.endDate)}</span>
+                  <span className="text-xs text-gray-400">{formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</span>
                 </div>
                 <p className="text-xs text-gray-500 dark:text-gray-400">{edu.degree} · {edu.major}</p>
               </div>
@@ -95,7 +95,7 @@ export default function CardTemplate({ data, themeColor, language }: TemplatePro
   });
 
   return (
-    <div className="font-sans text-gray-800 dark:text-gray-200 p-8 bg-gray-50 dark:bg-gray-800" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}>
+    <div className="font-sans text-gray-800 dark:text-gray-200 p-8 bg-gray-50 dark:bg-gray-800" style={{ width: 794, minHeight: 1123, boxSizing: 'border-box' }}>
       {/* Header card */}
       <div className="rounded-lg p-6 mb-4 text-white shadow-md" style={{ backgroundColor: themeColor }}>
         <h1 className="text-2xl font-bold">{personalInfo.name || L.namePlaceholder}</h1>

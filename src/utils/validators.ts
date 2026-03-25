@@ -27,12 +27,13 @@ export function generateId(): string {
 
 /**
  * 格式化日期字符串用于显示
- * 将 YYYY-MM 格式转换为更友好的显示格式（如 "2023年01月"）
- * 空字符串返回 "至今"
+ * 将 YYYY-MM 格式转换为更友好的显示格式
+ * 中文: "2023年01月"，英文: "Jan 2023"
+ * 空字符串返回 "至今" / "Present"
  */
-export function formatDate(date: string): string {
+export function formatDate(date: string, locale: 'zh' | 'en' = 'zh'): string {
   if (!date) {
-    return '至今';
+    return locale === 'zh' ? '至今' : 'Present';
   }
 
   const parts = date.split('-');
@@ -41,5 +42,12 @@ export function formatDate(date: string): string {
   }
 
   const [year, month] = parts;
+
+  if (locale === 'en') {
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const monthIndex = parseInt(month, 10) - 1;
+    return `${monthNames[monthIndex] ?? month} ${year}`;
+  }
+
   return `${year}年${month}月`;
 }

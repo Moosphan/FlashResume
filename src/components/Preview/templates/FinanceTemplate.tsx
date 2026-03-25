@@ -24,7 +24,7 @@ export default function FinanceTemplate({ data, language }: TemplateProps) {
             <div key={exp.id} className="mb-3">
               <div className="flex justify-between items-baseline">
                 <h3 className="font-bold text-sm" style={{ color: navy }}>{exp.company}</h3>
-                <span className="text-xs text-gray-500">{formatDate(exp.startDate)} - {formatDate(exp.endDate)}</span>
+                <span className="text-xs text-gray-500">{formatDate(exp.startDate, language)} - {formatDate(exp.endDate, language)}</span>
               </div>
               <p className="text-sm text-gray-700 italic">{exp.position}</p>
               {exp.description && (
@@ -44,7 +44,7 @@ export default function FinanceTemplate({ data, language }: TemplateProps) {
             <div key={edu.id} className="mb-3">
               <div className="flex justify-between items-baseline">
                 <h3 className="font-bold text-sm" style={{ color: navy }}>{edu.school}</h3>
-                <span className="text-xs text-gray-500">{formatDate(edu.startDate)} - {formatDate(edu.endDate)}</span>
+                <span className="text-xs text-gray-500">{formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</span>
               </div>
               <p className="text-sm text-gray-700">{edu.degree} · {edu.major}</p>
             </div>
@@ -76,7 +76,7 @@ export default function FinanceTemplate({ data, language }: TemplateProps) {
             <div key={proj.id} className="mb-3">
               <div className="flex justify-between items-baseline">
                 <h3 className="font-bold text-sm" style={{ color: navy }}>{proj.name}</h3>
-                <span className="text-xs text-gray-500">{formatDate(proj.startDate)} - {formatDate(proj.endDate)}</span>
+                <span className="text-xs text-gray-500">{formatDate(proj.startDate, language)} - {formatDate(proj.endDate, language)}</span>
               </div>
               {proj.role && <p className="text-sm text-gray-700 italic">{proj.role}</p>}
               {proj.description && (
@@ -107,7 +107,7 @@ export default function FinanceTemplate({ data, language }: TemplateProps) {
   return (
     <div
       className="bg-white text-gray-800 p-8"
-      style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box', fontFamily: 'Georgia, "Times New Roman", serif' }}
+      style={{ width: 794, minHeight: 1123, boxSizing: 'border-box', fontFamily: 'Georgia, "Times New Roman", serif' }}
     >
       {/* Header */}
       <header className="text-center mb-6 pb-4 border-b" style={{ borderColor: gold }}>

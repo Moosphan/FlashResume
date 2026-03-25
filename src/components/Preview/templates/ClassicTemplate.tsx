@@ -25,7 +25,7 @@ export default function ClassicTemplate({ data, themeColor, language }: Template
               <div className="flex justify-between items-baseline">
                 <h3 className="font-bold text-sm text-gray-900 dark:text-gray-100">{exp.position}</h3>
                 <span className="text-xs text-gray-500">
-                  {formatDate(exp.startDate)} - {formatDate(exp.endDate)}
+                  {formatDate(exp.startDate, language)} - {formatDate(exp.endDate, language)}
                 </span>
               </div>
               <p className="text-sm text-gray-700 dark:text-gray-300 italic">{exp.company}</p>
@@ -50,7 +50,7 @@ export default function ClassicTemplate({ data, themeColor, language }: Template
               <div className="flex justify-between items-baseline">
                 <h3 className="font-bold text-sm text-gray-900 dark:text-gray-100">{edu.school}</h3>
                 <span className="text-xs text-gray-500 dark:text-gray-400">
-                  {formatDate(edu.startDate)} - {formatDate(edu.endDate)}
+                  {formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}
                 </span>
               </div>
               <p className="text-sm text-gray-700 dark:text-gray-300">
@@ -96,7 +96,7 @@ export default function ClassicTemplate({ data, themeColor, language }: Template
               <div className="flex justify-between items-baseline">
                 <h3 className="font-bold text-sm text-gray-900 dark:text-gray-100">{proj.name}</h3>
                 <span className="text-xs text-gray-500">
-                  {formatDate(proj.startDate)} - {formatDate(proj.endDate)}
+                  {formatDate(proj.startDate, language)} - {formatDate(proj.endDate, language)}
                 </span>
               </div>
               {proj.role && <p className="text-sm text-gray-700 dark:text-gray-300 italic">{proj.role}</p>}
@@ -127,7 +127,7 @@ export default function ClassicTemplate({ data, themeColor, language }: Template
   return (
     <div
       className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 p-8 font-serif"
-      style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}
+      style={{ width: 794, minHeight: 1123, boxSizing: 'border-box' }}
     >
       {/* Header - Personal Info (always first) */}
       <header className="text-center mb-6 pb-4 border-b-2" style={{ borderColor: themeColor }}>

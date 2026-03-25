@@ -39,7 +39,7 @@ export default function RealEstateTemplate({ data, themeColor, language }: Templ
             <div key={edu.id} className="mb-3">
               <p className="text-xs font-semibold" style={{ color: green }}>{edu.school}</p>
               <p className="text-xs text-gray-500">{edu.degree} · {edu.major}</p>
-              <p className="text-xs text-gray-400">{formatDate(edu.startDate)} - {formatDate(edu.endDate)}</p>
+              <p className="text-xs text-gray-400">{formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</p>
             </div>
           ))}
         </section>
@@ -55,7 +55,7 @@ export default function RealEstateTemplate({ data, themeColor, language }: Templ
             <div key={exp.id} className="mb-3">
               <div className="flex justify-between items-baseline">
                 <h3 className="font-bold text-sm font-serif" style={{ color: green }}>{exp.position}</h3>
-                <span className="text-xs text-gray-400">{formatDate(exp.startDate)} - {formatDate(exp.endDate)}</span>
+                <span className="text-xs text-gray-400">{formatDate(exp.startDate, language)} - {formatDate(exp.endDate, language)}</span>
               </div>
               <p className="text-xs" style={{ color: earth }}>{exp.company}</p>
               {exp.description && (
@@ -73,7 +73,7 @@ export default function RealEstateTemplate({ data, themeColor, language }: Templ
             {projects.map((proj) => (
               <div key={proj.id} className="p-3 rounded border" style={{ borderColor: `${earth}44` }}>
                 <h3 className="font-bold text-xs font-serif" style={{ color: green }}>{proj.name}</h3>
-                <p className="text-xs text-gray-400">{formatDate(proj.startDate)} - {formatDate(proj.endDate)}</p>
+                <p className="text-xs text-gray-400">{formatDate(proj.startDate, language)} - {formatDate(proj.endDate, language)}</p>
                 {proj.role && <p className="text-xs" style={{ color: earth }}>{proj.role}</p>}
                 {proj.description && (
                   <div className="text-xs text-gray-600 mt-1 whitespace-pre-line [&_a]:underline" dangerouslySetInnerHTML={{ __html: proj.description }} />
@@ -98,7 +98,7 @@ export default function RealEstateTemplate({ data, themeColor, language }: Templ
   const renderedSidebar = new Set(sidebarSections);
 
   return (
-    <div className="bg-white font-serif" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box', color: '#333' }}>
+    <div className="bg-white font-serif" style={{ width: 794, minHeight: 1123, boxSizing: 'border-box', color: '#333' }}>
       {/* Wide Header with architectural line decoration */}
       <div className="relative px-8 pt-8 pb-6" style={{ backgroundColor: `${earth}0a` }}>
         {/* Architectural lines */}

@@ -39,7 +39,7 @@ export default function TimelineTemplate({ data, themeColor, language }: Templat
         <section key="experiences" className="mb-6">
           <h2 className="text-xs font-bold tracking-widest mb-3" style={{ color: themeColor }}>{L.experiences}</h2>
           {experiences.map((exp) => (
-            <TimelineItem key={exp.id} title={exp.position} subtitle={exp.company} date={`${formatDate(exp.startDate)} - ${formatDate(exp.endDate)}`} desc={exp.description} />
+            <TimelineItem key={exp.id} title={exp.position} subtitle={exp.company} date={`${formatDate(exp.startDate, language)} - ${formatDate(exp.endDate, language)}`} desc={exp.description} />
           ))}
         </section>
       ) : null,
@@ -48,7 +48,7 @@ export default function TimelineTemplate({ data, themeColor, language }: Templat
         <section key="projects" className="mb-6">
           <h2 className="text-xs font-bold tracking-widest mb-3" style={{ color: themeColor }}>{L.projects}</h2>
           {projects.map((proj) => (
-            <TimelineItem key={proj.id} title={proj.name} subtitle={proj.role} date={`${formatDate(proj.startDate)} - ${formatDate(proj.endDate)}`} desc={proj.description} />
+            <TimelineItem key={proj.id} title={proj.name} subtitle={proj.role} date={`${formatDate(proj.startDate, language)} - ${formatDate(proj.endDate, language)}`} desc={proj.description} />
           ))}
         </section>
       ) : null,
@@ -57,7 +57,7 @@ export default function TimelineTemplate({ data, themeColor, language }: Templat
         <section key="educations" className="mb-6">
           <h2 className="text-xs font-bold tracking-widest mb-3" style={{ color: themeColor }}>{L.educations}</h2>
           {educations.map((edu) => (
-            <TimelineItem key={edu.id} title={edu.school} subtitle={`${edu.degree} · ${edu.major}`} date={`${formatDate(edu.startDate)} - ${formatDate(edu.endDate)}`} />
+            <TimelineItem key={edu.id} title={edu.school} subtitle={`${edu.degree} · ${edu.major}`} date={`${formatDate(edu.startDate, language)} - ${formatDate(edu.endDate, language)}`} />
           ))}
         </section>
       ) : null,
@@ -86,7 +86,7 @@ export default function TimelineTemplate({ data, themeColor, language }: Templat
   });
 
   return (
-    <div className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-sans p-8" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}>
+    <div className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-sans p-8" style={{ width: 794, minHeight: 1123, boxSizing: 'border-box' }}>
       {/* Header */}
       <header className="mb-8">
         <h1 className="text-3xl font-bold" style={{ color: themeColor }}>{personalInfo.name || L.namePlaceholder}</h1>

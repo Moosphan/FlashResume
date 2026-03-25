@@ -23,7 +23,7 @@ export default function MediaTemplate({ data, themeColor, language }: TemplatePr
           {experiences.map((exp) => (
             <div key={exp.id} className="mb-4">
               <h3 className="font-serif font-bold text-sm" style={{ color: black }}>{exp.position}</h3>
-              <p className="text-xs font-sans" style={{ color: yellow }}>{exp.company} · {formatDate(exp.startDate)} - {formatDate(exp.endDate)}</p>
+              <p className="text-xs font-sans" style={{ color: yellow }}>{exp.company} · {formatDate(exp.startDate, language)} - {formatDate(exp.endDate, language)}</p>
               {exp.description && (
                 <div className="text-xs font-sans text-gray-600 mt-1 whitespace-pre-line [&_a]:underline" dangerouslySetInnerHTML={{ __html: exp.description }} />
               )}
@@ -40,7 +40,7 @@ export default function MediaTemplate({ data, themeColor, language }: TemplatePr
           {educations.map((edu) => (
             <div key={edu.id} className="mb-3">
               <h3 className="font-serif font-bold text-sm" style={{ color: black }}>{edu.school}</h3>
-              <p className="text-xs font-sans text-gray-500">{edu.degree} · {edu.major} · {formatDate(edu.startDate)} - {formatDate(edu.endDate)}</p>
+              <p className="text-xs font-sans text-gray-500">{edu.degree} · {edu.major} · {formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</p>
             </div>
           ))}
         </section>
@@ -69,7 +69,7 @@ export default function MediaTemplate({ data, themeColor, language }: TemplatePr
           {projects.map((proj) => (
             <div key={proj.id} className="mb-4">
               <h3 className="font-serif font-bold text-sm" style={{ color: black }}>{proj.name}</h3>
-              <p className="text-xs font-sans" style={{ color: yellow }}>{proj.role && `${proj.role} · `}{formatDate(proj.startDate)} - {formatDate(proj.endDate)}</p>
+              <p className="text-xs font-sans" style={{ color: yellow }}>{proj.role && `${proj.role} · `}{formatDate(proj.startDate, language)} - {formatDate(proj.endDate, language)}</p>
               {proj.description && (
                 <div className="text-xs font-sans text-gray-600 mt-1 whitespace-pre-line [&_a]:underline" dangerouslySetInnerHTML={{ __html: proj.description }} />
               )}
@@ -94,7 +94,7 @@ export default function MediaTemplate({ data, themeColor, language }: TemplatePr
   const renderedIds = new Set(orderedSections);
 
   return (
-    <div className="bg-white" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box', color: black }}>
+    <div className="bg-white" style={{ width: 794, minHeight: 1123, boxSizing: 'border-box', color: black }}>
       {/* Magazine-style header */}
       <div className="px-10 pt-8 pb-6" style={{ backgroundColor: black }}>
         <h1 className="font-serif text-3xl font-bold text-white">{personalInfo.name || L.namePlaceholder}</h1>

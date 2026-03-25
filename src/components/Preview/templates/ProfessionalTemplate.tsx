@@ -23,7 +23,7 @@ export default function ProfessionalTemplate({ data, themeColor, language }: Tem
             <div key={exp.id} className="mb-3">
               <div className="flex justify-between items-baseline">
                 <span className="text-sm font-bold text-gray-900 dark:text-gray-100">{exp.position}</span>
-                <span className="text-xs text-gray-400">{formatDate(exp.startDate)} - {formatDate(exp.endDate)}</span>
+                <span className="text-xs text-gray-400">{formatDate(exp.startDate, language)} - {formatDate(exp.endDate, language)}</span>
               </div>
               <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">{exp.company}</p>
               {exp.description && <div className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line leading-relaxed [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: exp.description }} />}
@@ -39,7 +39,7 @@ export default function ProfessionalTemplate({ data, themeColor, language }: Tem
             <div key={proj.id} className="mb-3">
               <div className="flex justify-between items-baseline">
                 <span className="text-sm font-bold text-gray-900 dark:text-gray-100">{proj.name}</span>
-                <span className="text-xs text-gray-400">{formatDate(proj.startDate)} - {formatDate(proj.endDate)}</span>
+                <span className="text-xs text-gray-400">{formatDate(proj.startDate, language)} - {formatDate(proj.endDate, language)}</span>
               </div>
               {proj.role && <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">{proj.role}</p>}
               {proj.description && <div className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line leading-relaxed [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: proj.description }} />}
@@ -67,7 +67,7 @@ export default function ProfessionalTemplate({ data, themeColor, language }: Tem
             <div key={edu.id} className="mb-2">
               <p className="text-xs font-semibold text-white">{edu.school}</p>
               <p className="text-xs text-white/70">{edu.degree} · {edu.major}</p>
-              <p className="text-xs text-white/50">{formatDate(edu.startDate)} - {formatDate(edu.endDate)}</p>
+              <p className="text-xs text-white/50">{formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</p>
             </div>
           ))}
         </section>
@@ -89,7 +89,7 @@ export default function ProfessionalTemplate({ data, themeColor, language }: Tem
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-sans" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}>
+    <div className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-sans" style={{ width: 794, minHeight: 1123, boxSizing: 'border-box' }}>
       {/* Top header band */}
       <header className="px-8 py-6 text-white" style={{ backgroundColor: themeColor }}>
         <h1 className="text-3xl font-bold tracking-tight">{personalInfo.name || L.namePlaceholder}</h1>

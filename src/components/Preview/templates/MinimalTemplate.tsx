@@ -23,7 +23,7 @@ export default function MinimalTemplate({ data, themeColor, language }: Template
                 <div className="flex justify-between items-baseline">
                   <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{exp.position}</span>
                   <span className="text-xs text-gray-400">
-                    {formatDate(exp.startDate)} - {formatDate(exp.endDate)}
+                    {formatDate(exp.startDate, language)} - {formatDate(exp.endDate, language)}
                   </span>
                 </div>
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{exp.company}</p>
@@ -47,7 +47,7 @@ export default function MinimalTemplate({ data, themeColor, language }: Template
                 <div className="flex justify-between items-baseline">
                   <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{edu.school}</span>
                   <span className="text-xs text-gray-400">
-                    {formatDate(edu.startDate)} - {formatDate(edu.endDate)}
+                    {formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}
                   </span>
                 </div>
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
@@ -88,7 +88,7 @@ export default function MinimalTemplate({ data, themeColor, language }: Template
                 <div className="flex justify-between items-baseline">
                   <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{proj.name}</span>
                   <span className="text-xs text-gray-400">
-                    {formatDate(proj.startDate)} - {formatDate(proj.endDate)}
+                    {formatDate(proj.startDate, language)} - {formatDate(proj.endDate, language)}
                   </span>
                 </div>
                 {proj.role && <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{proj.role}</p>}
@@ -117,7 +117,7 @@ export default function MinimalTemplate({ data, themeColor, language }: Template
   return (
     <div
       className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-sans px-12 py-10"
-      style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}
+      style={{ width: 794, minHeight: 1123, boxSizing: 'border-box' }}
     >
       {/* Header */}
       <header className="mb-10">

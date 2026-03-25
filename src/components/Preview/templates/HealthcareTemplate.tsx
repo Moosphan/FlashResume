@@ -29,7 +29,7 @@ export default function HealthcareTemplate({ data, themeColor, language }: Templ
                 />
                 <div className="flex justify-between items-baseline">
                   <h3 className="font-semibold text-sm text-gray-900">{exp.position}</h3>
-                  <span className="text-xs text-gray-400">{formatDate(exp.startDate)} - {formatDate(exp.endDate)}</span>
+                  <span className="text-xs text-gray-400">{formatDate(exp.startDate, language)} - {formatDate(exp.endDate, language)}</span>
                 </div>
                 <p className="text-xs text-gray-500">{exp.company}</p>
                 {exp.description && (
@@ -50,7 +50,7 @@ export default function HealthcareTemplate({ data, themeColor, language }: Templ
             <div key={edu.id} className="mb-3">
               <div className="flex justify-between items-baseline">
                 <h3 className="font-semibold text-sm text-gray-900">{edu.school}</h3>
-                <span className="text-xs text-gray-400">{formatDate(edu.startDate)} - {formatDate(edu.endDate)}</span>
+                <span className="text-xs text-gray-400">{formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</span>
               </div>
               <p className="text-xs text-gray-500">{edu.degree} · {edu.major}</p>
             </div>
@@ -86,7 +86,7 @@ export default function HealthcareTemplate({ data, themeColor, language }: Templ
             <div key={proj.id} className="mb-3">
               <div className="flex justify-between items-baseline">
                 <h3 className="font-semibold text-sm text-gray-900">{proj.name}</h3>
-                <span className="text-xs text-gray-400">{formatDate(proj.startDate)} - {formatDate(proj.endDate)}</span>
+                <span className="text-xs text-gray-400">{formatDate(proj.startDate, language)} - {formatDate(proj.endDate, language)}</span>
               </div>
               {proj.role && <p className="text-xs text-gray-500">{proj.role}</p>}
               {proj.description && (
@@ -112,7 +112,7 @@ export default function HealthcareTemplate({ data, themeColor, language }: Templ
   return (
     <div
       className="bg-white text-gray-800 p-10 font-sans"
-      style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}
+      style={{ width: 794, minHeight: 1123, boxSizing: 'border-box' }}
     >
       {/* Header */}
       <header className="text-center mb-8 pb-5" style={{ borderBottom: `2px solid ${teal}` }}>

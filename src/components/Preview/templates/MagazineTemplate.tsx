@@ -24,7 +24,7 @@ export default function MagazineTemplate({ data, themeColor, language }: Templat
             <div key={exp.id} className="mb-3 pl-3" style={{ borderLeft: `2px solid ${themeColor}30` }}>
               <div className="flex justify-between items-baseline">
                 <span className="text-xs font-bold text-gray-900 dark:text-gray-100">{exp.position}</span>
-                <span className="text-[10px] text-gray-400">{formatDate(exp.startDate)} – {formatDate(exp.endDate)}</span>
+                <span className="text-[10px] text-gray-400">{formatDate(exp.startDate, language)} – {formatDate(exp.endDate, language)}</span>
               </div>
               <p className="text-[10px] text-gray-500 dark:text-gray-400 italic">{exp.company}</p>
               {exp.description && <div className="text-[10px] text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line leading-relaxed [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: exp.description }} />}
@@ -42,7 +42,7 @@ export default function MagazineTemplate({ data, themeColor, language }: Templat
             <div key={p.id} className="mb-3 pl-3" style={{ borderLeft: `2px solid ${themeColor}30` }}>
               <div className="flex justify-between items-baseline">
                 <span className="text-xs font-bold text-gray-900 dark:text-gray-100">{p.name}</span>
-                <span className="text-[10px] text-gray-400">{formatDate(p.startDate)} – {formatDate(p.endDate)}</span>
+                <span className="text-[10px] text-gray-400">{formatDate(p.startDate, language)} – {formatDate(p.endDate, language)}</span>
               </div>
               {p.role && <p className="text-[10px] text-gray-500 dark:text-gray-400 italic">{p.role}</p>}
               {p.description && <div className="text-[10px] text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line leading-relaxed [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: p.description }} />}
@@ -65,7 +65,7 @@ export default function MagazineTemplate({ data, themeColor, language }: Templat
   });
 
   return (
-    <div className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-sans" style={{ width: '210mm', minHeight: '297mm', boxSizing: 'border-box' }}>
+    <div className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 font-sans" style={{ width: 794, minHeight: 1123, boxSizing: 'border-box' }}>
       {/* Full-width name banner */}
       <header className="px-8 pt-10 pb-4">
         <h1 className="text-4xl font-black tracking-tight leading-none" style={{ color: themeColor }}>
@@ -111,7 +111,7 @@ export default function MagazineTemplate({ data, themeColor, language }: Templat
                 <div key={edu.id} className="mb-2">
                   <p className="text-[10px] font-bold text-gray-900 dark:text-gray-100">{edu.school}</p>
                   <p className="text-[10px] text-gray-500 dark:text-gray-400">{edu.degree} · {edu.major}</p>
-                  <p className="text-[9px] text-gray-400">{formatDate(edu.startDate)} – {formatDate(edu.endDate)}</p>
+                  <p className="text-[9px] text-gray-400">{formatDate(edu.startDate, language)} – {formatDate(edu.endDate, language)}</p>
                 </div>
               ))}
             </section>
