@@ -131,6 +131,10 @@ const translations = {
     linkPrompt: '请输入链接地址',
 
     // Export / Import toasts
+    exportingPDF: '正在导出 PDF…',
+    exportingPNG: '正在导出 PNG…',
+    exportingJPG: '正在导出 JPG…',
+    exportSuccess: '导出成功',
     pdfFailed: 'PDF 生成失败，请重试',
     jsonExportFailed: 'JSON 导出失败，请重试',
     pngFailed: 'PNG 导出失败，请重试',
@@ -164,6 +168,11 @@ const translations = {
     templateSwitched: '模板已切换成功',
     filterByIndustry: '按行业筛选',
     noTemplatesFound: '该行业暂无推荐模板',
+
+    // Tutorial
+    tutorialButton: '简历教程',
+    tutorialTitle: '简历教程',
+    closeTutorial: '关闭',
   },
   en: {
     experiences: 'Work Experience',
@@ -274,6 +283,10 @@ const translations = {
     insertLink: 'Insert link',
     linkPrompt: 'Enter link URL',
 
+    exportingPDF: 'Exporting PDF…',
+    exportingPNG: 'Exporting PNG…',
+    exportingJPG: 'Exporting JPG…',
+    exportSuccess: 'Export successful',
     pdfFailed: 'PDF export failed, please retry',
     jsonExportFailed: 'JSON export failed, please retry',
     pngFailed: 'PNG export failed, please retry',
@@ -306,6 +319,11 @@ const translations = {
     templateSwitched: 'Template switched successfully',
     filterByIndustry: 'Filter by Industry',
     noTemplatesFound: 'No templates found for this industry',
+
+    // Tutorial
+    tutorialButton: 'Resume Tutorial',
+    tutorialTitle: 'Resume Tutorial',
+    closeTutorial: 'Close',
   },
 } as const;
 

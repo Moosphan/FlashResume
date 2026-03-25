@@ -3,6 +3,26 @@ import { exportToJSON, downloadFile } from '../exportService';
 import { DEFAULT_RESUME_DATA } from '../../types/resume';
 import type { ResumeData } from '../../types/resume';
 
+// Mock renderEngine (html-to-image backed) for image/PDF export tests
+vi.mock('../renderEngine', () => {
+  const mockCanvas = {
+    width: 1588,
+    height: 2246,
+    toDataURL: vi.fn(() => 'data:image/png;base64,mockBase64'),
+    getContext: vi.fn(() => ({
+      drawImage: vi.fn(),
+      fillRect: vi.fn(),
+    })),
+  } as unknown as HTMLCanvasElement;
+
+  return {
+    renderEngine: {
+      domToCanvas: vi.fn(() => Promise.resolve(mockCanvas)),
+      domToDataURL: vi.fn(() => Promise.resolve('data:image/png;base64,mockBase64')),
+    },
+  };
+});
+
 describe('exportToJSON', () => {
   it('serializes ResumeData to formatted JSON with 2-space indentation', () => {
     const result = exportToJSON(DEFAULT_RESUME_DATA);
