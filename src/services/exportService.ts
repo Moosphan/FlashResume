@@ -12,7 +12,7 @@ export const PAGE_MARGIN_PX = 40;
 export const PAGE_CONTENT_HEIGHT_PX = A4_HEIGHT_PX - PAGE_MARGIN_PX * 2;
 const PAGE_MARGIN_PT = (PAGE_MARGIN_PX / A4_HEIGHT_PX) * A4_HEIGHT_PT;
 
-const EXPORT_SCALE = 2;
+const EXPORT_SCALE = 3;
 
 export type ProgressCallback = (progress: number) => void;
 
