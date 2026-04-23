@@ -157,6 +157,16 @@ export default function AppLayout() {
               <PreviewPanel ref={previewRef} />
             </div>
           )}
+
+          {/* Mobile editor keeps an offscreen preview mounted so export has a DOM source. */}
+          {isMobile && activeTab === 'editor' && (
+            <div
+              aria-hidden="true"
+              className="pointer-events-none fixed left-[-10000px] top-0 h-[1px] w-[1px] overflow-hidden opacity-0"
+            >
+              <PreviewPanel ref={previewRef} />
+            </div>
+          )}
         </main>
       </div>
 

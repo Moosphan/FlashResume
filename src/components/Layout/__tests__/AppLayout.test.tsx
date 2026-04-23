@@ -1,18 +1,35 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // --- Mocks ---
 
 let mockToasts: Array<{ id: string; message: string; type: string }> = [];
 const mockRemoveToast = vi.fn();
+const mockAddToast = vi.fn();
 let mockActiveTab: 'editor' | 'preview' = 'editor';
 const mockSetActiveTab = vi.fn();
+let mockIsMobile = false;
+let mockIsTablet = false;
+let mockResumeData = {
+  personalInfo: { name: '', email: '', phone: '', address: '', website: '', avatar: '' },
+  experiences: [] as unknown[],
+  educations: [] as unknown[],
+  skills: [] as unknown[],
+  customSections: [],
+  sectionOrder: ['personalInfo', 'experiences', 'educations', 'skills'],
+  metadata: { templateId: 'classic', themeColor: '#2563EB', createdAt: '', updatedAt: '' },
+};
+const mockExportToPDF = vi.fn().mockResolvedValue(new Blob(['pdf'], { type: 'application/pdf' }));
+const mockExportToPNG = vi.fn().mockResolvedValue(new Blob(['png'], { type: 'image/png' }));
+const mockExportToJPG = vi.fn().mockResolvedValue(new Blob(['jpg'], { type: 'image/jpeg' }));
+const mockDownloadFile = vi.fn();
 
 vi.mock('../../../stores/uiStore', () => ({
   useUIStore: (selector: (s: Record<string, unknown>) => unknown) =>
     selector({
       toasts: mockToasts,
       removeToast: mockRemoveToast,
+      addToast: mockAddToast,
       activeTab: mockActiveTab,
       setActiveTab: mockSetActiveTab,
     }),
@@ -21,15 +38,7 @@ vi.mock('../../../stores/uiStore', () => ({
 vi.mock('../../../stores/resumeStore', () => ({
   useResumeStore: (selector: (s: Record<string, unknown>) => unknown) =>
     selector({
-      resumeData: {
-        personalInfo: { name: '', email: '', phone: '', address: '', website: '', avatar: '' },
-        experiences: [],
-        educations: [],
-        skills: [],
-        customSections: [],
-        sectionOrder: ['personalInfo', 'experiences', 'educations', 'skills'],
-        metadata: { templateId: 'classic', themeColor: '#2563EB', createdAt: '', updatedAt: '' },
-      },
+      resumeData: mockResumeData,
       selectedTemplateId: 'classic',
       themeColor: '#2563EB',
       setTemplate: vi.fn(),
@@ -49,11 +58,11 @@ vi.mock('../../../services/templateRegistry', () => ({
 }));
 
 vi.mock('../../../services/exportService', () => ({
-  exportToPDF: vi.fn(),
+  exportToPDF: (...args: unknown[]) => mockExportToPDF(...args),
   exportToJSON: vi.fn().mockReturnValue('{}'),
-  exportToPNG: vi.fn(),
-  exportToJPG: vi.fn(),
-  downloadFile: vi.fn(),
+  exportToPNG: (...args: unknown[]) => mockExportToPNG(...args),
+  exportToJPG: (...args: unknown[]) => mockExportToJPG(...args),
+  downloadFile: (...args: unknown[]) => mockDownloadFile(...args),
 }));
 
 vi.mock('../../../services/importService', () => ({
@@ -61,8 +70,8 @@ vi.mock('../../../services/importService', () => ({
 }));
 
 vi.mock('../../../hooks/useMediaQuery', () => ({
-  useIsMobile: () => false,
-  useIsTablet: () => false,
+  useIsMobile: () => mockIsMobile,
+  useIsTablet: () => mockIsTablet,
 }));
 
 vi.mock('../MobileTabNav', () => ({
@@ -84,6 +93,17 @@ describe('AppLayout', () => {
     vi.clearAllMocks();
     mockToasts = [];
     mockActiveTab = 'editor';
+    mockIsMobile = false;
+    mockIsTablet = false;
+    mockResumeData = {
+      personalInfo: { name: '', email: '', phone: '', address: '', website: '', avatar: '' },
+      experiences: [],
+      educations: [],
+      skills: [],
+      customSections: [],
+      sectionOrder: ['personalInfo', 'experiences', 'educations', 'skills'],
+      metadata: { templateId: 'classic', themeColor: '#2563EB', createdAt: '', updatedAt: '' },
+    };
   });
 
   it('renders the app title', () => {
@@ -137,5 +157,23 @@ describe('AppLayout', () => {
     const main = container.querySelector('main');
     expect(main?.className).toContain('flex-col');
     expect(main?.className).toContain('lg:flex-row');
+  });
+
+  it('exports from an offscreen preview on mobile editor tab', async () => {
+    mockIsMobile = true;
+    mockActiveTab = 'editor';
+    mockResumeData.personalInfo.name = 'Mobile User';
+
+    render(<AppLayout />);
+    fireEvent.click(screen.getByLabelText('导出菜单'));
+    fireEvent.click(screen.getByText('导出 PNG'));
+
+    await waitFor(() => {
+      expect(mockExportToPNG).toHaveBeenCalledWith(
+        expect.any(HTMLDivElement),
+        expect.any(Function),
+      );
+      expect(mockDownloadFile).toHaveBeenCalledWith(expect.any(Blob), 'resume.png');
+    });
   });
 });
