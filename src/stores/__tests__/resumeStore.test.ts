@@ -281,6 +281,24 @@ describe('ResumeStore', () => {
       expect(useResumeStore.getState().resumeData.personalInfo.name).toBe('Imported');
     });
 
+    it('should backfill empty sectionTitles when importing legacy JSON', () => {
+      const legacyData = {
+        personalInfo: { ...DEFAULT_RESUME_DATA.personalInfo, name: 'Imported' },
+        experiences: [],
+        educations: [],
+        skills: [],
+        projects: [],
+        customSections: [],
+        sectionOrder: [...DEFAULT_RESUME_DATA.sectionOrder],
+        metadata: { ...DEFAULT_RESUME_DATA.metadata, createdAt: '2024-01-01', updatedAt: '2024-01-01' },
+      };
+
+      const result = useResumeStore.getState().importFromJSON(JSON.stringify(legacyData));
+
+      expect(result.success).toBe(true);
+      expect(useResumeStore.getState().resumeData.sectionTitles).toEqual({});
+    });
+
     it('should reject invalid JSON', () => {
       const result = useResumeStore.getState().importFromJSON('not json');
       expect(result.success).toBe(false);

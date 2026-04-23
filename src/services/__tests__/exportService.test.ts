@@ -67,6 +67,24 @@ describe('exportToJSON', () => {
     expect(parsed.experiences).toHaveLength(1);
     expect(parsed.skills[0].name).toBe('TypeScript');
   });
+
+  it('preserves custom section titles in exported JSON', () => {
+    const data: ResumeData = {
+      ...DEFAULT_RESUME_DATA,
+      sectionTitles: {
+        experiences: 'Career Highlights',
+        projects: 'Selected Projects',
+      },
+    };
+
+    const result = exportToJSON(data);
+    const parsed = JSON.parse(result);
+
+    expect(parsed.sectionTitles).toEqual({
+      experiences: 'Career Highlights',
+      projects: 'Selected Projects',
+    });
+  });
 });
 
 describe('downloadFile', () => {

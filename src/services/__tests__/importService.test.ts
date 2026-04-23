@@ -17,6 +17,23 @@ describe('importService - parseJSON', () => {
     }
   });
 
+  it('should accept legacy ResumeData JSON without sectionTitles', () => {
+    const data = {
+      personalInfo: { ...DEFAULT_RESUME_DATA.personalInfo },
+      experiences: [],
+      educations: [],
+      skills: [],
+      projects: [],
+      customSections: [],
+      sectionOrder: [...DEFAULT_RESUME_DATA.sectionOrder],
+      metadata: { ...DEFAULT_RESUME_DATA.metadata, createdAt: '2024-01-01', updatedAt: '2024-01-01' },
+    };
+
+    const result = parseJSON(JSON.stringify(data));
+
+    expect(result.success).toBe(true);
+  });
+
   it('should return invalid_json for non-JSON strings', () => {
     const result = parseJSON('not json at all');
     expect(result).toEqual({ success: false, error: 'invalid_json' });
