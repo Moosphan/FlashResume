@@ -7,7 +7,7 @@ import { getLabels } from '../../../utils/i18n';
  */
 export default function AcademicTemplate({ data, themeColor, language }: TemplateProps) {
   const { personalInfo, experiences, educations, skills, projects, customSections, sectionOrder } = data;
-  const L = getLabels(language);
+  const L = getLabels(language, data.sectionTitles);
 
   const darkRed = themeColor || '#8b0000';
   const darkGray = '#333';

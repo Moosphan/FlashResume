@@ -7,7 +7,7 @@ import { getLabels } from '../../../utils/i18n';
  */
 export default function RealEstateTemplate({ data, themeColor, language }: TemplateProps) {
   const { personalInfo, experiences, educations, skills, projects, customSections, sectionOrder } = data;
-  const L = getLabels(language);
+  const L = getLabels(language, data.sectionTitles);
 
   const earth = themeColor || '#8B7355';
   const green = '#2d5016';

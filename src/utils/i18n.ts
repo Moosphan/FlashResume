@@ -1,5 +1,7 @@
 export type Locale = 'zh' | 'en';
 
+import type { SectionTitleMap } from '../types/resume';
+
 // Keep backward compat alias
 export type ResumeLanguage = Locale;
 
@@ -345,8 +347,17 @@ export function getTranslations(locale: Locale) {
 }
 
 /** Backward compat: get just the resume section labels */
-export function getLabels(lang: ResumeLanguage) {
-  return translations[lang];
+export function getLabels(lang: ResumeLanguage, sectionTitles?: SectionTitleMap) {
+  const labels = translations[lang];
+  if (!sectionTitles) return labels;
+
+  return {
+    ...labels,
+    experiences: sectionTitles.experiences?.trim() || labels.experiences,
+    educations: sectionTitles.educations?.trim() || labels.educations,
+    skills: sectionTitles.skills?.trim() || labels.skills,
+    projects: sectionTitles.projects?.trim() || labels.projects,
+  };
 }
 
 // ============================================================

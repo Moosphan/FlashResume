@@ -9,6 +9,7 @@ import type {
   CustomSection,
   SkillLevel,
   ImportResult,
+  StandardSectionId,
 } from '../types/resume';
 import { DEFAULT_RESUME_DATA } from '../types/resume';
 import { generateId } from '../utils/validators';
@@ -58,6 +59,7 @@ export interface ResumeStoreState {
   setTemplate: (templateId: string) => void;
   setThemeColor: (color: string) => void;
   setResumeLanguage: (lang: ResumeLanguage) => void;
+  updateSectionTitle: (sectionId: StandardSectionId, title: string) => void;
 
   createResume: (name: string) => void;
   loadResume: (id: string) => void;
@@ -90,6 +92,7 @@ function createDefaultResumeData(): ResumeData {
     skills: [],
     projects: [],
     customSections: [],
+    sectionTitles: { ...(DEFAULT_RESUME_DATA.sectionTitles ?? {}) },
     sectionOrder: [...DEFAULT_RESUME_DATA.sectionOrder],
     metadata: {
       ...DEFAULT_RESUME_DATA.metadata,
@@ -378,6 +381,21 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
 
   setResumeLanguage: (lang) => set({ resumeLanguage: lang }),
 
+  updateSectionTitle: (sectionId, title) =>
+    set((state) => ({
+      resumeData: {
+        ...state.resumeData,
+        sectionTitles: {
+          ...(state.resumeData.sectionTitles ?? {}),
+          [sectionId]: title,
+        },
+        metadata: {
+          ...state.resumeData.metadata,
+          updatedAt: new Date().toISOString(),
+        },
+      },
+    })),
+
   // --- 多简历管理 ---
   createResume: (name) => {
     const id = generateId();
@@ -463,6 +481,9 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
     }
 
     const data = parsed as ResumeData;
+    if (!data.sectionTitles) {
+      data.sectionTitles = {};
+    }
     // Ensure backward compatibility: add projects array if missing from imported data
     if (!data.projects) {
       data.projects = [];

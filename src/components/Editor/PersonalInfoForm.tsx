@@ -2,6 +2,7 @@ import { useState, type ChangeEvent } from 'react';
 import { useResumeStore } from '../../stores/resumeStore';
 import { validateEmail, validatePhone } from '../../services/validationService';
 import { useLocale } from '../../hooks/useLocale';
+import EditableSectionTitle from './EditableSectionTitle';
 
 export default function PersonalInfoForm() {
   const personalInfo = useResumeStore((s) => s.resumeData.personalInfo);
@@ -42,7 +43,7 @@ export default function PersonalInfoForm() {
 
   return (
     <section className="space-y-4">
-      <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">{t.personalInfo}</h2>
+      <EditableSectionTitle sectionId="personalInfo" />
 
       <div>
         <label className={labelCls}>{t.avatar}</label>

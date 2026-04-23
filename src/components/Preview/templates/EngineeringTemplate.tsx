@@ -7,7 +7,7 @@ import { getLabels } from '../../../utils/i18n';
  */
 export default function EngineeringTemplate({ data, themeColor, language }: TemplateProps) {
   const { personalInfo, experiences, educations, skills, projects, customSections, sectionOrder } = data;
-  const L = getLabels(language);
+  const L = getLabels(language, data.sectionTitles);
 
   const blue = themeColor || '#2b5797';
   const steelGray = '#4a4a4a';

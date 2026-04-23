@@ -7,7 +7,7 @@ import { getLabels } from '../../../utils/i18n';
  */
 export default function ModernTemplate({ data, themeColor, language }: TemplateProps) {
   const { personalInfo, experiences, educations, skills, projects, customSections, sectionOrder } = data;
-  const L = getLabels(language);
+  const L = getLabels(language, data.sectionTitles);
 
   // Sidebar sections: personalInfo contact details + skills
   const sidebarSectionIds = new Set(['personalInfo', 'skills']);

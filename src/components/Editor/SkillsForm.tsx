@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useResumeStore } from '../../stores/resumeStore';
 import { useLocale } from '../../hooks/useLocale';
+import EditableSectionTitle from './EditableSectionTitle';
 
 function parseSkills(text: string): string[] {
   return text.split(/[,，、\n]/).map((s) => s.trim()).filter(Boolean);
@@ -34,7 +35,7 @@ export default function SkillsForm() {
 
   return (
     <section className="space-y-3">
-      <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">{t.skills}</h2>
+      <EditableSectionTitle sectionId="skills" />
       <textarea
         value={text}
         onChange={(e) => setText(e.target.value)}

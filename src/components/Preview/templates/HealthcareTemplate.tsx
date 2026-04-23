@@ -7,7 +7,7 @@ import { getLabels } from '../../../utils/i18n';
  */
 export default function HealthcareTemplate({ data, themeColor, language }: TemplateProps) {
   const { personalInfo, experiences, educations, skills, projects, customSections, sectionOrder } = data;
-  const L = getLabels(language);
+  const L = getLabels(language, data.sectionTitles);
 
   const teal = themeColor || '#2c7a7b';
   const lightBlue = '#e8f4f8';

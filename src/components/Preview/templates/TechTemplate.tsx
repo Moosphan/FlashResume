@@ -7,7 +7,7 @@ import { getLabels } from '../../../utils/i18n';
  */
 export default function TechTemplate({ data, themeColor, language }: TemplateProps) {
   const { personalInfo, experiences, educations, skills, projects, customSections, sectionOrder } = data;
-  const L = getLabels(language);
+  const L = getLabels(language, data.sectionTitles);
 
   const accent = themeColor || '#0f9690';
   const sidebarBg = '#1a1a2e';

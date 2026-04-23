@@ -4,6 +4,7 @@ import { validateDateRange } from '../../services/validationService';
 import { useLocale } from '../../hooks/useLocale';
 import type { Project } from '../../types/resume';
 import RichTextEditor from '../UI/RichTextEditor';
+import EditableSectionTitle from './EditableSectionTitle';
 
 export default function ProjectForm() {
   const projects = useResumeStore((s) => s.resumeData.projects);
@@ -31,7 +32,7 @@ export default function ProjectForm() {
 
   return (
     <section className="space-y-4">
-      <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">{t.projects}</h2>
+      <EditableSectionTitle sectionId="projects" />
       {projects.map((proj) => (
         <div key={proj.id} className="rounded-lg border border-gray-200 bg-white p-4 space-y-3 dark:border-gray-600 dark:bg-gray-800">
           <div className="flex items-center justify-between">

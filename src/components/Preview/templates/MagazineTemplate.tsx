@@ -8,7 +8,7 @@ import { getLabels } from '../../../utils/i18n';
  */
 export default function MagazineTemplate({ data, themeColor, language }: TemplateProps) {
   const { personalInfo, experiences, educations, skills, projects, customSections, sectionOrder } = data;
-  const L = getLabels(language);
+  const L = getLabels(language, data.sectionTitles);
 
   const leftIds = new Set(['personalInfo', 'skills', 'educations']);
   const rightSections = sectionOrder.filter((id) => !leftIds.has(id));

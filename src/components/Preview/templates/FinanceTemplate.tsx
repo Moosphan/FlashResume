@@ -7,7 +7,7 @@ import { getLabels } from '../../../utils/i18n';
  */
 export default function FinanceTemplate({ data, language }: TemplateProps) {
   const { personalInfo, experiences, educations, skills, projects, customSections, sectionOrder } = data;
-  const L = getLabels(language);
+  const L = getLabels(language, data.sectionTitles);
 
   const navy = '#003366';
   const gold = '#c5a55a';

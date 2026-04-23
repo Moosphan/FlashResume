@@ -7,7 +7,7 @@ import { getLabels } from '../../../utils/i18n';
  */
 export default function LegalTemplate({ data, themeColor, language }: TemplateProps) {
   const { personalInfo, experiences, educations, skills, projects, customSections, sectionOrder } = data;
-  const L = getLabels(language);
+  const L = getLabels(language, data.sectionTitles);
 
   const darkRed = themeColor || '#800020';
   const textColor = '#2d2d2d';

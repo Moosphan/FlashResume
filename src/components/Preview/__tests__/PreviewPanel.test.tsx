@@ -26,7 +26,9 @@ const mockResumeData = {
   experiences: [],
   educations: [],
   skills: [],
+  projects: [],
   customSections: [],
+  sectionTitles: {},
   sectionOrder: ['personalInfo'],
   metadata: { templateId: 'classic', themeColor: '#2563EB', createdAt: '', updatedAt: '' },
 };

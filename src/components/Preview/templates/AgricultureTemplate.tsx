@@ -7,7 +7,7 @@ import { getLabels } from '../../../utils/i18n';
  */
 export default function AgricultureTemplate({ data, themeColor, language }: TemplateProps) {
   const { personalInfo, experiences, educations, skills, projects, customSections, sectionOrder } = data;
-  const L = getLabels(language);
+  const L = getLabels(language, data.sectionTitles);
 
   const forestGreen = themeColor || '#2d5016';
   const earthBrown = '#8B7355';

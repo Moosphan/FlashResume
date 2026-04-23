@@ -7,7 +7,7 @@ import { getLabels } from '../../../utils/i18n';
  */
 export default function MarketingTemplate({ data, themeColor, language }: TemplateProps) {
   const { personalInfo, experiences, educations, skills, projects, customSections, sectionOrder } = data;
-  const L = getLabels(language);
+  const L = getLabels(language, data.sectionTitles);
 
   const orange = themeColor || '#ff6600';
   const darkGray = '#333';

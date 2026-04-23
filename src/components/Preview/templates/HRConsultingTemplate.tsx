@@ -7,7 +7,7 @@ import { getLabels } from '../../../utils/i18n';
  */
 export default function HRConsultingTemplate({ data, themeColor, language }: TemplateProps) {
   const { personalInfo, experiences, educations, skills, projects, customSections, sectionOrder } = data;
-  const L = getLabels(language);
+  const L = getLabels(language, data.sectionTitles);
 
   const purple = themeColor || '#6c3483';
   const lightGray = '#f5f5f5';

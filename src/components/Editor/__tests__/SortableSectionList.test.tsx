@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, it, expect, beforeEach } from 'vitest';
 import SortableSectionList from '../SortableSectionList';
 import { useResumeStore } from '../../../stores/resumeStore';
@@ -76,5 +76,17 @@ describe('SortableSectionList', () => {
     const newOrder = useResumeStore.getState().resumeData.sectionOrder;
     // personalInfo moved from index 0 to index 2
     expect(newOrder).toEqual(['experiences', 'projects', 'personalInfo', 'educations', 'skills']);
+  });
+
+  it('supports inline editing default section titles', () => {
+    render(<SortableSectionList />);
+
+    fireEvent.click(screen.getByRole('button', { name: '编辑工作经历标题' }));
+    const input = screen.getByDisplayValue('工作经历');
+    fireEvent.change(input, { target: { value: '职业经历' } });
+    fireEvent.blur(input);
+
+    expect(screen.getAllByText('职业经历').length).toBeGreaterThanOrEqual(1);
+    expect(useResumeStore.getState().resumeData.sectionTitles?.experiences).toBe('职业经历');
   });
 });

@@ -3,6 +3,7 @@ import { useResumeStore } from '../../stores/resumeStore';
 import { validateDateRange } from '../../services/validationService';
 import { useLocale } from '../../hooks/useLocale';
 import type { Education } from '../../types/resume';
+import EditableSectionTitle from './EditableSectionTitle';
 
 export default function EducationForm() {
   const educations = useResumeStore((s) => s.resumeData.educations);
@@ -30,7 +31,7 @@ export default function EducationForm() {
 
   return (
     <section className="space-y-4">
-      <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">{t.educations}</h2>
+      <EditableSectionTitle sectionId="educations" />
       {educations.map((edu) => (
         <div key={edu.id} className="rounded-lg border border-gray-200 bg-white p-4 space-y-3 dark:border-gray-600 dark:bg-gray-800">
           <div className="flex items-center justify-between">

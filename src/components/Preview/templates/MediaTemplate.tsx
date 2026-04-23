@@ -7,7 +7,7 @@ import { getLabels } from '../../../utils/i18n';
  */
 export default function MediaTemplate({ data, themeColor, language }: TemplateProps) {
   const { personalInfo, experiences, educations, skills, projects, customSections, sectionOrder } = data;
-  const L = getLabels(language);
+  const L = getLabels(language, data.sectionTitles);
 
   const yellow = themeColor || '#f1c40f';
   const black = '#1a1a1a';

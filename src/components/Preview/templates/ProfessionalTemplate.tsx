@@ -7,7 +7,7 @@ import { getLabels } from '../../../utils/i18n';
  */
 export default function ProfessionalTemplate({ data, themeColor, language }: TemplateProps) {
   const { personalInfo, experiences, educations, skills, projects, customSections, sectionOrder } = data;
-  const L = getLabels(language);
+  const L = getLabels(language, data.sectionTitles);
 
   // Right sidebar sections
   const sidebarIds = new Set(['skills', 'educations']);

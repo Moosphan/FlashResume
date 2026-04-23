@@ -57,6 +57,13 @@ describe('ResumeStore', () => {
     });
   });
 
+  describe('updateSectionTitle', () => {
+    it('should update standard section titles', () => {
+      useResumeStore.getState().updateSectionTitle('experiences', '职业经历');
+      expect(useResumeStore.getState().resumeData.sectionTitles?.experiences).toBe('职业经历');
+    });
+  });
+
   describe('Experience CRUD', () => {
     it('should add an experience', () => {
       useResumeStore.getState().addExperience();

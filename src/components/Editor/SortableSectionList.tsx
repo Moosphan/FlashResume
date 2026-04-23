@@ -26,6 +26,8 @@ import EducationForm from './EducationForm';
 import SkillsForm from './SkillsForm';
 import ProjectForm from './ProjectForm';
 import SingleCustomSectionEditor from './SingleCustomSectionEditor';
+import { getSectionTitle } from '../../utils/sectionTitles';
+import type { StandardSectionId } from '../../types/resume';
 
 // --- Drag Handle ---
 function DragHandle({ listeners, attributes, label }: { listeners?: DraggableSyntheticListeners; attributes?: React.HTMLAttributes<HTMLButtonElement>; label: string }) {
@@ -60,7 +62,8 @@ function SortableSectionItem({ id, customSectionIds }: { id: string; customSecti
     isDragging,
   } = useSortable({ id });
   const { t } = useLocale();
-  const customSections = useResumeStore((s) => s.resumeData.customSections);
+  const resumeData = useResumeStore((s) => s.resumeData);
+  const customSections = resumeData.customSections;
 
   const style = {
     transform: transform
@@ -70,17 +73,11 @@ function SortableSectionItem({ id, customSectionIds }: { id: string; customSecti
     opacity: isDragging ? 0.4 : 1,
   };
 
-  const sectionLabels: Record<string, string> = {
-    personalInfo: t.sectionPersonalInfo,
-    experiences: t.sectionExperiences,
-    projects: t.sectionProjects,
-    educations: t.sectionEducations,
-    skills: t.sectionSkills,
-  };
-
   const isCustom = customSectionIds.includes(id);
   const customSection = isCustom ? customSections.find((s) => s.id === id) : undefined;
-  const label = sectionLabels[id] ?? (customSection?.title || t.sectionCustom);
+  const label = !isCustom && ['personalInfo', 'experiences', 'projects', 'educations', 'skills'].includes(id)
+    ? getSectionTitle(resumeData, t, id as StandardSectionId)
+    : (customSection?.title || t.sectionCustom);
 
   const renderContent = () => {
     switch (id) {
@@ -123,17 +120,13 @@ function SortableSectionItem({ id, customSectionIds }: { id: string; customSecti
 // --- Drag Overlay placeholder ---
 function DragOverlayContent({ id, customSectionIds }: { id: string; customSectionIds: string[] }) {
   const { t } = useLocale();
-  const customSections = useResumeStore((s) => s.resumeData.customSections);
-  const sectionLabels: Record<string, string> = {
-    personalInfo: t.sectionPersonalInfo,
-    experiences: t.sectionExperiences,
-    projects: t.sectionProjects,
-    educations: t.sectionEducations,
-    skills: t.sectionSkills,
-  };
+  const resumeData = useResumeStore((s) => s.resumeData);
+  const customSections = resumeData.customSections;
   const isCustom = customSectionIds.includes(id);
   const customSection = isCustom ? customSections.find((s) => s.id === id) : undefined;
-  const label = sectionLabels[id] ?? (customSection?.title || t.sectionCustom);
+  const label = !isCustom && ['personalInfo', 'experiences', 'projects', 'educations', 'skills'].includes(id)
+    ? getSectionTitle(resumeData, t, id as StandardSectionId)
+    : (customSection?.title || t.sectionCustom);
 
   return (
     <div className="rounded-lg border-2 border-blue-400 bg-white p-4 shadow-xl dark:bg-gray-800 dark:border-blue-500">

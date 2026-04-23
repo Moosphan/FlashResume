@@ -7,7 +7,7 @@ import { getLabels } from '../../../utils/i18n';
  */
 export default function CenteredTemplate({ data, themeColor, language }: TemplateProps) {
   const { personalInfo, experiences, educations, skills, projects, customSections, sectionOrder } = data;
-  const L = getLabels(language);
+  const L = getLabels(language, data.sectionTitles);
 
   function Divider() {
     return <div className="w-8 h-[2px] mx-auto my-6" style={{ backgroundColor: themeColor }} />;

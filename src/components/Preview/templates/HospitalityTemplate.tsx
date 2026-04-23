@@ -7,7 +7,7 @@ import { getLabels } from '../../../utils/i18n';
  */
 export default function HospitalityTemplate({ data, themeColor, language }: TemplateProps) {
   const { personalInfo, experiences, educations, skills, projects, customSections, sectionOrder } = data;
-  const L = getLabels(language);
+  const L = getLabels(language, data.sectionTitles);
 
   const brown = themeColor || '#8B4513';
   const cream = '#FFF8DC';

@@ -7,7 +7,7 @@ import { getLabels } from '../../../utils/i18n';
  */
 export default function TimelineTemplate({ data, themeColor, language }: TemplateProps) {
   const { personalInfo, experiences, educations, skills, projects, customSections, sectionOrder } = data;
-  const L = getLabels(language);
+  const L = getLabels(language, data.sectionTitles);
 
   function TimelineItem({ title, subtitle, date, desc }: { title: string; subtitle?: string; date: string; desc?: string }) {
     return (

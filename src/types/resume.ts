@@ -5,6 +5,8 @@
 // --- 基础类型 ---
 
 export type SkillLevel = 'beginner' | 'intermediate' | 'advanced' | 'expert';
+export type StandardSectionId = 'personalInfo' | 'experiences' | 'projects' | 'educations' | 'skills';
+export type SectionTitleMap = Partial<Record<StandardSectionId, string>>;
 
 export interface PersonalInfo {
   name: string;
@@ -71,6 +73,7 @@ export interface ResumeData {
   skills: Skill[];
   projects: Project[];
   customSections: CustomSection[];
+  sectionTitles?: SectionTitleMap;
   sectionOrder: string[]; // Section ID 排序数组
   metadata: ResumeMetadata;
 }
@@ -144,6 +147,7 @@ export const DEFAULT_RESUME_DATA: ResumeData = {
   skills: [],
   projects: [],
   customSections: [],
+  sectionTitles: {},
   sectionOrder: ['personalInfo', 'experiences', 'projects', 'educations', 'skills'],
   metadata: {
     templateId: 'classic',
