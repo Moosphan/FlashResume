@@ -12,7 +12,6 @@ import ExportBar from './ExportBar';
 import Sidebar from './Sidebar';
 import IndustryGalleryOverlay from '../Gallery/IndustryGalleryOverlay';
 import TutorialPanel from '../Tutorial/TutorialPanel';
-import faviconUrl from '/favicon.svg?url';
 
 export default function AppLayout() {
   const previewRef = useRef<HTMLDivElement>(null);
@@ -30,6 +29,7 @@ export default function AppLayout() {
   const [editorWidthPct, setEditorWidthPct] = useState(isTablet ? 55 : 50);
   const isDragging = useRef(false);
   const mainRef = useRef<HTMLDivElement>(null);
+  const logoUrl = `${import.meta.env.BASE_URL}favicon.svg`;
 
   const handleDragStart = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
@@ -75,7 +75,7 @@ export default function AppLayout() {
           >
             ☰
           </button>
-          <img src={faviconUrl} alt="Flash Resume" className="h-7 w-7" />
+          <img src={logoUrl} alt="Flash Resume" className="h-7 w-7" />
           {!isMobile && (
             <h1 className="text-lg font-bold text-gray-900 dark:text-gray-100">Flash Resume</h1>
           )}
@@ -208,4 +208,3 @@ export default function AppLayout() {
     </div>
   );
 }
-
