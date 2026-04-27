@@ -1,0 +1,13 @@
+name = "flash-resume-ga4-counter"
+main = "ga4-counter-worker.mjs"
+compatibility_date = "2026-04-27"
+
+[vars]
+GA4_PROPERTY_ID = "123456789"
+GA4_START_DATE = "2026-01-01"
+ALLOWED_ORIGIN = "https://yourname.github.io"
+COUNTER_CACHE_TTL = "60"
+
+# Secrets should be set with `wrangler secret put`, not in this file:
+# - GA4_SERVICE_ACCOUNT_EMAIL
+# - GA4_SERVICE_ACCOUNT_PRIVATE_KEY

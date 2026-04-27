@@ -1,6 +1,7 @@
 import type { TemplateProps } from '../../../types/resume';
 import { formatDate } from '../../../utils/validators';
 import { getLabels } from '../../../utils/i18n';
+import { exportChipCls, exportContactItemCls } from './exportLayout';
 
 /**
  * 居中模板 - 所有内容居中对齐，大量留白，像展开的名片
@@ -22,7 +23,8 @@ export default function CenteredTemplate({ data, themeColor, language }: Templat
           {experiences.map((exp) => (
             <div key={exp.id} className="mb-4">
               <p className="text-sm font-bold text-gray-900 dark:text-gray-100">{exp.position}</p>
-              <p className="text-[10px] text-gray-500 dark:text-gray-400">{exp.company} · {formatDate(exp.startDate, language)} – {formatDate(exp.endDate, language)}</p>
+              <p className="text-[10px] break-words text-gray-500 dark:text-gray-400">{exp.company}</p>
+              <p className="text-[9px] whitespace-nowrap text-gray-400">{formatDate(exp.startDate, language)} – {formatDate(exp.endDate, language)}</p>
               {exp.description && <div className="text-[10px] text-gray-600 dark:text-gray-400 mt-1 max-w-md mx-auto whitespace-pre-line leading-relaxed [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: exp.description }} />}
             </div>
           ))}
@@ -35,7 +37,8 @@ export default function CenteredTemplate({ data, themeColor, language }: Templat
           {projects.map((p) => (
             <div key={p.id} className="mb-4">
               <p className="text-sm font-bold text-gray-900 dark:text-gray-100">{p.name}</p>
-              <p className="text-[10px] text-gray-500 dark:text-gray-400">{p.role && `${p.role} · `}{formatDate(p.startDate, language)} – {formatDate(p.endDate, language)}</p>
+              {p.role && <p className="text-[10px] break-words text-gray-500 dark:text-gray-400">{p.role}</p>}
+              <p className="text-[9px] whitespace-nowrap text-gray-400">{formatDate(p.startDate, language)} – {formatDate(p.endDate, language)}</p>
               {p.description && <div className="text-[10px] text-gray-600 dark:text-gray-400 mt-1 max-w-md mx-auto whitespace-pre-line leading-relaxed [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: p.description }} />}
             </div>
           ))}
@@ -60,7 +63,7 @@ export default function CenteredTemplate({ data, themeColor, language }: Templat
           <h2 className="text-[11px] font-bold tracking-[0.25em] mb-4" style={{ color: themeColor }}>{L.skills}</h2>
           <div className="flex flex-wrap justify-center gap-2 max-w-sm mx-auto">
             {skills.map((s) => (
-              <span key={s.id} className="text-[10px] px-2.5 py-1 rounded-full border" style={{ borderColor: `${themeColor}40`, color: themeColor }}>
+              <span key={s.id} className={`text-[10px] px-2.5 py-1 rounded-full border ${exportChipCls}`} style={{ borderColor: `${themeColor}40`, color: themeColor }}>
                 {s.name}
               </span>
             ))}
@@ -109,10 +112,10 @@ export default function CenteredTemplate({ data, themeColor, language }: Templat
           {personalInfo.name || L.namePlaceholder}
         </h1>
         <div className="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-1 text-[10px] text-gray-400 dark:text-gray-500">
-          {personalInfo.email && <span>{personalInfo.email}</span>}
-          {personalInfo.phone && <span>{personalInfo.phone}</span>}
-          {personalInfo.address && <span>{personalInfo.address}</span>}
-          {personalInfo.website && <span>{personalInfo.website}</span>}
+          {personalInfo.email && <span className={exportContactItemCls}>{personalInfo.email}</span>}
+          {personalInfo.phone && <span className={exportContactItemCls}>{personalInfo.phone}</span>}
+          {personalInfo.address && <span className={exportContactItemCls}>{personalInfo.address}</span>}
+          {personalInfo.website && <span className={exportContactItemCls}>{personalInfo.website}</span>}
         </div>
         <div className="w-12 h-[2px] mx-auto mt-6" style={{ backgroundColor: themeColor }} />
       </header>

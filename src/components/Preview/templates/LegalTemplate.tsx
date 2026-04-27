@@ -1,6 +1,7 @@
 import type { TemplateProps } from '../../../types/resume';
 import { formatDate } from '../../../utils/validators';
 import { getLabels } from '../../../utils/i18n';
+import { exportContactItemCls, exportDateMainCls, exportDateRowCls, exportDateTextCls, exportMetaLineCls } from './exportLayout';
 
 /**
  * 法律/合规行业模板 - 严格单栏法律文书风格，衬线字体，粗体标题+缩进段落
@@ -22,8 +23,14 @@ export default function LegalTemplate({ data, themeColor, language }: TemplatePr
           </h2>
           {experiences.map((exp) => (
             <div key={exp.id} className="mb-4 pl-4">
-              <p className="text-sm"><span className="font-bold">{exp.company}</span> — {exp.position}</p>
-              <p className="text-xs text-gray-500 mb-1">{formatDate(exp.startDate, language)} - {formatDate(exp.endDate, language)}</p>
+              <div className={exportDateRowCls}>
+                <div className={exportDateMainCls}>
+                  <p className="text-sm break-words"><span className="font-bold">{exp.company}</span> — {exp.position}</p>
+                </div>
+                <span className={`${exportDateTextCls} text-gray-500`}>
+                  {formatDate(exp.startDate, language)} - {formatDate(exp.endDate, language)}
+                </span>
+              </div>
               {exp.description && (
                 <div className="text-xs leading-relaxed text-gray-700 whitespace-pre-line [&_a]:underline" dangerouslySetInnerHTML={{ __html: exp.description }} />
               )}
@@ -39,9 +46,15 @@ export default function LegalTemplate({ data, themeColor, language }: TemplatePr
           </h2>
           {educations.map((edu) => (
             <div key={edu.id} className="mb-3 pl-4">
-              <p className="text-sm"><span className="font-bold">{edu.school}</span></p>
-              <p className="text-xs text-gray-600 pl-4">{edu.degree} · {edu.major}</p>
-              <p className="text-xs text-gray-500 pl-4">{formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</p>
+              <div className={exportDateRowCls}>
+                <div className={exportDateMainCls}>
+                  <p className="text-sm break-words"><span className="font-bold">{edu.school}</span></p>
+                  <p className={`${exportMetaLineCls} text-gray-600 pl-4`}>{edu.degree} · {edu.major}</p>
+                </div>
+                <span className={`${exportDateTextCls} text-gray-500`}>
+                  {formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}
+                </span>
+              </div>
             </div>
           ))}
         </section>
@@ -67,8 +80,15 @@ export default function LegalTemplate({ data, themeColor, language }: TemplatePr
           </h2>
           {projects.map((proj) => (
             <div key={proj.id} className="mb-4 pl-4">
-              <p className="text-sm font-bold">{proj.name}</p>
-              <p className="text-xs text-gray-500 mb-1">{proj.role && `${proj.role} · `}{formatDate(proj.startDate, language)} - {formatDate(proj.endDate, language)}</p>
+              <div className={exportDateRowCls}>
+                <div className={exportDateMainCls}>
+                  <p className="text-sm font-bold break-words">{proj.name}</p>
+                  {proj.role && <p className={`${exportMetaLineCls} text-gray-500`}>{proj.role}</p>}
+                </div>
+                <span className={`${exportDateTextCls} text-gray-500`}>
+                  {formatDate(proj.startDate, language)} - {formatDate(proj.endDate, language)}
+                </span>
+              </div>
               {proj.description && (
                 <div className="text-xs leading-relaxed text-gray-700 whitespace-pre-line [&_a]:underline" dangerouslySetInnerHTML={{ __html: proj.description }} />
               )}
@@ -98,10 +118,10 @@ export default function LegalTemplate({ data, themeColor, language }: TemplatePr
       <div className="px-10 pt-10 pb-4 text-center" style={{ borderBottom: `3px double ${darkRed}` }}>
         <h1 className="text-2xl font-bold tracking-wider" style={{ color: darkRed }}>{personalInfo.name || L.namePlaceholder}</h1>
         <div className="flex justify-center flex-wrap gap-4 mt-2 text-xs text-gray-500">
-          {personalInfo.email && <span>{personalInfo.email}</span>}
-          {personalInfo.phone && <span>{personalInfo.phone}</span>}
-          {personalInfo.address && <span>{personalInfo.address}</span>}
-          {personalInfo.website && <span>{personalInfo.website}</span>}
+          {personalInfo.email && <span className={exportContactItemCls}>{personalInfo.email}</span>}
+          {personalInfo.phone && <span className={exportContactItemCls}>{personalInfo.phone}</span>}
+          {personalInfo.address && <span className={exportContactItemCls}>{personalInfo.address}</span>}
+          {personalInfo.website && <span className={exportContactItemCls}>{personalInfo.website}</span>}
         </div>
       </div>
 

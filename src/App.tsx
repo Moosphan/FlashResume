@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
 import AppLayout from './components/Layout/AppLayout';
+import VisitorCountBadge from './components/UI/VisitorCountBadge';
 import { useAutoSave } from './hooks/useAutoSave';
 import { useResumeStore } from './stores/resumeStore';
 import { useUIStore } from './stores/uiStore';
+import { initializeAnalytics } from './services/analyticsService';
 import * as storageService from './services/storageService';
 import { PRESET_RESUME_DATA } from './data/presetResume';
 
@@ -38,7 +40,16 @@ function App() {
     }
   }, []);
 
-  return <AppLayout />;
+  useEffect(() => {
+    initializeAnalytics();
+  }, []);
+
+  return (
+    <>
+      <AppLayout />
+      <VisitorCountBadge />
+    </>
+  );
 }
 
 export default App;

@@ -26,6 +26,12 @@ function waitForLayout(): Promise<void> {
   return new Promise((r) => requestAnimationFrame(() => r()));
 }
 
+/** Wait for web fonts to finish loading before measuring/rendering. */
+async function waitForFonts(): Promise<void> {
+  if (typeof document === 'undefined' || !('fonts' in document)) return;
+  await document.fonts.ready;
+}
+
 /** Safely remove an offscreen container from the DOM */
 function removeOffscreen(offscreen: HTMLElement): void {
   try {
@@ -68,6 +74,7 @@ function createOffscreenClone(element: HTMLElement): {
   document.body.appendChild(offscreen);
 
   const clone = element.cloneNode(true) as HTMLElement;
+  clone.classList.add('resume-export-mode');
   clone.style.cssText = `
     width: ${A4_WIDTH_PX}px;
     max-width: ${A4_WIDTH_PX}px;
@@ -115,6 +122,7 @@ export async function exportToPDF(
   try {
     report(5);
     await yieldToMain();
+    await waitForFonts();
 
     await waitForLayout();
 
@@ -296,6 +304,7 @@ async function exportToImageBlob(
   const { offscreen, clone } = createOffscreenClone(element);
   try {
     report(5);
+    await waitForFonts();
 
     await waitForLayout();
 

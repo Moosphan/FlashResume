@@ -63,4 +63,35 @@ describe('ClassicTemplate', () => {
     expect(screen.getByText('重点项目')).toBeInTheDocument();
     expect(screen.queryByText('工作经历')).not.toBeInTheDocument();
   });
+
+  it('uses export-safe no-wrap layout for contact info, dates, and skill chips', () => {
+    const data: ResumeData = {
+      ...resumeData,
+      personalInfo: {
+        ...resumeData.personalInfo,
+        email: 'alex.chen@email.com',
+        phone: '+1 (415) 555-0192',
+        address: 'San Francisco, CA',
+        website: 'https://alexchen.pm',
+      },
+    };
+
+    render(<ClassicTemplate data={data} themeColor="#2563EB" language="zh" />);
+
+    expect(screen.getByText('alex.chen@email.com').className).toContain('whitespace-nowrap');
+    expect(screen.getByText('+1 (415) 555-0192').className).toContain('whitespace-nowrap');
+    expect(screen.getByText('San Francisco, CA').className).toContain('whitespace-nowrap');
+    expect(screen.getByText('https://alexchen.pm').className).toContain('whitespace-nowrap');
+
+    const dateTexts = [
+      '2020年01月 - 至今',
+      '2022年01月 - 2022年06月',
+      '2016年09月 - 2018年06月',
+    ];
+    dateTexts.forEach((text) => {
+      expect(screen.getByText(text).className).toContain('whitespace-nowrap');
+    });
+
+    expect(screen.getByText('Strategy').className).toContain('whitespace-nowrap');
+  });
 });

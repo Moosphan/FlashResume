@@ -1,6 +1,7 @@
 import type { TemplateProps } from '../../../types/resume';
 import { formatDate } from '../../../utils/validators';
 import { getLabels } from '../../../utils/i18n';
+import { exportChipCls, exportContactItemCls, exportDateMainCls, exportDateRowCls, exportDateTextCls, exportMetaLineCls } from './exportLayout';
 
 /**
  * 农业/环保行业模板 - 单栏自然风格，森林绿+大地棕配色，有机曲线装饰，卡片式经验
@@ -23,11 +24,13 @@ export default function AgricultureTemplate({ data, themeColor, language }: Temp
           <div className="space-y-3">
             {experiences.map((exp) => (
               <div key={exp.id} className="p-3 rounded-xl" style={{ background: `linear-gradient(135deg, ${forestGreen}08, ${earthBrown}08)` }}>
-                <div className="flex justify-between items-baseline">
-                  <h3 className="font-bold text-sm" style={{ color: forestGreen }}>{exp.position}</h3>
-                  <span className="text-xs text-gray-400">{formatDate(exp.startDate, language)} - {formatDate(exp.endDate, language)}</span>
+                <div className={exportDateRowCls}>
+                  <div className={exportDateMainCls}>
+                    <h3 className="font-bold text-sm break-words" style={{ color: forestGreen }}>{exp.position}</h3>
+                    <p className={exportMetaLineCls} style={{ color: earthBrown }}>{exp.company}</p>
+                  </div>
+                  <span className={`${exportDateTextCls} text-gray-400`}>{formatDate(exp.startDate, language)} - {formatDate(exp.endDate, language)}</span>
                 </div>
-                <p className="text-xs" style={{ color: earthBrown }}>{exp.company}</p>
                 {exp.description && (
                   <div className="text-xs text-gray-600 mt-1 whitespace-pre-line [&_a]:underline" dangerouslySetInnerHTML={{ __html: exp.description }} />
                 )}
@@ -44,8 +47,13 @@ export default function AgricultureTemplate({ data, themeColor, language }: Temp
           </h2>
           {educations.map((edu) => (
             <div key={edu.id} className="mb-3">
-              <h3 className="font-bold text-sm" style={{ color: forestGreen }}>{edu.school}</h3>
-              <p className="text-xs text-gray-500">{edu.degree} · {edu.major} · {formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</p>
+              <div className={exportDateRowCls}>
+                <div className={exportDateMainCls}>
+                  <h3 className="font-bold text-sm break-words" style={{ color: forestGreen }}>{edu.school}</h3>
+                  <p className={`${exportMetaLineCls} text-gray-500`}>{edu.degree} · {edu.major}</p>
+                </div>
+                <span className={`${exportDateTextCls} text-gray-500`}>{formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</span>
+              </div>
             </div>
           ))}
         </section>
@@ -58,7 +66,7 @@ export default function AgricultureTemplate({ data, themeColor, language }: Temp
           </h2>
           <div className="flex flex-wrap gap-2">
             {skills.map((skill) => (
-              <span key={skill.id} className="text-xs px-3 py-1 rounded-full" style={{ backgroundColor: `${forestGreen}15`, color: forestGreen, border: `1px solid ${forestGreen}33` }}>
+              <span key={skill.id} className={`text-xs px-3 py-1 rounded-full ${exportChipCls}`} style={{ backgroundColor: `${forestGreen}15`, color: forestGreen, border: `1px solid ${forestGreen}33` }}>
                 {skill.name}
               </span>
             ))}
@@ -119,10 +127,10 @@ export default function AgricultureTemplate({ data, themeColor, language }: Temp
           <div>
             <h1 className="text-2xl font-bold" style={{ color: forestGreen }}>{personalInfo.name || L.namePlaceholder}</h1>
             <div className="flex flex-wrap gap-3 mt-1 text-xs" style={{ color: earthBrown }}>
-              {personalInfo.email && <span>{personalInfo.email}</span>}
-              {personalInfo.phone && <span>{personalInfo.phone}</span>}
-              {personalInfo.address && <span>{personalInfo.address}</span>}
-              {personalInfo.website && <span>{personalInfo.website}</span>}
+              {personalInfo.email && <span className={exportContactItemCls}>{personalInfo.email}</span>}
+              {personalInfo.phone && <span className={exportContactItemCls}>{personalInfo.phone}</span>}
+              {personalInfo.address && <span className={exportContactItemCls}>{personalInfo.address}</span>}
+              {personalInfo.website && <span className={exportContactItemCls}>{personalInfo.website}</span>}
             </div>
           </div>
         </div>

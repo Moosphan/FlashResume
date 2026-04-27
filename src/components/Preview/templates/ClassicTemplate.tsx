@@ -8,6 +8,10 @@ import { getLabels } from '../../../utils/i18n';
 export default function ClassicTemplate({ data, themeColor, language }: TemplateProps) {
   const { personalInfo, experiences, educations, skills, projects, customSections, sectionOrder } = data;
   const L = getLabels(language, data.sectionTitles);
+  const contactItemCls = 'inline-flex max-w-full items-center whitespace-nowrap';
+  const itemTitleRowCls = 'flex items-start justify-between gap-4';
+  const itemMainCls = 'min-w-0 flex-1';
+  const itemDateCls = 'shrink-0 pl-4 text-right text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap';
 
   const sectionRenderers: Record<string, () => React.ReactNode> = {
     personalInfo: () => null, // Header is always rendered at top
@@ -22,15 +26,17 @@ export default function ClassicTemplate({ data, themeColor, language }: Template
           </h2>
           {experiences.map((exp) => (
             <div key={exp.id} className="mb-3">
-              <div className="flex justify-between items-baseline">
-                <h3 className="font-bold text-sm text-gray-900 dark:text-gray-100">{exp.position}</h3>
-                <span className="text-xs text-gray-500">
+              <div className={itemTitleRowCls}>
+                <div className={itemMainCls}>
+                  <h3 className="font-bold text-sm leading-tight text-gray-900 break-words dark:text-gray-100">{exp.position}</h3>
+                  <p className="mt-0.5 text-sm italic leading-tight text-gray-700 break-words dark:text-gray-300">{exp.company}</p>
+                </div>
+                <span className={itemDateCls}>
                   {formatDate(exp.startDate, language)} - {formatDate(exp.endDate, language)}
                 </span>
               </div>
-              <p className="text-sm text-gray-700 dark:text-gray-300 italic">{exp.company}</p>
               {exp.description && (
-                <div className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: exp.description }} />
+                <div className="mt-1.5 whitespace-pre-line text-xs leading-relaxed text-gray-600 dark:text-gray-400 [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: exp.description }} />
               )}
             </div>
           ))}
@@ -47,15 +53,17 @@ export default function ClassicTemplate({ data, themeColor, language }: Template
           </h2>
           {educations.map((edu) => (
             <div key={edu.id} className="mb-3">
-              <div className="flex justify-between items-baseline">
-                <h3 className="font-bold text-sm text-gray-900 dark:text-gray-100">{edu.school}</h3>
-                <span className="text-xs text-gray-500 dark:text-gray-400">
+              <div className={itemTitleRowCls}>
+                <div className={itemMainCls}>
+                  <h3 className="font-bold text-sm leading-tight text-gray-900 break-words dark:text-gray-100">{edu.school}</h3>
+                  <p className="mt-0.5 text-sm leading-tight text-gray-700 break-words dark:text-gray-300">
+                    {edu.degree} · {edu.major}
+                  </p>
+                </div>
+                <span className={itemDateCls}>
                   {formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}
                 </span>
               </div>
-              <p className="text-sm text-gray-700 dark:text-gray-300">
-                {edu.degree} · {edu.major}
-              </p>
             </div>
           ))}
         </section>
@@ -73,7 +81,7 @@ export default function ClassicTemplate({ data, themeColor, language }: Template
             {skills.map((skill) => (
               <span
                 key={skill.id}
-                className="text-xs px-2 py-1 rounded border"
+                className="rounded border px-2 py-1 text-xs leading-none whitespace-nowrap"
                 style={{ borderColor: themeColor, color: themeColor }}
               >
                 {skill.name}
@@ -93,15 +101,17 @@ export default function ClassicTemplate({ data, themeColor, language }: Template
           </h2>
           {projects.map((proj) => (
             <div key={proj.id} className="mb-3">
-              <div className="flex justify-between items-baseline">
-                <h3 className="font-bold text-sm text-gray-900 dark:text-gray-100">{proj.name}</h3>
-                <span className="text-xs text-gray-500">
+              <div className={itemTitleRowCls}>
+                <div className={itemMainCls}>
+                  <h3 className="font-bold text-sm leading-tight text-gray-900 break-words dark:text-gray-100">{proj.name}</h3>
+                  {proj.role && <p className="mt-0.5 text-sm italic leading-tight text-gray-700 break-words dark:text-gray-300">{proj.role}</p>}
+                </div>
+                <span className={itemDateCls}>
                   {formatDate(proj.startDate, language)} - {formatDate(proj.endDate, language)}
                 </span>
               </div>
-              {proj.role && <p className="text-sm text-gray-700 dark:text-gray-300 italic">{proj.role}</p>}
               {proj.description && (
-                <div className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: proj.description }} />
+                <div className="mt-1.5 whitespace-pre-line text-xs leading-relaxed text-gray-600 dark:text-gray-400 [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: proj.description }} />
               )}
             </div>
           ))}
@@ -135,10 +145,10 @@ export default function ClassicTemplate({ data, themeColor, language }: Template
           {personalInfo.name || L.namePlaceholder}
         </h1>
         <div className="text-xs text-gray-600 dark:text-gray-400 flex flex-wrap justify-center gap-x-4 gap-y-1">
-          {personalInfo.email && <span>{personalInfo.email}</span>}
-          {personalInfo.phone && <span>{personalInfo.phone}</span>}
-          {personalInfo.address && <span>{personalInfo.address}</span>}
-          {personalInfo.website && <span>{personalInfo.website}</span>}
+          {personalInfo.email && <span className={contactItemCls}>{personalInfo.email}</span>}
+          {personalInfo.phone && <span className={contactItemCls}>{personalInfo.phone}</span>}
+          {personalInfo.address && <span className={contactItemCls}>{personalInfo.address}</span>}
+          {personalInfo.website && <span className={contactItemCls}>{personalInfo.website}</span>}
         </div>
       </header>
 

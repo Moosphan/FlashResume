@@ -163,3 +163,41 @@ body {
 .resume-preview-font * {
   font-family: 'Noto Sans SC', 'Inter', ui-sans-serif, system-ui, sans-serif !important;
 }
+
+/* ── Export layout guards: stabilize html-to-image text wrapping/measurement ── */
+.resume-export-mode h1,
+.resume-export-mode h2,
+.resume-export-mode h3 {
+  line-height: 1.25 !important;
+}
+
+.resume-export-mode p,
+.resume-export-mode span {
+  line-height: 1.35 !important;
+}
+
+.resume-export-mode .justify-between.items-baseline {
+  align-items: flex-start !important;
+  gap: 1rem !important;
+}
+
+.resume-export-mode .justify-between.items-baseline > :first-child {
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
+}
+
+.resume-export-mode .justify-between.items-baseline > :last-child {
+  flex: 0 0 auto !important;
+  padding-left: 1rem !important;
+  text-align: right !important;
+  white-space: nowrap !important;
+}
+
+.resume-export-mode header .flex.flex-wrap > span,
+.resume-export-mode header .flex.flex-wrap > p,
+.resume-export-mode [class*='space-y-'] > p,
+.resume-export-mode .flex.flex-wrap > span {
+  display: inline-flex !important;
+  max-width: 100% !important;
+  white-space: nowrap !important;
+}

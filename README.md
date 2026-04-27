@@ -56,6 +56,9 @@ src/
 ## 快速开始
 
 ```bash
+# 复制环境变量模板
+cp .env.example .env.local
+
 # 安装依赖
 npm install
 
@@ -71,6 +74,93 @@ npm run test
 # 代码检查
 npm run lint
 ```
+
+## GA4 访问统计
+
+项目已内置：
+
+- `GA4` 前端埋点
+- 页面左下角访问量角标
+- `Cloudflare Worker` 统计中转示例：`cloudflare/ga4-counter-worker.mjs`
+
+### 1. 配置前端环境变量
+
+在 `.env.local` 中填写：
+
+```bash
+VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+VITE_VISITOR_COUNT_API_URL=https://your-worker-subdomain.workers.dev/stats
+```
+
+说明：
+
+- `VITE_GA_MEASUREMENT_ID`：GA4 Web Data Stream 的 Measurement ID
+- `VITE_VISITOR_COUNT_API_URL`：GA4 统计中转接口地址；如果不填，左下角访问量不会显示
+
+### 2. 配置 Cloudflare Worker
+
+`cloudflare/ga4-counter-worker.mjs` 需要以下环境变量：
+
+- `GA4_PROPERTY_ID`：GA4 Property ID（纯数字）
+- `GA4_START_DATE`：统计起始日期，例如 `2026-01-01`
+- `GA4_SERVICE_ACCOUNT_EMAIL`：Google Service Account 邮箱
+- `GA4_SERVICE_ACCOUNT_PRIVATE_KEY`：对应私钥
+- `ALLOWED_ORIGIN`：你的站点域名，例如 `https://yourname.github.io`
+- `COUNTER_CACHE_TTL`：缓存秒数，推荐 `60`
+
+可直接复制模板：
+
+```bash
+cp cloudflare/wrangler.toml.example cloudflare/wrangler.toml
+```
+
+### 2.1 Worker 部署步骤
+
+```bash
+# 全局安装 wrangler（如未安装）
+npm install -g wrangler
+
+# 登录 Cloudflare
+wrangler login
+
+# 进入 Worker 目录
+cd cloudflare
+
+# 复制配置模板
+cp wrangler.toml.example wrangler.toml
+
+# 设置敏感信息
+wrangler secret put GA4_SERVICE_ACCOUNT_EMAIL
+wrangler secret put GA4_SERVICE_ACCOUNT_PRIVATE_KEY
+
+# 发布
+wrangler deploy
+```
+
+发布成功后，把生成的 `/stats` 地址填回：
+
+```bash
+VITE_VISITOR_COUNT_API_URL=https://your-worker-subdomain.workers.dev/stats
+```
+
+Worker 返回格式：
+
+```json
+{
+  "totalViews": 12345,
+  "activeUsers": 3,
+  "updatedAt": "2026-04-27T12:00:00.000Z"
+}
+```
+
+### 3. 左下角角标显示内容
+
+页面左下角会显示：
+
+- 累计访问量 `Visits / 访问`
+- 当前活跃用户 `Live / 在线`
+
+数据每 60 秒刷新一次。
 
 ## 数据模型
 
