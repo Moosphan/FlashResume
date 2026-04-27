@@ -12,6 +12,7 @@
 - 自定义区块：可添加任意自定义内容模块
 - 导入 / 导出：支持 JSON 格式的简历数据导入导出
 - 高保真导出：基于 html-to-image（SVG foreignObject）+ jsPDF，导出样式与预览一致，支持 PDF / PNG / JPG 格式，PDF 组装在 Web Worker 中执行不阻塞 UI
+- 字体离线友好：已移除 Google Fonts 依赖，预览与导出统一使用系统本地字体栈，提升 Safari 与线上环境稳定性
 - 实时导出进度：导出过程中显示平滑进度动画
 - 简历写作指南：内置教程面板，提供结构化的简历撰写技巧
 - 自动保存：编辑内容自动保存至 localStorage
