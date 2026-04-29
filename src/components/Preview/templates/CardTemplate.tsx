@@ -67,6 +67,7 @@ export default function CardTemplate({ data, themeColor, language }: TemplatePro
                   <span className="text-xs text-gray-400">{formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</span>
                 </div>
                 <p className="text-xs text-gray-500 dark:text-gray-400">{edu.degree} · {edu.major}</p>
+                {edu.details && <p className="mt-1 whitespace-pre-line break-words text-xs text-gray-500 dark:text-gray-400">{edu.details}</p>}
               </div>
             ))}
           </div>

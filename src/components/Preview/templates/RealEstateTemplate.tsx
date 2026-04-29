@@ -40,6 +40,7 @@ export default function RealEstateTemplate({ data, themeColor, language }: Templ
             <div key={edu.id} className="mb-3">
               <p className="text-xs font-semibold" style={{ color: green }}>{edu.school}</p>
               <p className="text-xs text-gray-500">{edu.degree} · {edu.major}</p>
+              {edu.details && <p className="mt-1 whitespace-pre-line break-words text-xs text-gray-500">{edu.details}</p>}
               <p className="text-xs text-gray-400">{formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</p>
             </div>
           ))}

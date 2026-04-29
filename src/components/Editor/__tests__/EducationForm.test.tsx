@@ -31,6 +31,7 @@ describe('EducationForm', () => {
     expect(screen.getByText('学校名称')).toBeInTheDocument();
     expect(screen.getByText('学位')).toBeInTheDocument();
     expect(screen.getByText('专业')).toBeInTheDocument();
+    expect(screen.getByText('补充信息')).toBeInTheDocument();
     expect(screen.getByText('开始日期')).toBeInTheDocument();
     expect(screen.getByText('结束日期')).toBeInTheDocument();
   });
@@ -57,6 +58,14 @@ describe('EducationForm', () => {
     const majorInput = screen.getByPlaceholderText('请输入专业');
     fireEvent.change(majorInput, { target: { value: '计算机科学' } });
     expect(useResumeStore.getState().resumeData.educations[0].major).toBe('计算机科学');
+  });
+
+  it('updates store when education details change', () => {
+    render(<EducationForm />);
+    fireEvent.click(screen.getByText('+ 添加教育背景'));
+    const detailsInput = screen.getByPlaceholderText('可补充主修课程、绩点、荣誉、交换经历等');
+    fireEvent.change(detailsInput, { target: { value: 'GPA 3.9/4.0\n主修课程：数据结构、机器学习' } });
+    expect(useResumeStore.getState().resumeData.educations[0].details).toBe('GPA 3.9/4.0\n主修课程：数据结构、机器学习');
   });
 
   it('removes an education when delete button is clicked', () => {

@@ -31,6 +31,7 @@ export default function AcademicTemplate({ data, themeColor, language }: Templat
                 <span className="text-xs text-gray-500">{formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</span>
               </div>
               <p className="text-sm text-gray-700">{edu.degree} · {edu.major}</p>
+              {edu.details && <p className="mt-1 whitespace-pre-line break-words text-xs text-gray-500">{edu.details}</p>}
             </div>
           ))}
         </section>

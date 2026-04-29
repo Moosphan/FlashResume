@@ -25,6 +25,7 @@ const resumeData: ResumeData = {
     school: 'Stanford',
     degree: 'MBA',
     major: 'Business',
+    details: 'GPA 3.8/4.0',
     startDate: '2016-09',
     endDate: '2018-06',
   }],

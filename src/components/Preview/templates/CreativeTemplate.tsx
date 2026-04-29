@@ -47,6 +47,7 @@ export default function CreativeTemplate({ data, themeColor, language }: Templat
                 <div className={exportDateMainCls}>
                   <h3 className="font-bold text-sm break-words" style={{ color: purple }}>{edu.school}</h3>
                   <p className={`${exportMetaLineCls} text-gray-500`}>{edu.degree} · {edu.major}</p>
+                  {edu.details && <p className={`${exportMetaLineCls} whitespace-pre-line text-gray-500`}>{edu.details}</p>}
                 </div>
                 <span className={`${exportDateTextCls} text-gray-500`}>
                   {formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}

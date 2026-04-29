@@ -75,6 +75,8 @@ const translations = {
     degreePh: '请输入学位',
     major: '专业',
     majorPh: '请输入专业',
+    educationDetails: '补充信息',
+    educationDetailsPh: '可补充主修课程、绩点、荣誉、交换经历等',
     addEducation: '+ 添加教育背景',
     unfilledSchool: '未填写学校',
 
@@ -235,6 +237,8 @@ const translations = {
     degreePh: 'Enter degree',
     major: 'Major',
     majorPh: 'Enter major',
+    educationDetails: 'Additional Info',
+    educationDetailsPh: 'Add coursework, GPA, honors, exchange experience, etc.',
     addEducation: '+ Add Education',
     unfilledSchool: 'No school',
 

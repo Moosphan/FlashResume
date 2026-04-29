@@ -177,6 +177,7 @@ export const useResumeStore = create<ResumeStoreState>()((set, get) => ({
         school: '',
         degree: '',
         major: '',
+        details: '',
         startDate: '',
         endDate: '',
       };

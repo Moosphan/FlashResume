@@ -56,6 +56,7 @@ export default function ModernTemplate({ data, themeColor, language }: TemplateP
               <p className="text-xs text-gray-500 dark:text-gray-400">
                 {edu.degree} · {edu.major}
               </p>
+              {edu.details && <p className="mt-1 whitespace-pre-line break-words text-xs text-gray-500 dark:text-gray-400">{edu.details}</p>}
             </div>
           ))}
         </section>

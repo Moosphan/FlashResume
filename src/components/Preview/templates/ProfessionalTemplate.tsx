@@ -67,6 +67,7 @@ export default function ProfessionalTemplate({ data, themeColor, language }: Tem
             <div key={edu.id} className="mb-2">
               <p className="text-xs font-semibold text-white">{edu.school}</p>
               <p className="text-xs text-white/70">{edu.degree} · {edu.major}</p>
+              {edu.details && <p className="mt-1 whitespace-pre-line break-words text-xs text-white/60">{edu.details}</p>}
               <p className="text-xs text-white/50">{formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</p>
             </div>
           ))}

@@ -62,6 +62,16 @@ export default function EducationForm() {
               {dateErrors[edu.id] && <p className="mt-1 text-sm text-red-500">{dateErrors[edu.id]}</p>}
             </div>
           </div>
+          <div>
+            <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">{t.educationDetails}</label>
+            <textarea
+              value={edu.details ?? ''}
+              onChange={(e) => handleChange(edu.id, 'details', e.target.value)}
+              placeholder={t.educationDetailsPh}
+              rows={3}
+              className={`${inputCls} min-h-[96px] resize-y`}
+            />
+          </div>
         </div>
       ))}
       <button type="button" onClick={addEducation} className="min-h-[44px] w-full rounded-md border-2 border-dashed border-gray-300 px-4 py-3 text-base md:text-sm font-medium text-gray-500 hover:border-primary hover:text-primary transition-colors duration-150 dark:border-gray-600 dark:text-gray-400 dark:hover:border-primary dark:hover:text-primary">

@@ -48,8 +48,11 @@ export default function EngineeringTemplate({ data, themeColor, language }: Temp
               <div key={edu.id} className="flex text-xs p-2" style={{ borderBottom: idx < educations.length - 1 ? `1px solid ${steelGray}22` : 'none' }}>
                 <div className="w-1/3 font-mono text-gray-500">{formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</div>
                 <div className="w-2/3">
-                  <span className="font-bold" style={{ color: steelGray }}>{edu.school}</span>
-                  <span className="text-gray-500"> · {edu.degree} · {edu.major}</span>
+                  <div>
+                    <span className="font-bold" style={{ color: steelGray }}>{edu.school}</span>
+                    <span className="text-gray-500"> · {edu.degree} · {edu.major}</span>
+                  </div>
+                  {edu.details && <p className="mt-1 whitespace-pre-line break-words text-[11px] leading-relaxed text-gray-500">{edu.details}</p>}
                 </div>
               </div>
             ))}

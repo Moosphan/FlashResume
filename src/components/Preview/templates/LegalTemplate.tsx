@@ -50,6 +50,7 @@ export default function LegalTemplate({ data, themeColor, language }: TemplatePr
                 <div className={exportDateMainCls}>
                   <p className="text-sm break-words"><span className="font-bold">{edu.school}</span></p>
                   <p className={`${exportMetaLineCls} text-gray-600 pl-4`}>{edu.degree} · {edu.major}</p>
+                  {edu.details && <p className={`${exportMetaLineCls} whitespace-pre-line pl-4 text-gray-500`}>{edu.details}</p>}
                 </div>
                 <span className={`${exportDateTextCls} text-gray-500`}>
                   {formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}

@@ -53,6 +53,7 @@ export default function HealthcareTemplate({ data, themeColor, language }: Templ
                 <span className="text-xs text-gray-400">{formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</span>
               </div>
               <p className="text-xs text-gray-500">{edu.degree} · {edu.major}</p>
+              {edu.details && <p className="mt-1 whitespace-pre-line break-words text-xs text-gray-500">{edu.details}</p>}
             </div>
           ))}
         </section>

@@ -53,6 +53,7 @@ export default function MinimalTemplate({ data, themeColor, language }: Template
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                   {edu.degree} · {edu.major}
                 </p>
+                {edu.details && <p className="mt-1 whitespace-pre-line break-words text-xs text-gray-500 dark:text-gray-400">{edu.details}</p>}
               </div>
             ))}
           </div>

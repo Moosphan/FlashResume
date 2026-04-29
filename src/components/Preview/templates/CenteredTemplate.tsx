@@ -52,6 +52,7 @@ export default function CenteredTemplate({ data, themeColor, language }: Templat
             <div key={edu.id} className="mb-3">
               <p className="text-sm font-bold text-gray-900 dark:text-gray-100">{edu.school}</p>
               <p className="text-[10px] text-gray-500 dark:text-gray-400">{edu.degree} · {edu.major}</p>
+              {edu.details && <p className="mt-1 whitespace-pre-line break-words text-[10px] text-gray-500 dark:text-gray-400">{edu.details}</p>}
               <p className="text-[9px] text-gray-400">{formatDate(edu.startDate, language)} – {formatDate(edu.endDate, language)}</p>
             </div>
           ))}

@@ -48,6 +48,7 @@ export default function MarketingTemplate({ data, themeColor, language }: Templa
             <div key={edu.id} className="mb-3">
               <p className="text-xs font-semibold text-white">{edu.school}</p>
               <p className="text-xs text-gray-400">{edu.degree} · {edu.major}</p>
+              {edu.details && <p className="mt-1 whitespace-pre-line break-words text-xs text-gray-500">{edu.details}</p>}
               <p className="text-xs text-gray-500">{formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</p>
             </div>
           ))}

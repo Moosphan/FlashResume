@@ -59,6 +59,7 @@ export default function ClassicTemplate({ data, themeColor, language }: Template
                   <p className="mt-0.5 text-sm leading-tight text-gray-700 break-words dark:text-gray-300">
                     {edu.degree} · {edu.major}
                   </p>
+                  {edu.details && <p className="mt-1 whitespace-pre-line break-words text-xs leading-relaxed text-gray-500 dark:text-gray-400">{edu.details}</p>}
                 </div>
                 <span className={itemDateCls}>
                   {formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}

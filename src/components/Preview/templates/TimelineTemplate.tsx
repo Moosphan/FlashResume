@@ -9,7 +9,7 @@ export default function TimelineTemplate({ data, themeColor, language }: Templat
   const { personalInfo, experiences, educations, skills, projects, customSections, sectionOrder } = data;
   const L = getLabels(language, data.sectionTitles);
 
-  function TimelineItem({ title, subtitle, date, desc }: { title: string; subtitle?: string; date: string; desc?: string }) {
+  function TimelineItem({ title, subtitle, date, desc, note }: { title: string; subtitle?: string; date: string; desc?: string; note?: string }) {
     return (
       <div className="relative pl-6 pb-4">
         {/* Dot */}
@@ -27,6 +27,7 @@ export default function TimelineTemplate({ data, themeColor, language }: Templat
           <span className="text-xs text-gray-400 shrink-0 ml-2">{date}</span>
         </div>
         {subtitle && <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{subtitle}</p>}
+        {note && <p className="mt-1 whitespace-pre-line break-words text-xs text-gray-500 dark:text-gray-400">{note}</p>}
         {desc && <div className="text-xs text-gray-600 dark:text-gray-400 mt-1 whitespace-pre-line leading-relaxed [&_a]:text-blue-600 [&_a]:underline" dangerouslySetInnerHTML={{ __html: desc }} />}
       </div>
     );
@@ -57,7 +58,7 @@ export default function TimelineTemplate({ data, themeColor, language }: Templat
         <section key="educations" className="mb-6">
           <h2 className="text-xs font-bold tracking-widest mb-3" style={{ color: themeColor }}>{L.educations}</h2>
           {educations.map((edu) => (
-            <TimelineItem key={edu.id} title={edu.school} subtitle={`${edu.degree} · ${edu.major}`} date={`${formatDate(edu.startDate, language)} - ${formatDate(edu.endDate, language)}`} />
+            <TimelineItem key={edu.id} title={edu.school} subtitle={`${edu.degree} · ${edu.major}`} date={`${formatDate(edu.startDate, language)} - ${formatDate(edu.endDate, language)}`} note={edu.details} />
           ))}
         </section>
       ) : null,

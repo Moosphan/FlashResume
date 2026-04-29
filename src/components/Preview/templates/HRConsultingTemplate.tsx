@@ -47,6 +47,7 @@ export default function HRConsultingTemplate({ data, themeColor, language }: Tem
             <div key={edu.id} className="mb-3">
               <p className="text-xs font-semibold text-white">{edu.school}</p>
               <p className="text-xs text-gray-300">{edu.degree} · {edu.major}</p>
+              {edu.details && <p className="mt-1 whitespace-pre-line break-words text-xs text-gray-400">{edu.details}</p>}
               <p className="text-xs text-gray-400">{formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}</p>
             </div>
           ))}

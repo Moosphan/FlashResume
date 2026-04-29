@@ -31,6 +31,7 @@ export interface Education {
   school: string;
   degree: string;
   major: string;
+  details: string;
   startDate: string; // ISO 8601 格式 YYYY-MM
   endDate: string;   // ISO 8601 格式 YYYY-MM
 }

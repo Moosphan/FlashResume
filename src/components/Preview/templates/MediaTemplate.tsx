@@ -51,6 +51,7 @@ export default function MediaTemplate({ data, themeColor, language }: TemplatePr
                 <div className={exportDateMainCls}>
                   <h3 className="font-serif font-bold text-sm break-words" style={{ color: black }}>{edu.school}</h3>
                   <p className={`${exportMetaLineCls} font-sans text-gray-500`}>{edu.degree} · {edu.major}</p>
+                  {edu.details && <p className={`${exportMetaLineCls} whitespace-pre-line font-sans text-gray-500`}>{edu.details}</p>}
                 </div>
                 <span className={`${exportDateTextCls} text-gray-500`}>
                   {formatDate(edu.startDate, language)} - {formatDate(edu.endDate, language)}
