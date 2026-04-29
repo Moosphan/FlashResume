@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import AppLayout from './components/Layout/AppLayout';
-import VisitorCountBadge from './components/UI/VisitorCountBadge';
 import { useAutoSave } from './hooks/useAutoSave';
 import { useResumeStore } from './stores/resumeStore';
 import { useUIStore } from './stores/uiStore';
@@ -44,12 +43,7 @@ function App() {
     initializeAnalytics();
   }, []);
 
-  return (
-    <>
-      <AppLayout />
-      <VisitorCountBadge />
-    </>
-  );
+  return <AppLayout />;
 }
 
 export default App;

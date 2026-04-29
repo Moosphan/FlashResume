@@ -81,8 +81,8 @@ npm run lint
 项目已内置：
 
 - `GA4` 前端埋点
-- 页面左下角访问量角标
-- `Cloudflare Worker` 统计中转示例：`cloudflare/ga4-counter-worker.mjs`
+- 可选的页面左下角访问量角标
+- 可选的 `Cloudflare Worker` 统计中转示例：`cloudflare/ga4-counter-worker.mjs`
 
 ### 1. 配置前端环境变量
 
@@ -90,15 +90,23 @@ npm run lint
 
 ```bash
 VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX
-VITE_VISITOR_COUNT_API_URL=https://your-worker-subdomain.workers.dev/stats
 ```
 
 说明：
 
 - `VITE_GA_MEASUREMENT_ID`：GA4 Web Data Stream 的 Measurement ID
-- `VITE_VISITOR_COUNT_API_URL`：GA4 统计中转接口地址；如果不填，左下角访问量不会显示
 
-### 2. 配置 Cloudflare Worker
+如果你后续要开启左下角访问量角标，再额外配置：
+
+```bash
+VITE_VISITOR_COUNT_API_URL=https://your-worker-subdomain.workers.dev/stats
+```
+
+说明：
+
+- `VITE_VISITOR_COUNT_API_URL`：GA4 统计中转接口地址；不填时仅保留 GA4 埋点，不显示页面角标
+
+### 2. 可选：配置 Cloudflare Worker
 
 `cloudflare/ga4-counter-worker.mjs` 需要以下环境变量：
 
@@ -154,7 +162,7 @@ Worker 返回格式：
 }
 ```
 
-### 3. 左下角角标显示内容
+### 3. 可选：左下角角标显示内容
 
 页面左下角会显示：
 
