@@ -187,3 +187,7 @@ Worker 返回格式：
 ## License
 
 CC BY-NC 4.0 — 允许自由使用和修改，禁止商业用途。详见 [Creative Commons BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)。
+
+## QA
+
+- 问题排查记录见 `/Users/dorck/IdeaProjects/FlashResume/QA.md`

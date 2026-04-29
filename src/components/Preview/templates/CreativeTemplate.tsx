@@ -1,7 +1,7 @@
 import type { TemplateProps } from '../../../types/resume';
 import { formatDate } from '../../../utils/validators';
 import { getLabels } from '../../../utils/i18n';
-import { exportContactItemCls, exportDateMainCls, exportDateRowCls, exportDateTextCls, exportMetaLineCls } from './exportLayout';
+import { exportAvatarPortraitCls, exportContactItemCls, exportDateMainCls, exportDateRowCls, exportDateTextCls, exportMetaLineCls } from './exportLayout';
 
 /**
  * 创意/设计行业模板 - 非对称布局，珊瑚色+深紫撞色，几何装饰，圆环技能评分
@@ -119,7 +119,7 @@ export default function CreativeTemplate({ data, themeColor, language }: Templat
         <div className="absolute bottom-0 left-10 w-16 h-16 rounded-full opacity-15" style={{ backgroundColor: '#fff' }} />
         <div className="relative p-8 flex items-center gap-6">
           {personalInfo.avatar && (
-            <img src={personalInfo.avatar} alt="avatar" className="w-20 h-20 rounded-full border-4 border-white object-cover shadow-lg" />
+            <img src={personalInfo.avatar} alt="avatar" className={exportAvatarPortraitCls} />
           )}
           <div className="text-white">
             <h1 className="text-2xl font-bold">{personalInfo.name || L.namePlaceholder}</h1>

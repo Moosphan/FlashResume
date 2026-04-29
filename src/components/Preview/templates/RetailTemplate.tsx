@@ -1,6 +1,7 @@
 import type { TemplateProps } from '../../../types/resume';
 import { formatDate } from '../../../utils/validators';
 import { getLabels } from '../../../utils/i18n';
+import { exportAvatarPortraitCls } from './exportLayout';
 
 /**
  * 零售/电商行业模板 - 双栏活泼布局，圆角卡片+柔和阴影，活力橙+深灰配色，标签云技能
@@ -108,7 +109,7 @@ export default function RetailTemplate({ data, themeColor, language }: TemplateP
       <aside className="w-1/3 p-6 text-white rounded-r-2xl" style={{ backgroundColor: darkGray }}>
         <div className="mb-6 text-center">
           {personalInfo.avatar && (
-            <img src={personalInfo.avatar} alt="avatar" className="w-20 h-20 rounded-full mx-auto mb-3 border-2 object-cover" style={{ borderColor: orange }} />
+            <img src={personalInfo.avatar} alt="avatar" className={`${exportAvatarPortraitCls} mx-auto mb-3`} />
           )}
           <h1 className="text-xl font-bold">{personalInfo.name || L.namePlaceholder}</h1>
           <div className="mt-2 space-y-1 text-xs opacity-90">

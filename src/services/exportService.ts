@@ -32,6 +32,50 @@ async function waitForFonts(): Promise<void> {
   await document.fonts.ready;
 }
 
+function isImageReady(img: HTMLImageElement): boolean {
+  return img.complete && img.naturalWidth > 0;
+}
+
+/** Wait for cloned <img> nodes to finish loading so exported output doesn't miss photos/logos. */
+async function waitForImages(root: HTMLElement): Promise<void> {
+  const images = Array.from(root.querySelectorAll('img'));
+  if (images.length === 0) return;
+
+  await Promise.all(images.map(async (img) => {
+    if (!img.src) return;
+
+    img.loading = 'eager';
+    img.decoding = 'sync';
+
+    if (isImageReady(img)) return;
+
+    try {
+      await img.decode();
+      if (isImageReady(img)) return;
+    } catch {
+      // Fallback to load/error listeners below
+    }
+
+    await new Promise<void>((resolve) => {
+      let settled = false;
+      let timeoutId = 0;
+
+      const finish = () => {
+        if (settled) return;
+        settled = true;
+        img.removeEventListener('load', finish);
+        img.removeEventListener('error', finish);
+        window.clearTimeout(timeoutId);
+        resolve();
+      };
+
+      timeoutId = window.setTimeout(finish, 3000);
+      img.addEventListener('load', finish, { once: true });
+      img.addEventListener('error', finish, { once: true });
+    });
+  }));
+}
+
 /** Safely remove an offscreen container from the DOM */
 function removeOffscreen(offscreen: HTMLElement): void {
   try {
@@ -123,6 +167,7 @@ export async function exportToPDF(
     report(5);
     await yieldToMain();
     await waitForFonts();
+    await waitForImages(clone);
 
     await waitForLayout();
 
@@ -304,7 +349,9 @@ async function exportToImageBlob(
   const { offscreen, clone } = createOffscreenClone(element);
   try {
     report(5);
+    await yieldToMain();
     await waitForFonts();
+    await waitForImages(clone);
 
     await waitForLayout();
 

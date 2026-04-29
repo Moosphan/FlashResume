@@ -1,6 +1,7 @@
 import type { TemplateProps } from '../../../types/resume';
 import { formatDate } from '../../../utils/validators';
 import { getLabels } from '../../../utils/i18n';
+import { exportAvatarPortraitCls } from './exportLayout';
 
 /**
  * 现代模板 - 双栏布局，左侧边栏放技能/联系方式，右侧主内容区，现代无衬线风格
@@ -108,7 +109,7 @@ export default function ModernTemplate({ data, themeColor, language }: TemplateP
             <img
               src={personalInfo.avatar}
               alt="头像"
-              className="w-20 h-20 rounded-full mx-auto mb-3 border-2 border-white/30 object-cover"
+              className={`${exportAvatarPortraitCls} mx-auto mb-3`}
             />
           )}
           <h1 className="text-xl font-bold">{personalInfo.name || L.namePlaceholder}</h1>

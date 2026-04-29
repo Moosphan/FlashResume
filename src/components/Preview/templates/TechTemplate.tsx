@@ -1,6 +1,7 @@
 import type { TemplateProps } from '../../../types/resume';
 import { formatDate } from '../../../utils/validators';
 import { getLabels } from '../../../utils/i18n';
+import { exportAvatarPortraitCls } from './exportLayout';
 
 /**
  * 科技/互联网行业模板 - 深色侧边栏 + 浅色主内容区双栏布局，技能进度条，终端风格装饰
@@ -99,8 +100,7 @@ export default function TechTemplate({ data, themeColor, language }: TemplatePro
             <img
               src={personalInfo.avatar}
               alt="avatar"
-              className="w-20 h-20 rounded-full mx-auto mb-3 border-2 object-cover"
-              style={{ borderColor: accent }}
+              className={`${exportAvatarPortraitCls} mx-auto mb-3`}
             />
           )}
           <h1 className="text-xl font-bold">{personalInfo.name || L.namePlaceholder}</h1>

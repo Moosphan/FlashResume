@@ -1,6 +1,7 @@
 import type { TemplateProps } from '../../../types/resume';
 import { formatDate } from '../../../utils/validators';
 import { getLabels } from '../../../utils/i18n';
+import { exportAvatarPortraitCls } from './exportLayout';
 
 /**
  * 房地产/建筑行业模板 - 宽幅头部+双栏内容，大地色+深绿配色，建筑线条装饰，卡片式项目
@@ -106,7 +107,7 @@ export default function RealEstateTemplate({ data, themeColor, language }: Templ
         <div className="absolute top-2 left-8 right-8 h-px" style={{ backgroundColor: `${earth}44` }} />
         <div className="flex items-center gap-6 mt-2">
           {personalInfo.avatar && (
-            <img src={personalInfo.avatar} alt="avatar" className="w-16 h-16 rounded object-cover border-2" style={{ borderColor: earth }} />
+            <img src={personalInfo.avatar} alt="avatar" className={exportAvatarPortraitCls} />
           )}
           <div>
             <h1 className="text-2xl font-bold" style={{ color: green }}>{personalInfo.name || L.namePlaceholder}</h1>

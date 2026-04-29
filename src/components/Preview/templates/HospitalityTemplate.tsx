@@ -1,7 +1,7 @@
 import type { TemplateProps } from '../../../types/resume';
 import { formatDate } from '../../../utils/validators';
 import { getLabels } from '../../../utils/i18n';
-import { exportChipCls, exportContactItemCls, exportDateMainCls, exportDateRowCls, exportDateTextCls, exportMetaLineCls } from './exportLayout';
+import { exportAvatarPortraitCls, exportChipCls, exportContactItemCls, exportDateMainCls, exportDateRowCls, exportDateTextCls, exportMetaLineCls } from './exportLayout';
 
 /**
  * 餐饮/酒店行业模板 - 单栏温馨风格，暖棕+奶油白配色，圆角元素，时间线工作经验，分组技能标签
@@ -107,7 +107,7 @@ export default function HospitalityTemplate({ data, themeColor, language }: Temp
       <div className="px-10 pt-8 pb-6 rounded-b-3xl" style={{ backgroundColor: cream }}>
         <div className="flex items-center gap-6">
           {personalInfo.avatar && (
-            <img src={personalInfo.avatar} alt="avatar" className="w-20 h-20 rounded-2xl object-cover border-2" style={{ borderColor: brown }} />
+            <img src={personalInfo.avatar} alt="avatar" className={exportAvatarPortraitCls} />
           )}
           <div>
             <h1 className="text-2xl font-bold" style={{ color: brown }}>{personalInfo.name || L.namePlaceholder}</h1>

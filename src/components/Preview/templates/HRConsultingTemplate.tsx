@@ -1,6 +1,7 @@
 import type { TemplateProps } from '../../../types/resume';
 import { formatDate } from '../../../utils/validators';
 import { getLabels } from '../../../utils/i18n';
+import { exportAvatarPortraitCls } from './exportLayout';
 
 /**
  * 人力资源/咨询行业模板 - 双栏专业布局，紫色+浅灰配色，评分矩阵技能，结构化成就描述
@@ -116,7 +117,7 @@ export default function HRConsultingTemplate({ data, themeColor, language }: Tem
       <aside className="w-1/3 p-6" style={{ backgroundColor: purple }}>
         <div className="mb-6 text-center">
           {personalInfo.avatar && (
-            <img src={personalInfo.avatar} alt="avatar" className="w-20 h-20 rounded-full mx-auto mb-3 border-2 border-white object-cover" />
+            <img src={personalInfo.avatar} alt="avatar" className={`${exportAvatarPortraitCls} mx-auto mb-3`} />
           )}
           <h1 className="text-xl font-bold text-white">{personalInfo.name || L.namePlaceholder}</h1>
           <div className="mt-2 space-y-1 text-xs text-gray-300">

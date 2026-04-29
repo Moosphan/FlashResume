@@ -1,6 +1,7 @@
 import type { TemplateProps } from '../../../types/resume';
 import { formatDate } from '../../../utils/validators';
 import { getLabels } from '../../../utils/i18n';
+import { exportAvatarPortraitCls } from './exportLayout';
 
 /**
  * 市场营销行业模板 - 双栏信息图风格，橙色+深灰配色，百分比进度条，数据高亮
@@ -117,7 +118,7 @@ export default function MarketingTemplate({ data, themeColor, language }: Templa
       <aside className="w-1/3 p-6 text-white" style={{ backgroundColor: darkGray }}>
         <div className="mb-6 text-center">
           {personalInfo.avatar && (
-            <img src={personalInfo.avatar} alt="avatar" className="w-20 h-20 rounded-full mx-auto mb-3 border-2 object-cover" style={{ borderColor: orange }} />
+            <img src={personalInfo.avatar} alt="avatar" className={`${exportAvatarPortraitCls} mx-auto mb-3`} />
           )}
           <h1 className="text-xl font-bold">{personalInfo.name || L.namePlaceholder}</h1>
           <div className="mt-2 space-y-1 text-xs opacity-90">

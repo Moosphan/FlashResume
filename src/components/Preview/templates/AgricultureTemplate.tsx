@@ -1,7 +1,7 @@
 import type { TemplateProps } from '../../../types/resume';
 import { formatDate } from '../../../utils/validators';
 import { getLabels } from '../../../utils/i18n';
-import { exportChipCls, exportContactItemCls, exportDateMainCls, exportDateRowCls, exportDateTextCls, exportMetaLineCls } from './exportLayout';
+import { exportAvatarPortraitCls, exportChipCls, exportContactItemCls, exportDateMainCls, exportDateRowCls, exportDateTextCls, exportMetaLineCls } from './exportLayout';
 
 /**
  * 农业/环保行业模板 - 单栏自然风格，森林绿+大地棕配色，有机曲线装饰，卡片式经验
@@ -122,7 +122,7 @@ export default function AgricultureTemplate({ data, themeColor, language }: Temp
         }} />
         <div className="flex items-center gap-6">
           {personalInfo.avatar && (
-            <img src={personalInfo.avatar} alt="avatar" className="w-16 h-16 rounded-full object-cover border-2" style={{ borderColor: forestGreen }} />
+            <img src={personalInfo.avatar} alt="avatar" className={exportAvatarPortraitCls} />
           )}
           <div>
             <h1 className="text-2xl font-bold" style={{ color: forestGreen }}>{personalInfo.name || L.namePlaceholder}</h1>
