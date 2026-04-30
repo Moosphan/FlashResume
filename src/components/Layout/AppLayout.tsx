@@ -13,6 +13,8 @@ import Sidebar from './Sidebar';
 import IndustryGalleryOverlay from '../Gallery/IndustryGalleryOverlay';
 import TutorialPanel from '../Tutorial/TutorialPanel';
 
+const APP_VERSION = 'v1.0';
+
 export default function AppLayout() {
   const previewRef = useRef<HTMLDivElement>(null);
   const toasts = useUIStore((s) => s.toasts);
@@ -76,9 +78,14 @@ export default function AppLayout() {
             ☰
           </button>
           <img src={logoUrl} alt="Flash Resume" className="h-7 w-7" />
-          {!isMobile && (
-            <h1 className="text-lg font-bold text-gray-900 dark:text-gray-100">Flash Resume</h1>
-          )}
+          <div className="flex items-center gap-2">
+            {!isMobile && (
+              <h1 className="text-lg font-bold text-gray-900 dark:text-gray-100">Flash Resume</h1>
+            )}
+            <span className="rounded-full border border-gray-200 bg-gray-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-600 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300">
+              {APP_VERSION}
+            </span>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <ExportBar previewRef={previewRef} />
