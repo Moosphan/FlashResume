@@ -56,7 +56,7 @@ export default function RetailTemplate({ data, themeColor, language }: TemplateP
           <h2 className="text-sm font-bold mb-3" style={{ color: darkGray }}>{L.experiences}</h2>
           <div className="space-y-3">
             {experiences.map((exp) => (
-              <div key={exp.id} className="p-3 rounded-lg bg-gray-50 shadow-sm">
+              <div key={exp.id} className="retail-export-card p-3 rounded-lg bg-gray-50 shadow-sm">
                 <div className="flex justify-between items-baseline">
                   <h3 className="font-bold text-sm" style={{ color: darkGray }}>{exp.position}</h3>
                   <span className="text-xs text-gray-400">{formatDate(exp.startDate, language)} - {formatDate(exp.endDate, language)}</span>
@@ -76,7 +76,7 @@ export default function RetailTemplate({ data, themeColor, language }: TemplateP
           <h2 className="text-sm font-bold mb-3" style={{ color: darkGray }}>{L.projects}</h2>
           <div className="space-y-3">
             {projects.map((proj) => (
-              <div key={proj.id} className="p-3 rounded-lg bg-gray-50 shadow-sm">
+              <div key={proj.id} className="retail-export-card p-3 rounded-lg bg-gray-50 shadow-sm">
                 <div className="flex justify-between items-baseline">
                   <h3 className="font-bold text-sm" style={{ color: darkGray }}>{proj.name}</h3>
                   <span className="text-xs text-gray-400">{formatDate(proj.startDate, language)} - {formatDate(proj.endDate, language)}</span>
@@ -96,7 +96,7 @@ export default function RetailTemplate({ data, themeColor, language }: TemplateP
     mainRenderers[cs.id] = () => (
       <section key={cs.id} className="mb-5">
         <h2 className="text-sm font-bold mb-3" style={{ color: darkGray }}>{cs.title}</h2>
-        <div className="text-xs text-gray-600 p-3 rounded-lg bg-gray-50 shadow-sm" dangerouslySetInnerHTML={{ __html: cs.content }} />
+        <div className="retail-export-card text-xs text-gray-600 p-3 rounded-lg bg-gray-50 shadow-sm" dangerouslySetInnerHTML={{ __html: cs.content }} />
       </section>
     );
   });

@@ -13,6 +13,7 @@ export const PAGE_CONTENT_HEIGHT_PX = A4_HEIGHT_PX - PAGE_MARGIN_PX * 2;
 const PAGE_MARGIN_PT = (PAGE_MARGIN_PX / A4_HEIGHT_PX) * A4_HEIGHT_PT;
 
 const EXPORT_SCALE = 3;
+const PDF_IMAGE_QUALITY = 0.82;
 
 export type ProgressCallback = (progress: number) => void;
 
@@ -202,7 +203,7 @@ export async function exportToPDF(
     // ─── Prepare page data URLs on main thread (needs Canvas API) ───
     if (totalHeight <= A4_HEIGHT_PX) {
       // Single page — send one full-page image to worker
-      const dataURL = fullCanvas.toDataURL('image/png');
+      const dataURL = fullCanvas.toDataURL('image/jpeg', PDF_IMAGE_QUALITY);
       report(65);
 
       const blob = await assemblePdfInWorker({
@@ -239,7 +240,7 @@ export async function exportToPDF(
       const yOffset = i === 0 ? 0 : PAGE_MARGIN_PT;
 
       pages.push({
-        dataURL: pageCanvas.toDataURL('image/png'),
+        dataURL: pageCanvas.toDataURL('image/jpeg', PDF_IMAGE_QUALITY),
         drawHeight,
         yOffset,
       });

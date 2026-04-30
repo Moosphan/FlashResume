@@ -12,7 +12,7 @@ const A4_HEIGHT_PT = 841.89;
 
 export interface PdfWorkerRequest {
   type: 'assemble';
-  /** Data URL for each page (image/png) */
+  /** Data URL for each page (image/jpeg) */
   pages: Array<{
     dataURL: string;
     /** Draw height in PDF points */
@@ -46,18 +46,23 @@ self.onmessage = (e: MessageEvent<PdfWorkerRequest>) => {
   const { pages, personName, singlePage } = e.data;
 
   try {
-    const pdf = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'a4' });
+    const pdf = new jsPDF({
+      orientation: 'portrait',
+      unit: 'pt',
+      format: 'a4',
+      compress: true,
+    });
     const totalPages = pages.length;
 
     if (singlePage && pages.length === 1) {
-      pdf.addImage(pages[0].dataURL, 'PNG', 0, 0, A4_WIDTH_PT, A4_HEIGHT_PT);
+      pdf.addImage(pages[0].dataURL, 'JPEG', 0, 0, A4_WIDTH_PT, A4_HEIGHT_PT);
       drawPageFooter(pdf, personName, 1, 1);
     } else {
       for (let i = 0; i < pages.length; i++) {
         if (i > 0) pdf.addPage();
 
         const page = pages[i];
-        pdf.addImage(page.dataURL, 'PNG', 0, page.yOffset, A4_WIDTH_PT, page.drawHeight);
+        pdf.addImage(page.dataURL, 'JPEG', 0, page.yOffset, A4_WIDTH_PT, page.drawHeight);
         drawPageFooter(pdf, personName, i + 1, totalPages);
 
         // Report per-page progress

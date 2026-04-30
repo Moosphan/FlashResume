@@ -77,7 +77,12 @@ async function assemblePdfMainThread(opts: AssemblePdfOptions): Promise<Blob> {
   const A4_WIDTH_PT = 595.28;
   const A4_HEIGHT_PT = 841.89;
 
-  const pdf = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'a4' });
+  const pdf = new jsPDF({
+    orientation: 'portrait',
+    unit: 'pt',
+    format: 'a4',
+    compress: true,
+  });
   const { pages, personName, singlePage } = opts;
   const totalPages = pages.length;
 
@@ -89,13 +94,13 @@ async function assemblePdfMainThread(opts: AssemblePdfOptions): Promise<Blob> {
   };
 
   if (singlePage && pages.length === 1) {
-    pdf.addImage(pages[0].dataURL, 'PNG', 0, 0, A4_WIDTH_PT, A4_HEIGHT_PT);
+    pdf.addImage(pages[0].dataURL, 'JPEG', 0, 0, A4_WIDTH_PT, A4_HEIGHT_PT);
     drawFooter(1, 1);
   } else {
     for (let i = 0; i < pages.length; i++) {
       if (i > 0) pdf.addPage();
       const page = pages[i];
-      pdf.addImage(page.dataURL, 'PNG', 0, page.yOffset, A4_WIDTH_PT, page.drawHeight);
+      pdf.addImage(page.dataURL, 'JPEG', 0, page.yOffset, A4_WIDTH_PT, page.drawHeight);
       drawFooter(i + 1, totalPages);
       opts.onProgress?.(Math.round(((i + 1) / totalPages) * 100));
     }

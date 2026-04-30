@@ -211,3 +211,7 @@ body {
   max-width: 100% !important;
   white-space: nowrap !important;
 }
+
+.resume-export-mode .retail-export-card {
+  box-shadow: none !important;
+}
