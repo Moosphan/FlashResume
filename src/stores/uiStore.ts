@@ -17,6 +17,7 @@ export interface UIStoreState {
   toasts: Toast[];
   galleryOpen: boolean;
   tutorialOpen: boolean;
+  settingsOpen: boolean;
   activeTab: 'editor' | 'preview';
 
   toggleThemeMode: () => void;
@@ -28,6 +29,8 @@ export interface UIStoreState {
   closeGallery: () => void;
   openTutorial: () => void;
   closeTutorial: () => void;
+  openSettings: () => void;
+  closeSettings: () => void;
   setActiveTab: (tab: 'editor' | 'preview') => void;
 }
 
@@ -39,6 +42,7 @@ export const useUIStore = create<UIStoreState>((set) => ({
   toasts: [],
   galleryOpen: false,
   tutorialOpen: false,
+  settingsOpen: false,
   activeTab: 'editor',
 
   toggleThemeMode: () =>
@@ -79,6 +83,9 @@ export const useUIStore = create<UIStoreState>((set) => ({
 
   openTutorial: () => set({ tutorialOpen: true }),
   closeTutorial: () => set({ tutorialOpen: false }),
+
+  openSettings: () => set({ settingsOpen: true }),
+  closeSettings: () => set({ settingsOpen: false }),
 
   setActiveTab: (tab) => set({ activeTab: tab }),
 }));

@@ -62,6 +62,7 @@ describe('SortableSectionList', () => {
     expect(screen.getByPlaceholderText('请输入区块标题')).toBeInTheDocument();
     // The add custom section button is always visible at the bottom
     expect(screen.getByText('+ 添加自定义区块')).toBeInTheDocument();
+    expect(screen.getByText('删除')).toBeInTheDocument();
   });
 
   it('section order matches store sectionOrder', () => {

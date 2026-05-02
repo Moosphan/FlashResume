@@ -63,6 +63,7 @@ function SortableSectionItem({ id, customSectionIds }: { id: string; customSecti
   } = useSortable({ id });
   const { t } = useLocale();
   const resumeData = useResumeStore((s) => s.resumeData);
+  const removeCustomSection = useResumeStore((s) => s.removeCustomSection);
   const customSections = resumeData.customSections;
 
   const style = {
@@ -110,7 +111,16 @@ function SortableSectionItem({ id, customSectionIds }: { id: string; customSecti
     >
       <div className="mb-3 flex items-center gap-2 border-b border-gray-200 pb-2 dark:border-gray-700">
         <DragHandle listeners={listeners} attributes={attributes} label={t.dragSort} />
-        <span className="text-sm font-medium text-gray-500 dark:text-gray-400">{label}</span>
+        <span className="flex-1 text-sm font-medium text-gray-500 dark:text-gray-400">{label}</span>
+        {isCustom ? (
+          <button
+            type="button"
+            onClick={() => removeCustomSection(id)}
+            className="min-h-[44px] min-w-[44px] rounded-md px-3 py-2 text-sm text-red-500 transition-colors duration-150 hover:bg-red-50 dark:hover:bg-red-900/20"
+          >
+            {t.delete}
+          </button>
+        ) : null}
       </div>
       {content}
     </div>

@@ -1,27 +1,106 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
+const MockTemplatePreview = ({ label }: { label: string }) => <div>{label}</div>;
+
 // Mock templateRegistry
 vi.mock('../../../services/templateRegistry', () => ({
   templateRegistry: {
     getAll: () => [
-      { id: 'classic', name: '经典', thumbnail: '', component: () => null },
-      { id: 'modern', name: '现代', thumbnail: '', component: () => null },
-      { id: 'minimal', name: '极简', thumbnail: '', component: () => null },
+      {
+        id: 'classic',
+        name: '经典',
+        nameEn: 'Classic',
+        thumbnail: '',
+        component: () => <MockTemplatePreview label="classic-preview" />,
+      },
+      {
+        id: 'modern',
+        name: '现代',
+        nameEn: 'Modern',
+        thumbnail: '',
+        component: () => <MockTemplatePreview label="modern-preview" />,
+      },
+      {
+        id: 'minimal',
+        name: '极简',
+        nameEn: 'Minimal',
+        thumbnail: '',
+        component: () => <MockTemplatePreview label="minimal-preview" />,
+      },
     ],
+    getById: (id: string) =>
+      [
+        {
+          id: 'classic',
+          name: '经典',
+          nameEn: 'Classic',
+          thumbnail: '',
+          component: () => <MockTemplatePreview label="classic-preview" />,
+        },
+        {
+          id: 'modern',
+          name: '现代',
+          nameEn: 'Modern',
+          thumbnail: '',
+          component: () => <MockTemplatePreview label="modern-preview" />,
+        },
+        {
+          id: 'minimal',
+          name: '极简',
+          nameEn: 'Minimal',
+          thumbnail: '',
+          component: () => <MockTemplatePreview label="minimal-preview" />,
+        },
+      ].find((tpl) => tpl.id === id),
   },
 }));
 
 // Mock resumeStore
 const mockSetTemplate = vi.fn();
 let mockSelectedTemplateId = 'classic';
+const mockResumeData = {
+  personalInfo: {},
+  experiences: [],
+  educations: [],
+  skills: [],
+  projects: [],
+  customSections: [],
+  sectionTitles: {},
+  sectionOrder: [],
+  metadata: {
+    templateId: 'classic',
+    themeColor: '#2563EB',
+    createdAt: '',
+    updatedAt: '',
+  },
+};
 
 vi.mock('../../../stores/resumeStore', () => ({
   useResumeStore: (selector: (s: Record<string, unknown>) => unknown) =>
     selector({
       selectedTemplateId: mockSelectedTemplateId,
       setTemplate: mockSetTemplate,
+      resumeData: mockResumeData,
+      themeColor: '#2563EB',
     }),
+}));
+
+vi.mock('../../../stores/uiStore', () => ({
+  useUIStore: (selector: (s: Record<string, unknown>) => unknown) =>
+    selector({
+      openGallery: vi.fn(),
+    }),
+}));
+
+vi.mock('../../../hooks/useLocale', () => ({
+  useLocale: () => ({
+    locale: 'zh',
+    t: {
+      selectTemplate: '选择模板',
+      browseMoreTemplates: '浏览更多模板',
+    },
+  }),
 }));
 
 import TemplateSelector from '../TemplateSelector';
@@ -60,10 +139,16 @@ describe('TemplateSelector', () => {
     expect(btn.className).toContain('min-w-[44px]');
   });
 
-  it('shows template name below placeholder', () => {
+  it('renders live template previews inside fixed-size frames', () => {
     render(<TemplateSelector />);
-    // Each template name appears twice: once in the placeholder, once as label
-    const classicTexts = screen.getAllByText('经典');
-    expect(classicTexts.length).toBeGreaterThanOrEqual(2);
+    expect(screen.getByText('classic-preview')).toBeInTheDocument();
+    const preview = screen.getByTestId('template-preview-classic');
+    expect(preview.className).toContain('h-20');
+    expect(preview.className).toContain('w-16');
+  });
+
+  it('shows template name below the preview', () => {
+    render(<TemplateSelector />);
+    expect(screen.getByText('经典')).toBeInTheDocument();
   });
 });

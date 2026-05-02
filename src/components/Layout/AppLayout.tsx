@@ -3,7 +3,6 @@ import { useUIStore } from '../../stores/uiStore';
 import { useLocale } from '../../hooks/useLocale';
 import { useIsMobile, useIsTablet } from '../../hooks/useMediaQuery';
 import MobileTabNav from './MobileTabNav';
-import ThemeToggle from '../UI/ThemeToggle';
 import TemplateSelector from '../UI/TemplateSelector';
 import ThemePicker from '../UI/ThemePicker';
 import SortableSectionList from '../Editor/SortableSectionList';
@@ -12,8 +11,8 @@ import ExportBar from './ExportBar';
 import Sidebar from './Sidebar';
 import IndustryGalleryOverlay from '../Gallery/IndustryGalleryOverlay';
 import TutorialPanel from '../Tutorial/TutorialPanel';
-
-const APP_VERSION = 'v1.0';
+import SettingsPanel from '../Settings/SettingsPanel';
+import { APP_VERSION_LABEL } from '../../constants/app';
 
 export default function AppLayout() {
   const previewRef = useRef<HTMLDivElement>(null);
@@ -21,7 +20,7 @@ export default function AppLayout() {
   const removeToast = useUIStore((s) => s.removeToast);
   const activeTab = useUIStore((s) => s.activeTab);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { t, toggleLocale } = useLocale();
+  const { t } = useLocale();
 
   const isMobile = useIsMobile();
   const isTablet = useIsTablet();
@@ -83,7 +82,7 @@ export default function AppLayout() {
               <h1 className="text-lg font-bold text-gray-900 dark:text-gray-100">Flash Resume</h1>
             )}
             <span className="rounded-full border border-gray-200 bg-gray-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-600 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300">
-              {APP_VERSION}
+              {APP_VERSION_LABEL}
             </span>
           </div>
         </div>
@@ -91,21 +90,25 @@ export default function AppLayout() {
           <ExportBar previewRef={previewRef} />
           <button
             type="button"
-            onClick={toggleLocale}
-            className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md border border-gray-200 px-2 text-xs font-medium text-gray-600 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700 transition-colors"
-            aria-label={t.switchLang}
-          >
-            {t.switchLang}
-          </button>
-          <button
-            type="button"
-            onClick={() => useUIStore.getState().openTutorial()}
+            onClick={() => useUIStore.getState().openSettings()}
             className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 transition-colors"
-            aria-label={t.tutorialButton}
+            aria-label={t.moreSettings}
+            title={t.moreSettings}
           >
-            📖
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              className="h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="12" cy="12" r="3.2" />
+              <path d="M19.4 15a1 1 0 0 0 .2 1.1l.1.1a1.9 1.9 0 0 1 0 2.7 1.9 1.9 0 0 1-2.7 0l-.1-.1a1 1 0 0 0-1.1-.2 1 1 0 0 0-.6.9V20a2 2 0 0 1-2 2h-.4a2 2 0 0 1-2-2v-.2a1 1 0 0 0-.6-.9 1 1 0 0 0-1.1.2l-.1.1a1.9 1.9 0 0 1-2.7 0 1.9 1.9 0 0 1 0-2.7l.1-.1a1 1 0 0 0 .2-1.1 1 1 0 0 0-.9-.6H4a2 2 0 0 1-2-2v-.4a2 2 0 0 1 2-2h.2a1 1 0 0 0 .9-.6 1 1 0 0 0-.2-1.1l-.1-.1a1.9 1.9 0 0 1 0-2.7 1.9 1.9 0 0 1 2.7 0l.1.1a1 1 0 0 0 1.1.2 1 1 0 0 0 .6-.9V4a2 2 0 0 1 2-2h.4a2 2 0 0 1 2 2v.2a1 1 0 0 0 .6.9 1 1 0 0 0 1.1-.2l.1-.1a1.9 1.9 0 0 1 2.7 0 1.9 1.9 0 0 1 0 2.7l-.1.1a1 1 0 0 0-.2 1.1 1 1 0 0 0 .9.6h.2a2 2 0 0 1 2 2v.4a2 2 0 0 1-2 2h-.2a1 1 0 0 0-.9.6Z" />
+            </svg>
           </button>
-          <ThemeToggle />
         </div>
       </header>
 
@@ -185,6 +188,9 @@ export default function AppLayout() {
 
       {/* Tutorial Panel */}
       <TutorialPanel />
+
+      {/* Settings Panel */}
+      <SettingsPanel />
 
       {/* Toast notifications */}
       {toasts.length > 0 && (

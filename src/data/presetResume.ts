@@ -48,7 +48,8 @@ export const PRESET_RESUME_DATA: ResumeData = {
       school: 'Stanford University',
       degree: 'MBA',
       major: 'Technology & Innovation',
-      details: 'GPA 3.8/4.0 · Product Strategy, Design Leadership',
+      details:
+        'GPA 3.8/4.0 · Arjay Miller Scholar\nRelevant Coursework: Product Strategy, Design Leadership, Organizational Behavior\nActivities: Stanford Venture Studio, Product Management Club',
       startDate: '2014-09',
       endDate: '2016-06',
     },
@@ -57,7 +58,8 @@ export const PRESET_RESUME_DATA: ResumeData = {
       school: 'UC Berkeley',
       degree: 'B.S.',
       major: 'Computer Science',
-      details: 'Dean’s List · Relevant Coursework: HCI, Distributed Systems',
+      details:
+        'Dean’s List (2012, 2013) · GPA 3.7/4.0\nRelevant Coursework: HCI, Distributed Systems, Database Systems, Machine Learning\nSenior Project: Built a campus event recommendation engine used by 5,000+ students',
       startDate: '2010-09',
       endDate: '2014-06',
     },

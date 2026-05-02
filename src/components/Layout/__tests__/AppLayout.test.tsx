@@ -111,10 +111,10 @@ describe('AppLayout', () => {
     expect(screen.getByText('Flash Resume')).toBeInTheDocument();
   });
 
-  it('renders the ThemeToggle button', () => {
+  it('renders the settings button', () => {
     render(<AppLayout />);
-    const toggleBtn = screen.getByLabelText(/切换到/);
-    expect(toggleBtn).toBeInTheDocument();
+    const settingsButtons = screen.getAllByLabelText('更多设置');
+    expect(settingsButtons[0]).toBeInTheDocument();
   });
 
   it('renders the ExportBar with menu trigger', () => {

@@ -12,7 +12,6 @@ export default function SingleCustomSectionEditor({ sectionId }: Props) {
     s.resumeData.customSections.find((cs) => cs.id === sectionId),
   );
   const updateCustomSection = useResumeStore((s) => s.updateCustomSection);
-  const removeCustomSection = useResumeStore((s) => s.removeCustomSection);
   const { t } = useLocale();
 
   if (!section) return null;
@@ -23,15 +22,6 @@ export default function SingleCustomSectionEditor({ sectionId }: Props) {
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center justify-end">
-        <button
-          type="button"
-          onClick={() => removeCustomSection(sectionId)}
-          className="min-h-[44px] min-w-[44px] rounded-md px-3 py-2 text-sm text-red-500 hover:bg-red-50 transition-colors duration-150 dark:hover:bg-red-900/20"
-        >
-          {t.delete}
-        </button>
-      </div>
       <div>
         <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
           {t.sectionTitle}

@@ -197,6 +197,7 @@ export default function ExportBar({ previewRef }: ExportBarProps) {
         onClick={handleImportClick}
         className={iconBtnCls}
         aria-label={t.importJSON}
+        title={t.importJSON}
       >
         <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -214,6 +215,7 @@ export default function ExportBar({ previewRef }: ExportBarProps) {
             onClick={() => !exporting && setOpen((v) => !v)}
             className={`${iconBtnCls} ${exporting ? 'pointer-events-none' : ''}`}
             aria-label={t.exportMenu}
+            title={exporting && label ? label : t.exportMenu}
             aria-expanded={open}
             aria-haspopup="true"
             disabled={exporting}
@@ -268,15 +270,16 @@ export default function ExportBar({ previewRef }: ExportBarProps) {
         {open && !exporting && (
           <div className="absolute right-0 top-full mt-1 w-44 rounded-lg border border-gray-200 bg-white py-1 shadow-lg dark:border-gray-600 dark:bg-gray-800 z-50 animate-fade-in">
             <button type="button" onClick={handleExportPDF} disabled={empty} className={itemCls}>
+              <span className="sr-only">{t.exportPDF}</span>
               <span className="w-5 text-center text-xs">📄</span> {t.exportPDF}
             </button>
-            <button type="button" onClick={handleExportPNG} disabled={empty} className={itemCls}>
+            <button type="button" onClick={handleExportPNG} disabled={empty} className={itemCls} title={t.exportPNG}>
               <span className="w-5 text-center text-xs">🖼️</span> {t.exportPNG}
             </button>
-            <button type="button" onClick={handleExportJPG} disabled={empty} className={itemCls}>
+            <button type="button" onClick={handleExportJPG} disabled={empty} className={itemCls} title={t.exportJPG}>
               <span className="w-5 text-center text-xs">🖼️</span> {t.exportJPG}
             </button>
-            <button type="button" onClick={handleExportJSON} disabled={empty} className={itemCls}>
+            <button type="button" onClick={handleExportJSON} disabled={empty} className={itemCls} title={t.exportJSON}>
               <span className="w-5 text-center text-xs">📋</span> {t.exportJSON}
             </button>
           </div>
