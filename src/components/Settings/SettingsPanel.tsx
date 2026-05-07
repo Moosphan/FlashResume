@@ -5,10 +5,11 @@ import { setLocale } from '../../utils/i18n';
 import { TUTORIAL_DATA } from '../../data/tutorialData';
 import TutorialCard from '../Tutorial/TutorialCard';
 import { APP_VERSION } from '../../constants/app';
+import { SUPPORT_CHANNELS, type SupportChannelDefinition } from '../../constants/support';
 import changelogEn from '../../../CHANGELOG.md?raw';
 import changelogZh from '../../../CHANGELOG.zh.md?raw';
 
-type SettingsView = 'menu' | 'changelog' | 'tutorial';
+type SettingsView = 'menu' | 'changelog' | 'tutorial' | 'support';
 
 type MarkdownBlock =
   | { type: 'heading'; level: 1 | 2 | 3; text: string }
@@ -179,6 +180,44 @@ function renderMarkdown(markdown: string): ReactNode {
   );
 }
 
+function SupportQrCard({
+  channel,
+  t,
+}: {
+  channel: SupportChannelDefinition;
+  t: ReturnType<typeof useLocale>['t'];
+}) {
+  const [imageFailed, setImageFailed] = useState(false);
+  const imageSrc = `${import.meta.env.BASE_URL}${channel.imagePath}`;
+  const title = channel.id === 'wechat' ? t.supportWechatTitle : t.supportAlipayTitle;
+
+  return (
+    <section className="rounded-2xl border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800">
+      <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
+
+      <div className="mt-4 overflow-hidden rounded-2xl border border-dashed border-gray-300 bg-white dark:border-gray-600 dark:bg-gray-900">
+        {!imageFailed ? (
+          <img
+            src={imageSrc}
+            alt={title}
+            className="aspect-square w-full object-contain"
+            onError={() => setImageFailed(true)}
+          />
+        ) : (
+          <div className="flex aspect-square flex-col items-center justify-center px-6 text-center">
+            <div className="text-sm font-semibold text-gray-700 dark:text-gray-200">
+              {t.supportQrMissingTitle}
+            </div>
+            <p className="mt-2 text-xs leading-5 text-gray-500 dark:text-gray-400">
+              {channel.imagePath}
+            </p>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
 export default function SettingsPanel() {
   const settingsOpen = useUIStore((s) => s.settingsOpen);
   const themeMode = useUIStore((s) => s.themeMode);
@@ -236,7 +275,9 @@ export default function SettingsPanel() {
                 ? t.settingsTitle
                 : view === 'changelog'
                   ? t.changelogTitle
-                  : t.tutorialTitle}
+                  : view === 'tutorial'
+                    ? t.tutorialTitle
+                    : t.supportAuthorTitle}
             </h2>
             {view === 'changelog' && (
               <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
@@ -351,6 +392,21 @@ export default function SettingsPanel() {
                 </span>
                 <span className="ml-4 text-gray-400 dark:text-gray-500">›</span>
               </button>
+              <button
+                type="button"
+                onClick={() => setView('support')}
+                className="flex w-full items-start justify-between rounded-xl border border-gray-200 bg-gray-50 px-4 py-4 text-left transition-colors hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+              >
+                <span>
+                  <span className="block text-sm font-semibold text-gray-900 dark:text-gray-100">
+                    {t.supportAuthorTitle}
+                  </span>
+                  <span className="mt-1 block text-xs text-gray-500 dark:text-gray-400">
+                    {t.supportAuthorHint}
+                  </span>
+                </span>
+                <span className="ml-4 text-gray-400 dark:text-gray-500">›</span>
+              </button>
               <div className="flex items-start justify-between rounded-xl border border-gray-200 bg-gray-50 px-4 py-4 dark:border-gray-700 dark:bg-gray-800">
                 <span>
                   <span className="block text-sm font-semibold text-gray-900 dark:text-gray-100">
@@ -378,6 +434,35 @@ export default function SettingsPanel() {
               </button>
               <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800">
                 {renderMarkdown(changelogContent)}
+              </div>
+            </div>
+          )}
+
+          {view === 'support' && (
+            <div>
+              <button
+                type="button"
+                onClick={() => setView('menu')}
+                className="mb-4 min-h-[44px] rounded-md border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
+              >
+                {t.backToSettings}
+              </button>
+              <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800">
+                <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100">
+                  {t.supportAuthorLead}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-gray-600 dark:text-gray-300">
+                  {t.supportAuthorThanks}
+                </p>
+              </div>
+              <div className="mt-4 space-y-4">
+                {SUPPORT_CHANNELS.map((channel) => (
+                  <SupportQrCard
+                    key={channel.id}
+                    channel={channel}
+                    t={t}
+                  />
+                ))}
               </div>
             </div>
           )}

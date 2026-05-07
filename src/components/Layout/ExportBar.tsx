@@ -16,6 +16,8 @@ interface ExportBarProps {
   previewRef: React.RefObject<HTMLDivElement | null>;
 }
 
+const GITHUB_REPOSITORY_URL = 'https://github.com/Moosphan/FlashResume';
+
 function isResumeEmpty(data: ReturnType<typeof useResumeStore.getState>['resumeData']): boolean {
   const hasName = data.personalInfo.name.trim() !== '';
   const hasExperiences = data.experiences.length > 0;
@@ -191,6 +193,31 @@ export default function ExportBar({ previewRef }: ExportBarProps) {
 
   return (
     <div className="flex items-center gap-1">
+      {/* GitHub repository link */}
+      <a
+        href={GITHUB_REPOSITORY_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={iconBtnCls}
+        aria-label={t.githubRepository}
+        title={t.githubRepository}
+      >
+        <svg
+          aria-hidden="true"
+          className="h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.49 0-.24-.01-1.04-.01-1.9-2.78.62-3.37-1.21-3.37-1.21-.45-1.19-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.57 2.35 1.12 2.92.85.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05A9.34 9.34 0 0 1 12 6.96c.85 0 1.7.12 2.5.34 1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.38-.01 2.49-.01 2.82 0 .27.18.59.69.49A10.17 10.17 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"
+          />
+        </svg>
+      </a>
+
+      <div className="mx-1 h-5 w-px bg-gray-200 dark:bg-gray-700" aria-hidden="true" />
+
       {/* Import JSON standalone button */}
       <button
         type="button"
@@ -270,7 +297,6 @@ export default function ExportBar({ previewRef }: ExportBarProps) {
         {open && !exporting && (
           <div className="absolute right-0 top-full mt-1 w-44 rounded-lg border border-gray-200 bg-white py-1 shadow-lg dark:border-gray-600 dark:bg-gray-800 z-50 animate-fade-in">
             <button type="button" onClick={handleExportPDF} disabled={empty} className={itemCls}>
-              <span className="sr-only">{t.exportPDF}</span>
               <span className="w-5 text-center text-xs">📄</span> {t.exportPDF}
             </button>
             <button type="button" onClick={handleExportPNG} disabled={empty} className={itemCls} title={t.exportPNG}>

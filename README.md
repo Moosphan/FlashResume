@@ -1,5 +1,7 @@
 # Flash Resume
 
+[中文](./README.md) | [English](./README.en.md)
+
 浏览器端简历编辑器，基于 React + TypeScript 构建，支持本地存储、实时预览、多模板切换，以及 `PDF / PNG / JPG / JSON` 导出。
 
 ## 预览
