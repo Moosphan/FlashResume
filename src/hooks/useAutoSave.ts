@@ -15,6 +15,11 @@ export function useAutoSave(): void {
 
   const debouncedData = useDebounce(resumeData, 2000);
   const isInitialMount = useRef(true);
+  const currentResumeIdRef = useRef(currentResumeId);
+
+  useEffect(() => {
+    currentResumeIdRef.current = currentResumeId;
+  }, [currentResumeId]);
 
   useEffect(() => {
     // Skip the first render to avoid saving on mount
@@ -23,20 +28,21 @@ export function useAutoSave(): void {
       return;
     }
 
-    if (currentResumeId === null) return;
+    const currentId = currentResumeIdRef.current;
+    if (currentId === null) return;
 
-    storage.saveResume(currentResumeId, debouncedData);
+    storage.saveResume(currentId, debouncedData);
 
     // Update the resumeList item's updatedAt timestamp
     // Read resumeList directly from store to avoid it being a reactive dependency
     const resumeList = useResumeStore.getState().resumeList;
     const now = new Date().toISOString();
     const updatedList = resumeList.map((item) =>
-      item.id === currentResumeId ? { ...item, updatedAt: now } : item,
+      item.id === currentId ? { ...item, updatedAt: now } : item,
     );
     storage.saveResumeList(updatedList);
     useResumeStore.setState({ resumeList: updatedList });
 
     setAutoSaveStatus('saved');
-  }, [debouncedData, currentResumeId, setAutoSaveStatus]);
+  }, [debouncedData, setAutoSaveStatus]);
 }

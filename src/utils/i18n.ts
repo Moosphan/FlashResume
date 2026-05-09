@@ -423,12 +423,45 @@ export function getLabels(lang: ResumeLanguage, sectionTitles?: SectionTitleMap)
 type LocaleListener = (locale: Locale) => void;
 const listeners = new Set<LocaleListener>();
 
+const LOCALE_STORAGE_KEY = 'flash-resume-locale';
+const CHINESE_TIME_ZONES = new Set([
+  'Asia/Shanghai',
+  'Asia/Chongqing',
+  'Asia/Harbin',
+  'Asia/Urumqi',
+  'Asia/Hong_Kong',
+  'Asia/Macau',
+  'Asia/Taipei',
+]);
+
+function isLocale(value: string | null): value is Locale {
+  return value === 'zh' || value === 'en';
+}
+
+function detectBrowserLocale(): Locale {
+  const languageSources = [
+    ...((globalThis.navigator?.languages ?? []) as readonly string[]),
+    globalThis.navigator?.language,
+  ].filter(Boolean);
+
+  if (languageSources.some((language) => language.toLowerCase().startsWith('zh'))) {
+    return 'zh';
+  }
+
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  if (CHINESE_TIME_ZONES.has(timeZone)) {
+    return 'zh';
+  }
+
+  return 'en';
+}
+
 let currentLocale: Locale = ((): Locale => {
   try {
-    const saved = localStorage.getItem('flash-resume-locale');
-    if (saved === 'en' || saved === 'zh') return saved;
+    const saved = localStorage.getItem(LOCALE_STORAGE_KEY);
+    if (isLocale(saved)) return saved;
   } catch { /* ignore */ }
-  return 'zh';
+  return detectBrowserLocale();
 })();
 
 export function getLocale(): Locale {
@@ -437,7 +470,7 @@ export function getLocale(): Locale {
 
 export function setLocale(locale: Locale): void {
   currentLocale = locale;
-  try { localStorage.setItem('flash-resume-locale', locale); } catch { /* ignore */ }
+  try { localStorage.setItem(LOCALE_STORAGE_KEY, locale); } catch { /* ignore */ }
   listeners.forEach((fn) => fn(locale));
 }
 

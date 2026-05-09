@@ -2,6 +2,12 @@
 
 All notable changes to this project are recorded here.
 
+## 1.0.1
+
+- Fixed local resume data being overwritten after repeated refreshes.
+- Added automatic language selection for first-time visitors.
+- Added GitHub repository entry, Bing verification meta, and sitemap.
+
 ## 1.0.0
 
 - Added a visible `v1.0` version badge in the header.

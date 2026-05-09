@@ -160,4 +160,49 @@ describe('useAutoSave', () => {
 
     expect(mockedSaveResume).not.toHaveBeenCalled();
   });
+
+  it('does not overwrite restored resume with stale initial data when current id changes first', () => {
+    const resumeId = 'restored-resume';
+    const restoredData = {
+      ...DEFAULT_RESUME_DATA,
+      personalInfo: { ...DEFAULT_RESUME_DATA.personalInfo, name: 'Restored User' },
+      experiences: [],
+      educations: [],
+      skills: [],
+      customSections: [],
+      sectionOrder: [...DEFAULT_RESUME_DATA.sectionOrder],
+      metadata: {
+        ...DEFAULT_RESUME_DATA.metadata,
+        createdAt: '2026-05-09T00:00:00.000Z',
+        updatedAt: '2026-05-09T00:00:00.000Z',
+      },
+    };
+
+    renderHook(() => useAutoSave());
+
+    act(() => {
+      useResumeStore.setState({
+        currentResumeId: resumeId,
+        resumeList: [{ id: resumeId, name: 'Restored User', updatedAt: '2026-05-09T00:00:00.000Z' }],
+      });
+    });
+
+    expect(mockedSaveResume).not.toHaveBeenCalled();
+
+    act(() => {
+      useResumeStore.setState({ resumeData: restoredData });
+    });
+
+    act(() => {
+      vi.advanceTimersByTime(2500);
+    });
+
+    expect(mockedSaveResume).toHaveBeenCalledTimes(1);
+    expect(mockedSaveResume).toHaveBeenCalledWith(
+      resumeId,
+      expect.objectContaining({
+        personalInfo: expect.objectContaining({ name: 'Restored User' }),
+      }),
+    );
+  });
 });

@@ -25,6 +25,8 @@ function App() {
   // On startup, always load preset demo data, then restore last active resume if exists
   useEffect(() => {
     const store = useResumeStore.getState();
+    const savedId = storageService.getCurrentResumeId();
+
     // Always ensure preset resume exists in the list
     const list = storageService.getResumeList();
     const presetExists = list.some((item) => item.name === 'Alex Chen');
@@ -33,7 +35,6 @@ function App() {
     }
 
     // Then restore last active resume if available
-    const savedId = storageService.getCurrentResumeId();
     if (savedId) {
       store.loadResume(savedId);
     }
