@@ -205,4 +205,84 @@ describe('useAutoSave', () => {
       }),
     );
   });
+
+  it('does not save a new blank resume snapshot into a previously opened resume after a quick switch back', () => {
+    const originalResumeId = 'resume-a';
+    const newResumeId = 'resume-b';
+    const originalData = {
+      ...DEFAULT_RESUME_DATA,
+      personalInfo: { ...DEFAULT_RESUME_DATA.personalInfo, name: 'Existing Resume' },
+      experiences: [],
+      educations: [],
+      skills: [],
+      customSections: [],
+      sectionOrder: [...DEFAULT_RESUME_DATA.sectionOrder],
+      metadata: {
+        ...DEFAULT_RESUME_DATA.metadata,
+        createdAt: '2026-05-09T00:00:00.000Z',
+        updatedAt: '2026-05-09T00:00:00.000Z',
+      },
+    };
+    const blankNewResumeData = {
+      ...DEFAULT_RESUME_DATA,
+      personalInfo: { ...DEFAULT_RESUME_DATA.personalInfo },
+      experiences: [],
+      educations: [],
+      skills: [],
+      customSections: [],
+      sectionOrder: [...DEFAULT_RESUME_DATA.sectionOrder],
+      metadata: {
+        ...DEFAULT_RESUME_DATA.metadata,
+        createdAt: '2026-05-10T00:00:00.000Z',
+        updatedAt: '2026-05-10T00:00:00.000Z',
+      },
+    };
+
+    useResumeStore.setState({
+      currentResumeId: originalResumeId,
+      resumeData: originalData,
+      resumeList: [
+        { id: originalResumeId, name: 'Resume A', updatedAt: '2026-05-09T00:00:00.000Z' },
+        { id: newResumeId, name: 'Resume B', updatedAt: '2026-05-10T00:00:00.000Z' },
+      ],
+    });
+
+    renderHook(() => useAutoSave());
+
+    act(() => {
+      useResumeStore.setState({
+        currentResumeId: newResumeId,
+        resumeData: blankNewResumeData,
+      });
+    });
+
+    act(() => {
+      vi.advanceTimersByTime(1000);
+    });
+
+    act(() => {
+      useResumeStore.setState({
+        currentResumeId: originalResumeId,
+        resumeData: originalData,
+      });
+    });
+
+    act(() => {
+      vi.advanceTimersByTime(2500);
+    });
+
+    expect(mockedSaveResume).toHaveBeenCalledTimes(1);
+    expect(mockedSaveResume).toHaveBeenCalledWith(
+      originalResumeId,
+      expect.objectContaining({
+        personalInfo: expect.objectContaining({ name: 'Existing Resume' }),
+      }),
+    );
+    expect(mockedSaveResume).not.toHaveBeenCalledWith(
+      originalResumeId,
+      expect.objectContaining({
+        personalInfo: expect.objectContaining({ name: '' }),
+      }),
+    );
+  });
 });

@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { useDebounce } from './useDebounce';
 import { useResumeStore } from '../stores/resumeStore';
 import { useUIStore } from '../stores/uiStore';
 import * as storage from '../services/storageService';
@@ -13,13 +12,7 @@ export function useAutoSave(): void {
   const currentResumeId = useResumeStore((s) => s.currentResumeId);
   const setAutoSaveStatus = useUIStore((s) => s.setAutoSaveStatus);
 
-  const debouncedData = useDebounce(resumeData, 2000);
   const isInitialMount = useRef(true);
-  const currentResumeIdRef = useRef(currentResumeId);
-
-  useEffect(() => {
-    currentResumeIdRef.current = currentResumeId;
-  }, [currentResumeId]);
 
   useEffect(() => {
     // Skip the first render to avoid saving on mount
@@ -28,21 +21,29 @@ export function useAutoSave(): void {
       return;
     }
 
-    const currentId = currentResumeIdRef.current;
-    if (currentId === null) return;
+    const snapshotId = currentResumeId;
+    const snapshotData = resumeData;
 
-    storage.saveResume(currentId, debouncedData);
+    const timer = window.setTimeout(() => {
+      if (snapshotId === null) return;
 
-    // Update the resumeList item's updatedAt timestamp
-    // Read resumeList directly from store to avoid it being a reactive dependency
-    const resumeList = useResumeStore.getState().resumeList;
-    const now = new Date().toISOString();
-    const updatedList = resumeList.map((item) =>
-      item.id === currentId ? { ...item, updatedAt: now } : item,
-    );
-    storage.saveResumeList(updatedList);
-    useResumeStore.setState({ resumeList: updatedList });
+      storage.saveResume(snapshotId, snapshotData);
 
-    setAutoSaveStatus('saved');
-  }, [debouncedData, setAutoSaveStatus]);
+      // Update the resumeList item's updatedAt timestamp
+      // Read resumeList directly from store to avoid it being a reactive dependency
+      const resumeList = useResumeStore.getState().resumeList;
+      const now = new Date().toISOString();
+      const updatedList = resumeList.map((item) =>
+        item.id === snapshotId ? { ...item, updatedAt: now } : item,
+      );
+      storage.saveResumeList(updatedList);
+      useResumeStore.setState({ resumeList: updatedList });
+
+      setAutoSaveStatus('saved');
+    }, 2000);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, [currentResumeId, resumeData, setAutoSaveStatus]);
 }
