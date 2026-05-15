@@ -7,6 +7,7 @@ import {
   type Locale,
   type Translations,
 } from '../utils/i18n';
+import { SEO_URLS } from '../utils/seo';
 
 /**
  * Hook to access the current locale and translations.
@@ -20,7 +21,13 @@ export function useLocale(): {
   const locale = useSyncExternalStore(subscribeLocale, getLocale, getLocale);
   const t = getTranslations(locale);
   const toggleLocale = useCallback(() => {
-    setLocale(locale === 'zh' ? 'en' : 'zh');
+    const nextLocale = locale === 'zh' ? 'en' : 'zh';
+    setLocale(nextLocale);
+
+    const targetUrl = nextLocale === 'zh' ? SEO_URLS.zh : SEO_URLS.en;
+    if (globalThis.location?.href !== targetUrl) {
+      globalThis.location.assign(targetUrl);
+    }
   }, [locale]);
   return { locale, t, toggleLocale };
 }

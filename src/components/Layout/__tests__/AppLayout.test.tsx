@@ -86,6 +86,10 @@ vi.mock('../Sidebar', () => ({
   ),
 }));
 
+vi.mock('../SeoContent', () => ({
+  default: () => <div data-testid="seo-content">SEO Content</div>,
+}));
+
 import AppLayout from '../AppLayout';
 
 describe('AppLayout', () => {
@@ -120,6 +124,11 @@ describe('AppLayout', () => {
   it('renders the ExportBar with menu trigger', () => {
     render(<AppLayout />);
     expect(screen.getByLabelText('导出菜单')).toBeInTheDocument();
+  });
+
+  it('renders the SEO content section', () => {
+    render(<AppLayout />);
+    expect(screen.getByTestId('seo-content')).toBeInTheDocument();
   });
 
   it('renders toast notifications', () => {

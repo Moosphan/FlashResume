@@ -12,6 +12,7 @@ import Sidebar from './Sidebar';
 import IndustryGalleryOverlay from '../Gallery/IndustryGalleryOverlay';
 import TutorialPanel from '../Tutorial/TutorialPanel';
 import SettingsPanel from '../Settings/SettingsPanel';
+import SeoContent from './SeoContent';
 import { APP_VERSION_LABEL } from '../../constants/app';
 
 export default function AppLayout() {
@@ -139,6 +140,7 @@ export default function AppLayout() {
                   <ThemePicker />
                 </section>
                 <SortableSectionList />
+                <SeoContent />
               </div>
             </div>
           )}

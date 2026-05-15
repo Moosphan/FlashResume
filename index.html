@@ -3,12 +3,107 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="canonical" href="https://dorck.cn/FlashResume/" />
+    <link rel="alternate" hreflang="en" href="https://dorck.cn/FlashResume/" />
+    <link rel="alternate" hreflang="zh-CN" href="https://dorck.cn/FlashResume/zh/" />
+    <link rel="alternate" hreflang="x-default" href="https://dorck.cn/FlashResume/" />
+    <link rel="manifest" href="/FlashResume/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="description" content="Flash Resume is a free online resume builder with local auto-save, live preview, multi-resume management, 24 industry templates, and PDF, PNG, JPG, JSON export." />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta name="theme-color" content="#2563EB" />
     <meta name="msvalidate.01" content="81168BC3080FF20DE46A35C808050489" />
-    <title>Flash Resume</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Flash Resume" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="zh_CN" />
+    <meta property="og:title" content="Flash Resume - Free Online Resume Builder" />
+    <meta property="og:description" content="Browser-based resume editor with local auto-save, live preview, multi-resume management, 24 industry templates, and PDF, PNG, JPG, JSON export." />
+    <meta property="og:url" content="https://dorck.cn/FlashResume/" />
+    <meta property="og:image" content="https://dorck.cn/FlashResume/og-cover.png" />
+    <meta property="og:image:alt" content="Flash Resume online resume builder interface preview" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Flash Resume - Free Online Resume Builder" />
+    <meta name="twitter:description" content="Create resumes online with local auto-save, live preview, 24 templates, and PDF, PNG, JPG, JSON export." />
+    <meta name="twitter:image" content="https://dorck.cn/FlashResume/og-cover.png" />
+    <title>Flash Resume - Free Online Resume Builder</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Flash Resume",
+        "applicationCategory": "BusinessApplication",
+        "applicationSubCategory": "Resume Builder",
+        "operatingSystem": "Web",
+        "url": "https://dorck.cn/FlashResume/",
+        "image": "https://dorck.cn/FlashResume/og-cover.png",
+        "inLanguage": ["zh-CN", "en"],
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "description": "Flash Resume is a free online resume builder with local auto-save, live preview, multi-template switching, multi-resume management, and PDF, PNG, JPG, JSON export.",
+        "featureList": [
+          "Local auto-save",
+          "Live preview",
+          "24 industry templates",
+          "Multi-resume management",
+          "PDF / PNG / JPG / JSON export",
+          "Chinese and English UI"
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Do I need to sign in or upload my resume to a server?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. The current version stores resume data in browser localStorage by default and does not require a backend for everyday editing."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which export formats are supported?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Flash Resume supports PDF, PNG, JPG, and JSON export. PDF works well for applications, while JSON is useful for backup and migration."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I manage multiple resumes at the same time?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. You can create separate resume versions for different roles and switch, rename, or delete them from the sidebar."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who is Flash Resume for?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Flash Resume is useful for students, professionals changing jobs, and anyone who needs fast bilingual resume editing with multiple templates."
+            }
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <div>
+        <h1>Flash Resume</h1>
+        <p>Flash Resume is a free online resume builder for creating, editing, previewing, and exporting resumes in your browser.</p>
+        <p>It supports local auto-save, multiple resume versions, 24 templates, and PDF, PNG, JPG, JSON export without registration.</p>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

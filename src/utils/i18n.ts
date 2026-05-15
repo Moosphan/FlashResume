@@ -456,7 +456,25 @@ function detectBrowserLocale(): Locale {
   return 'en';
 }
 
+function detectLocaleFromPathname(pathname: string): Locale | null {
+  if (pathname.startsWith('/FlashResume/zh/') || pathname === '/FlashResume/zh') {
+    return 'zh';
+  }
+
+  return null;
+}
+
+function detectLocaleFromSearch(search: string): Locale | null {
+  const params = new URLSearchParams(search);
+  const lang = params.get('lang');
+  return isLocale(lang) ? lang : null;
+}
+
 let currentLocale: Locale = ((): Locale => {
+  const pathnameLocale = detectLocaleFromPathname(globalThis.location?.pathname ?? '');
+  if (pathnameLocale) return pathnameLocale;
+  const queryLocale = detectLocaleFromSearch(globalThis.location?.search ?? '');
+  if (queryLocale) return queryLocale;
   try {
     const saved = localStorage.getItem(LOCALE_STORAGE_KEY);
     if (isLocale(saved)) return saved;
@@ -477,4 +495,8 @@ export function setLocale(locale: Locale): void {
 export function subscribeLocale(fn: LocaleListener): () => void {
   listeners.add(fn);
   return () => listeners.delete(fn);
+}
+
+export function getPathnameLocale(pathname: string): Locale | null {
+  return detectLocaleFromPathname(pathname);
 }

@@ -1,0 +1,18 @@
+{
+  "name": "Flash Resume",
+  "short_name": "Flash Resume",
+  "description": "免费在线简历制作工具，支持实时预览、多模板切换和 PDF / PNG / JPG / JSON 导出。",
+  "start_url": "/FlashResume/",
+  "scope": "/FlashResume/",
+  "display": "standalone",
+  "background_color": "#F8FAFC",
+  "theme_color": "#2563EB",
+  "icons": [
+    {
+      "src": "/FlashResume/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

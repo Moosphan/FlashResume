@@ -6,12 +6,15 @@ import { useUIStore } from './stores/uiStore';
 import { initializeAnalytics } from './services/analyticsService';
 import * as storageService from './services/storageService';
 import { PRESET_RESUME_DATA } from './data/presetResume';
+import { useLocale } from './hooks/useLocale';
+import { syncDocumentSeo } from './utils/seo';
 
 function App() {
   // Activate auto-save at the top level
   useAutoSave();
 
   const themeMode = useUIStore((s) => s.themeMode);
+  const { locale } = useLocale();
 
   // Sync themeMode to document.documentElement class for Tailwind dark mode
   useEffect(() => {
@@ -21,6 +24,10 @@ function App() {
       document.documentElement.classList.remove('dark');
     }
   }, [themeMode]);
+
+  useEffect(() => {
+    syncDocumentSeo(locale);
+  }, [locale]);
 
   // On startup, always load preset demo data, then restore last active resume if exists
   useEffect(() => {
