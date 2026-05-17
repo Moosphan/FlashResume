@@ -12,24 +12,27 @@ type SeoEntry = {
   description: string;
   ogLocale: string;
   url: string;
+  imageAlt: string;
 };
 
 export const SEO_META: Record<Locale, SeoEntry> = {
   en: {
     lang: 'en',
-    title: 'Flash Resume - Free Online Resume Builder',
+    title: 'Flash Resume - Online Resume Builder with Live Preview',
     description:
-      'Flash Resume is a free online resume builder with local auto-save, live preview, multi-resume management, 24 industry templates, and PDF, PNG, JPG, JSON export.',
+      'Write, preview, tailor, and export resumes in one local-first workspace with 24 templates and PDF, PNG, JPG, JSON export.',
     ogLocale: 'en_US',
     url: SEO_URLS.en,
+    imageAlt: 'Flash Resume branded social card showing a resume workspace, polished layout preview, and export-ready visuals.',
   },
   zh: {
     lang: 'zh-CN',
-    title: 'Flash Resume - 免费在线简历制作工具',
+    title: 'Flash Resume - 支持实时预览的在线简历编辑器',
     description:
-      'Flash Resume 是一个免费在线简历制作工具，支持本地自动保存、实时预览、多份简历管理、24 套行业模板，以及 PDF、PNG、JPG、JSON 导出。',
+      '在一个本地优先的工作区中完成简历撰写、预览、定向调整与导出，支持 24 套模板和 PDF、PNG、JPG、JSON 导出。',
     ogLocale: 'zh_CN',
     url: SEO_URLS.zh,
+    imageAlt: 'Flash Resume 品牌分享图，展示简历工作区、版式预览与导出能力。',
   },
 };
 
@@ -58,7 +61,11 @@ export function syncDocumentSeo(locale: Locale): void {
   updateMeta('meta[property="og:description"]', meta.description);
   updateMeta('meta[property="og:locale"]', meta.ogLocale);
   updateMeta('meta[property="og:url"]', pageUrl);
+  updateMeta('meta[property="og:image"]', 'https://dorck.cn/FlashResume/og-cover.png');
+  updateMeta('meta[property="og:image:alt"]', meta.imageAlt);
   updateMeta('meta[name="twitter:title"]', meta.title);
   updateMeta('meta[name="twitter:description"]', meta.description);
+  updateMeta('meta[name="twitter:image"]', 'https://dorck.cn/FlashResume/og-cover.png');
+  updateMeta('meta[name="twitter:image:alt"]', meta.imageAlt);
   updateLink('link[rel="canonical"]', pageUrl);
 }

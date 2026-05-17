@@ -80,7 +80,7 @@ export default function AppLayout() {
           <img src={logoUrl} alt="Flash Resume" className="h-7 w-7" />
           <div className="flex items-center gap-2">
             {!isMobile && (
-              <h1 className="text-lg font-bold text-gray-900 dark:text-gray-100">Flash Resume</h1>
+              <div className="text-lg font-bold text-gray-900 dark:text-gray-100">Flash Resume</div>
             )}
             <span className="rounded-full border border-gray-200 bg-gray-100 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-600 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300">
               {APP_VERSION_LABEL}

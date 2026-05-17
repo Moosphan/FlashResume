@@ -1,8 +1,11 @@
 import { useLocale } from '../../hooks/useLocale';
+import { SEO_URLS } from '../../utils/seo';
 
 const SEO_CONTENT = {
   zh: {
+    brand: 'Flash Resume',
     heading: '免费在线简历制作工具',
+    eyebrow: '在线简历编辑器',
     intro:
       'Flash Resume 是一个浏览器端简历编辑器，适合校招、社招、转岗和自由职业场景。你可以直接在页面里编辑内容、切换模板、调整主题色，并实时查看 A4 排版效果。',
     supporting:
@@ -14,7 +17,23 @@ const SEO_CONTENT = {
       '多份简历管理，适合针对不同岗位准备多个版本',
       '实时预览和导出，方便在投递前检查版式',
     ],
+    useCasesHeading: '适合哪些人使用',
+    useCases: [
+      '应届生和校招生快速生成第一版求职简历',
+      '社招候选人针对不同岗位维护多个版本',
+      '自由职业者整理项目经历、技能和作品链接',
+    ],
+    workflowHeading: '如何使用',
+    workflow: [
+      '在左侧填写个人信息、经历、项目和技能',
+      '切换模板与主题色，并实时查看右侧排版预览',
+      '导出 PDF、PNG、JPG 或 JSON，投递前再次检查内容',
+    ],
+    privacyHeading: '隐私与数据',
+    privacy:
+      '当前版本默认将简历内容保存在浏览器本地，不要求注册账号。你可以用 JSON 导出做备份，在不同设备之间迁移。',
     faqHeading: '常见问题',
+    alternateLabel: 'English version',
     faqs: [
       {
         question: 'Flash Resume 需要登录或上传简历到服务器吗？',
@@ -39,7 +58,9 @@ const SEO_CONTENT = {
     ],
   },
   en: {
+    brand: 'Flash Resume',
     heading: 'Free Online Resume Builder',
+    eyebrow: 'Browser-Based Resume Editor',
     intro:
       'Flash Resume is a browser-based resume editor for job seekers, career changers, and freelancers. You can edit content, switch templates, adjust theme colors, and preview the final A4 layout in real time.',
     supporting:
@@ -51,7 +72,23 @@ const SEO_CONTENT = {
       'Multi-resume management for different job applications',
       'Real-time preview and export before sending applications',
     ],
+    useCasesHeading: 'Best For',
+    useCases: [
+      'Students and new graduates building a first application-ready resume',
+      'Professionals maintaining tailored resume versions for different roles',
+      'Freelancers organizing projects, skills, and portfolio links in one place',
+    ],
+    workflowHeading: 'How It Works',
+    workflow: [
+      'Fill in personal details, work history, projects, and skills on the left',
+      'Switch templates and colors while reviewing the live preview on the right',
+      'Export PDF, PNG, JPG, or JSON after a final content and layout check',
+    ],
+    privacyHeading: 'Privacy and Storage',
+    privacy:
+      'The current version stores resume content locally in your browser by default and does not require an account. JSON export can be used for backup and transfer between devices.',
     faqHeading: 'FAQ',
+    alternateLabel: '中文版本',
     faqs: [
       {
         question: 'Do I need to sign in or upload my resume to a server?',
@@ -80,12 +117,28 @@ const SEO_CONTENT = {
 export default function SeoContent() {
   const { locale } = useLocale();
   const content = SEO_CONTENT[locale];
+  const alternateUrl = locale === 'zh' ? SEO_URLS.en : SEO_URLS.zh;
 
   return (
     <section className="rounded-lg border border-gray-200 bg-white p-4 text-sm text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300">
-      <h2 className="text-base font-semibold text-gray-900 dark:text-gray-100">
-        {content.heading}
-      </h2>
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-blue-600 dark:text-blue-400">
+            {content.eyebrow}
+          </p>
+          <h1 className="mt-1 text-lg font-semibold text-gray-900 dark:text-gray-100">
+            {content.brand} - {content.heading}
+          </h1>
+        </div>
+        <a
+          href={alternateUrl}
+          className="shrink-0 rounded-md border border-gray-200 px-3 py-2 text-xs font-medium text-gray-600 transition-colors hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+          hrefLang={locale === 'zh' ? 'en' : 'zh-CN'}
+          lang={locale === 'zh' ? 'en' : 'zh-CN'}
+        >
+          {content.alternateLabel}
+        </a>
+      </div>
       <p className="mt-2 leading-6">{content.intro}</p>
       <p className="mt-2 leading-6 text-gray-600 dark:text-gray-400">{content.supporting}</p>
 
@@ -97,6 +150,29 @@ export default function SeoContent() {
           <li key={feature}>{feature}</li>
         ))}
       </ul>
+
+      <h3 className="mt-5 text-sm font-semibold text-gray-900 dark:text-gray-100">
+        {content.useCasesHeading}
+      </h3>
+      <ul className="mt-2 list-disc space-y-1 pl-5 text-gray-600 dark:text-gray-400">
+        {content.useCases.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
+
+      <h3 className="mt-5 text-sm font-semibold text-gray-900 dark:text-gray-100">
+        {content.workflowHeading}
+      </h3>
+      <ol className="mt-2 list-decimal space-y-1 pl-5 text-gray-600 dark:text-gray-400">
+        {content.workflow.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ol>
+
+      <h3 className="mt-5 text-sm font-semibold text-gray-900 dark:text-gray-100">
+        {content.privacyHeading}
+      </h3>
+      <p className="mt-2 leading-6 text-gray-600 dark:text-gray-400">{content.privacy}</p>
 
       <h3 className="mt-5 text-sm font-semibold text-gray-900 dark:text-gray-100">
         {content.faqHeading}

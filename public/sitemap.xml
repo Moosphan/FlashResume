@@ -19,4 +19,76 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://dorck.cn/FlashResume/official/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dorck.cn/FlashResume/official/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://dorck.cn/FlashResume/official/zh/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dorck.cn/FlashResume/official/" />
+    <lastmod>2026-05-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://dorck.cn/FlashResume/official/zh/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dorck.cn/FlashResume/official/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://dorck.cn/FlashResume/official/zh/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dorck.cn/FlashResume/official/" />
+    <lastmod>2026-05-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://dorck.cn/FlashResume/official/features/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dorck.cn/FlashResume/official/features/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://dorck.cn/FlashResume/official/zh/features/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dorck.cn/FlashResume/official/features/" />
+    <lastmod>2026-05-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dorck.cn/FlashResume/official/zh/features/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dorck.cn/FlashResume/official/features/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://dorck.cn/FlashResume/official/zh/features/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dorck.cn/FlashResume/official/features/" />
+    <lastmod>2026-05-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dorck.cn/FlashResume/official/templates/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dorck.cn/FlashResume/official/templates/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://dorck.cn/FlashResume/official/zh/templates/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dorck.cn/FlashResume/official/templates/" />
+    <lastmod>2026-05-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dorck.cn/FlashResume/official/zh/templates/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dorck.cn/FlashResume/official/templates/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://dorck.cn/FlashResume/official/zh/templates/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dorck.cn/FlashResume/official/templates/" />
+    <lastmod>2026-05-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dorck.cn/FlashResume/official/faq/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dorck.cn/FlashResume/official/faq/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://dorck.cn/FlashResume/official/zh/faq/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dorck.cn/FlashResume/official/faq/" />
+    <lastmod>2026-05-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://dorck.cn/FlashResume/official/zh/faq/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dorck.cn/FlashResume/official/faq/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://dorck.cn/FlashResume/official/zh/faq/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dorck.cn/FlashResume/official/faq/" />
+    <lastmod>2026-05-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>
